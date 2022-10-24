@@ -10,6 +10,11 @@ var adminRouter = require('./routes/admin');
 
 
 var app = express();
+var session = require('express-session')  // session npm 
+//var cache = require('cache-control');
+const nocache = require("nocache");
+ 
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,15 +27,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } })) // session use
+app.use(nocache());
+ 
 
 app.use('/', usersRouter);
-app.use('/admin', adminRouter);
+app.use('/admin', adminRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+       
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
