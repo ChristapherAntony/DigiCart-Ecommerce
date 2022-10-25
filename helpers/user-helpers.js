@@ -50,22 +50,13 @@ module.exports = {
     },
     blockUser:(userID)=>{
         return new Promise(async(resolve,reject)=>{
-            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:true}})
-            // db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userID)}).then((user)=>{
-            //     resolve(user)
-            // })
-            
-            
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:true}})  
         })
         
     },
     unBlockUser:(userID)=>{
         return new Promise(async(resolve,reject)=>{
-            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:false}})
-            // db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userID)}).then((user)=>{
-            //     resolve(user)
-            // })  
-            
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:false}})       
         })
         
     }

@@ -11,8 +11,8 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-    next();
-    //res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+    //  next();
+    res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 
@@ -23,6 +23,11 @@ const verifyAdmin = (req, res, next) => {
 router.get('/', verifyAdmin, function (req, res, next) {
   res.redirect('/admin/dash');
 });
+
+// jgfjgklf
+
+
+
 
 
 router.post('/dash', function (req, res, next) {
@@ -43,35 +48,40 @@ router.get('/dash', verifyAdmin, function (req, res, next) {
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
   userHelpers.getAllUsers().then((users) => {
-    res.render('admin/view-users', {users, layout:'admin-layout' })
+    res.render('admin/view-users', { users, layout: 'admin-layout' })
   })
 })
+
 router.get('/block/:id', function (req, res) {
-  let userID = req.params.id 
+  let userID = req.params.id
   userHelpers.blockUser(userID)
-    res.redirect('/admin/view-users')
-
-  
-
+  res.redirect('/admin/view-users')
 })
+
 router.get('/unBlock/:id', function (req, res) {
-  let userID = req.params.id 
-  userHelpers.unBlockUser(userID) 
-    res.redirect('/admin/view-users')
+  let userID = req.params.id
+  userHelpers.unBlockUser(userID)
+  res.redirect('/admin/view-users')
 
-  
-  
 })
 
 
 
 
-router.get('/view-products', verifyAdmin, (req, res, next) => {
-  res.render('admin/view-products', { layout: 'admin-layout' })
-})
+
 router.get('/signOut', verifyAdmin, (req, res, next) => {
   req.session.destroy()
   res.redirect('/admin')
+})
+
+// product section starts here
+router.get('/view-products', verifyAdmin, (req, res, next) => {
+  res.render('admin/view-products', { layout: 'admin-layout' })
+})
+
+router.get('/addProduct', verifyAdmin, (req, res, next) => {
+
+  res.render('admin/addProduct', { layout: 'admin-layout' })
 })
 
 

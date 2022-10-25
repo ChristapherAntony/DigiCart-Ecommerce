@@ -42,21 +42,17 @@ router.post('/signUp',(req,res)=>{
 })
 
 router.post('/logIn',(req,res)=>{
-  console.log(req.body);
+
   userHelpers.doLogin(req.body).then((response)=>{
     if(response.status==false){     
       res.render('users/login-signUp',{'emailError':"Invalid Credentials! "})
     }else if(response.active==false){
       res.render('users/login-signUp',{'emailError':"Your Account is Blocked!"})
     }
-    
-    
     else{                               
       res.redirect('/')
     }
   }) 
-
-
 })
 
 
