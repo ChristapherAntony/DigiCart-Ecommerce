@@ -40,14 +40,14 @@
 </head>
 
 <body>
-    {{#if admin}}
+    {{#if login}}
 
     {{else}}
     {{>admin-header}}
     {{/if}}
 
     {{{body}}}
-    {{#if admin}}
+    {{#if login}}
 
     {{else}}
     {{>admin-footer}}

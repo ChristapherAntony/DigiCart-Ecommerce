@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs=require('express-handlebars');
 
+
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 
@@ -12,7 +13,9 @@ var adminRouter = require('./routes/admin');
 var app = express();
 var session = require('express-session')  // session npm 
 //var cache = require('cache-control');
+
 const nocache = require("nocache");
+var db = require('./config/connection')
  
 
 
@@ -29,6 +32,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } })) // session use
 app.use(nocache());
+db.connect((err)=>{
+  if(err) console.log("connection error"+err);  
+  else console.log("data base connected");
+})
  
 
 app.use('/', usersRouter);
@@ -38,7 +45,7 @@ app.use('/admin', adminRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-       
+         
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

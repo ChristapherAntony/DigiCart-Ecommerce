@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class="login-register-area pt-115 pb-120">
+        <div class="login-register-area pt-20 pb-120">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 ml-auto mr-auto">
@@ -27,9 +27,9 @@
                                 <div id="lg1" class="tab-pane active">
                                     <div class="login-form-container">
                                         <div class="login-register-form">
-                                            <form action="/" method="get">
-                                                <input type="text" name="user-name" placeholder="Username">
-                                                <input type="password" name="user-password" placeholder="Password">
+                                            <form action="/logIn" method="post">
+                                                <input type="text" name="userID" placeholder="Email / Mobile Number">
+                                                <input type="password" name="Password" placeholder="Password">
                                                 <div class="button-box">
                                                     <div class="login-toggle-btn">
                                                         <input type="checkbox">
@@ -45,13 +45,15 @@
                                 <div id="lg2" class="tab-pane">
                                     <div class="login-form-container">
                                         <div class="login-register-form">
-                                            <form action="/" method="get">
-                                                <input type="text" name="user-name" placeholder="Username">
-                                                <input type="password" name="user-password" placeholder="Password">
-                                                <input name="user-email" placeholder="Email" type="email">
+                                            <form action="/signUp" method="post">
+                                                <input type="text" name="UserName" placeholder="Name">
+                                                <input name="UserEmail" placeholder="Email" type="Email">
+                                                <input type="text" name="MobileNo" placeholder="Mobile Number">                                
+                                                <input type="password" name="Password" placeholder="Password">
+                                                <input type="password"  placeholder="Conform Password">
                                                 <div class="button-box">
                                                     <button type="submit">Register</button>
-                                                </div>
+                                                </div> 
                                             </form>
                                         </div>
                                     </div>

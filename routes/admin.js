@@ -1,14 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+
 const adminUser = "admin"
 const adminPassword ="123"
 
 const verifyAdmin=(req,res,next)=>{
-  if(req.session.admin){
-    next();
+  if(req.session.admin){ 
+    next(); 
   }else{
-    res.render('admin/admin-login',{layout: 'admin-layout',admin:true});
+    res.render('admin/admin-login',{layout: 'admin-layout',login:true}); 
   }
 }
 
