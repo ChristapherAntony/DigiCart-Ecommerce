@@ -27,6 +27,7 @@ module.exports = {
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.userID }, { MobileNo: userData.userID }] })
             if (user) {
+                if(user.block)resolve({active: false })
                 bcrypt.compare(userData.Password, user.Password).then((status) => {    // if user true the check pw with bcrypt
                     if (status) {
                         response.user = user;
