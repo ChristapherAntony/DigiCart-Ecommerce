@@ -1,6 +1,8 @@
 const db = require('../config/connection')
 const collection = require('../config/collections')
 var bcrypt = require('bcrypt')
+const { response } = require('express')
+var objectId=require('mongodb').ObjectId
 
 
 module.exports = {
@@ -38,6 +40,34 @@ module.exports = {
                 resolve({ status: false })
             }
         })
+    },
+    getAllUsers:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let users = await db.get().collection(collection.USER_COLLECTION).find().toArray()
+            resolve(users)
+        })
+    },
+    blockUser:(userID)=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:true}})
+            // db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userID)}).then((user)=>{
+            //     resolve(user)
+            // })
+            
+            
+        })
+        
+    },
+    unBlockUser:(userID)=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:false}})
+            // db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userID)}).then((user)=>{
+            //     resolve(user)
+            // })  
+            
+        })
+        
     }
+
 
 }

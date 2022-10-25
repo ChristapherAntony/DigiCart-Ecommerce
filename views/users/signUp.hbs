@@ -16,10 +16,10 @@
             <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div class="login-register-wrapper">
                     <div class="login-register-tab-list nav">
-                        <a class="active" data-toggle="tab" href="#lg1">
+                        <a data="tab" href="/login-register">
                             <h4> login </h4>
                         </a>
-                        <a data="tab" href="/signUp">
+                        <a class="active" data-toggle="tab" href="#">
                             <h4> sign up </h4>
                         </a>
                     </div>
@@ -27,23 +27,24 @@
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="/logIn" method="post">
-                                        <input type="text" name="userID" placeholder="Email / Mobile Number">
-                                        <input type="password" name="Password" placeholder="Password"> <br>
-                                            {{#if emailError}}
-                                            <span class="text-danger font-weight-bold disappear" >{{'emailError'}}</span>
-                                            {{/if}}
+                                    <form action="/signUp" method="post">
+                                        <input type="text" name="UserName" placeholder="Name">
+                                        <input name="UserEmail" placeholder="Email" type="Email">
+                                        <input type="text" name="MobileNo" placeholder="Mobile Number">
+                                        <input type="password" name="Password" placeholder="Password">
+                                        <input type="password" placeholder="Conform Password">
                                         <div class="button-box">
-                                            <div class="login-toggle-btn">
-                                                <input type="checkbox">
-                                                <label>Remember me</label>
-                                                <a href="#">Forgot Password?</a>
-                                            </div>
-                                            <button type="submit">Login</button>
+                                            <button type="submit">Register</button>
+
+                                            {{#if emailError}}
+                                            <span class="text-danger pl-5 disappear" >{{'emailError'}}</span>
+                                            {{/if}}
+                                            
                                         </div>
                                     </form>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>

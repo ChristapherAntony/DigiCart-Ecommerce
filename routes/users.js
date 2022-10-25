@@ -26,22 +26,29 @@ router.get('/wishlist', (req, res, next)=> {
 router.get('/login-register', (req, res, next)=> {
   res.render('users/login-signUp');
 });
+router.get('/signUp', (req, res, next)=> {
+  res.render('users/signUp');
+});
 
 router.post('/signUp',(req,res)=>{
   console.log(req.body);
   userHelpers.doSignUP(req.body).then((response)=>{
     if(response.status==false){                 
-      res.render('user/signup',{'emailError':"Email / Mobile Number Already Exists"})
-    }else{                               
-      res.render('user/login')
+      res.render('users/signUp',{'emailError':"Email / Mobile Number Already Exists"})
+    }else{                                 
+      res.redirect('/login-register')
     }
   })
 })
 
 router.post('/logIn',(req,res)=>{
   console.log(req.body);
-  userHelpers.doLogin(req.body).then((data)=>{
-    console.log(data);
+  userHelpers.doLogin(req.body).then((response)=>{
+    if(response.status==false){     
+      res.render('users/login-signUp',{'emailError':"Invalid Credentials"})
+    }else{                               
+      res.redirect('/')
+    }
   }) 
 
 

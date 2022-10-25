@@ -1099,7 +1099,7 @@
         topSpacing: 0,
         bottomSpacing: 30,
         minWidth: 767, 
-    });
+    }); 
     
     /*--- language currency active ----*/
     $('.mobile-language-active').on('click', function(e) {
@@ -1114,3 +1114,13 @@
     
 })(jQuery);
 
+// for hide a san after 5 seconds
+$.fn.delayedHide = function(delay) {
+    var that = this;
+    window.setTimeout(function () {
+      that.hide();
+    }, delay || 5000);
+    return that;
+  }
+   
+  $(".disappear").delayedHide(); 
