@@ -59,6 +59,26 @@ module.exports = {
             db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:false}})       
         })
         
+    },
+    adminLogin: (adminID) => {
+        return new Promise(async (resolve, reject) => {
+            
+            let response = {}
+            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName }) // check email
+            if (user) {
+                bcrypt.compare(adminID.Password, user.Password).then((status) => {    // if user true the check pw with bcrypt
+                    if (status) {
+                        response.user = user;
+                        response.status = true;
+                        resolve(response)  // this response include user data and statues
+                    } else {
+                        resolve({ status: false }) // this response include only false status
+                    }
+                })   // compare userData pw with db pw
+            } else {
+                resolve({ status: false })
+            }
+        })
     }
 
 

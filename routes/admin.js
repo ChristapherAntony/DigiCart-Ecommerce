@@ -1,7 +1,8 @@
+const { request } = require('express');
 var express = require('express');
 const userHelpers = require('../helpers/user-helpers');
 var router = express.Router();
-
+const userHelper=require('../helpers/user-helpers')
 
 
 const adminUser = "admin"
@@ -11,7 +12,7 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-    //  next();
+    //  next();  
     res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
@@ -24,26 +25,22 @@ router.get('/', verifyAdmin, function (req, res, next) {
   res.redirect('/admin/dash');
 });
 
-// jgfjgklf
 
-
-
-
-
-router.post('/dash', function (req, res, next) {
-  const adminKey = { username, password } = req.body
-  if (username === adminUser && password === adminPassword) {
-    req.session.admin = adminKey
-    res.redirect('/admin/dash');
-  } else {
-    res.redirect('/admin/dash');
-    // res.render('admin/admin-login',{layout: 'admin-layout',login:true});   
-
-  }
-});
+router.post('/dash', (req, res) => {
+  userHelper.adminLogin(req.body).then((response) => {      
+    if (response.status) {
+      //req.session.loggedIn = true
+      req.session.admin = response.user  
+      
+      res.redirect('/admin/dash')         
+    } else {
+      res.redirect('/admin/dash')   
+    }
+  })
+})
 
 router.get('/dash', verifyAdmin, function (req, res, next) {
-  res.render('admin/dash', { layout: 'admin-layout' });
+  res.render('admin/dash',{ layout: 'admin-layout' });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -64,9 +61,6 @@ router.get('/unBlock/:id', function (req, res) {
   res.redirect('/admin/view-users')
 
 })
-
-
-
 
 
 router.get('/signOut', verifyAdmin, (req, res, next) => {
