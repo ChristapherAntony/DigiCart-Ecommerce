@@ -12,6 +12,7 @@ var adminRouter = require('./routes/admin');
 
 var app = express();
 var session = require('express-session')  // session npm 
+var fileupload = require('express-fileupload')
 //var cache = require('cache-control');
 
 const nocache = require("nocache");
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileupload())
 app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } })) // session use
 app.use(nocache());
 db.connect((err)=>{

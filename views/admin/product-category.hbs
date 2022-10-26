@@ -1,0 +1,53 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <h1>Category </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product-category">Category Management</a> </li>
+                <li class="breadcrumb-item active">View Category</li>
+            </ol>
+            <a href="/admin/add-category" type="button" class="btn btn-success "> <i class="bi bi-check-circle"></i> Add
+                New</a>
+
+        </nav>
+    </div><!-- End Page Title -->
+
+    <table class="table table-bordered border-primary " id="userView">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each category}}
+            <tr>
+                <th scope="row">{{@index}}</th>
+                <td scope="row">{{this.category}}</td>
+                <td scope="row"><img src="/images/category-img/{{this._id}}.jpg" style="height: 60px" alt=""></td>
+                <td scope="row">{{this.Description}}</td>
+                <td><a href="/admin/edit-category/{{this._id}}" class="btn btn-warning btn-sm "> <i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="/admin/delete-category/{{this._id}}" class="btn btn-danger btn-sm"> <i
+                            class="bi bi-trash3"></i></a>
+
+                </td>
+            </tr>
+            {{/each}}
+
+
+        </tbody>
+    </table>
+
+
+
+
+</main>

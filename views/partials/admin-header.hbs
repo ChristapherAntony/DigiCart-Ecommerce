@@ -2,8 +2,8 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
   <div class="d-flex align-items-center justify-content-between">
-    <a href="index.html" class="logo d-flex align-items-center">
-      <img src="assets/img/logo.png" alt="">
+    <a href="/admin/dash" class="logo d-flex align-items-center">
+      <img src="../admin-assets/img/logo.png" alt="">
       <span class="d-none d-lg-block">DigiCart</span>
     </a>
     <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -118,7 +118,7 @@
 
           <li class="message-item">
             <a href="#">
-              <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+              <img src="../admin-assets/img/messages-1.jpg" alt="" class="rounded-circle">
               <div>
                 <h4>Maria Hudson</h4>
                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -132,7 +132,7 @@
 
           <li class="message-item">
             <a href="#">
-              <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+              <img src="../admin-assets/img/messages-2.jpg" alt="" class="rounded-circle">
               <div>
                 <h4>Anna Nelson</h4>
                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -146,7 +146,7 @@
 
           <li class="message-item">
             <a href="#">
-              <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+              <img src="../admin-assets/img/messages-3.jpg" alt="" class="rounded-circle">
               <div>
                 <h4>David Muldon</h4>
                 <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -164,7 +164,7 @@
 
         </ul><!-- End Messages Dropdown Items -->
 
-      </li><!-- End Messages Nav --> 
+      </li><!-- End Messages Nav -->
 
       <li class="nav-item dropdown pe-3">
 
@@ -234,7 +234,7 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link " href="index.html">
+      <a class="nav-link " href="">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -258,8 +258,8 @@
       </ul>
     </li><!-- End User Management Nav -->
 
-        <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#productMgt-nav" data-bs-toggle="collapse" href="#">
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#productMgt-nav" data-bs-toggle="collapse" href="/admin/view-products">
         <i class="bi bi-boxes"></i><span>Products Management</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="productMgt-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -269,14 +269,32 @@
           </a>
         </li>
         <li>
-          <a href="/admin/addProduct">
+          <a href="/admin/add-Product">
             <i class="bi bi-circle"></i><span>Add product</span>
           </a>
         </li>
       </ul>
-    </li><!-- End User Management Nav -->
+    </li><!-- End Product Management Nav -->
 
     <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#categoryMgt-nav" data-bs-toggle="collapse" href="/admin/product-category">
+        <i class="bi bi-journal-text"></i><span>Category management</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="categoryMgt-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="/admin/product-category">
+            <i class="bi bi-circle"></i><span>View Category</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/add-category">
+            <i class="bi bi-circle"></i><span>Add Category</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Category Management Nav -->
+
+    {{!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
@@ -444,18 +462,32 @@
           </a>
         </li>
       </ul>
-    </li><!-- End Icons Nav -->
+    </li><!-- End Icons Nav --> --}}
 
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="users-profile.html">
+      <a class="nav-link collapsed" href="/admin/profile">
         <i class="bi bi-person"></i>
         <span>Profile</span>
       </a>
     </li><!-- End Profile Page Nav -->
 
-    <li class="nav-item">
+            <li class="nav-item">
+      <a class="nav-link collapsed" href="#">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+      </a>
+    </li><!-- Settings Page Nav -->
+
+        <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/signOut">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span>Sign Out</span>
+      </a>
+    </li><!-- End Login Page Nav -->
+
+    {{!-- <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq.html">
         <i class="bi bi-question-circle"></i>
         <span>F.A.Q</span>
@@ -463,7 +495,7 @@
     </li><!-- End F.A.Q Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-contact.html">
+      <a class="nav-link collapsed" href="#">
         <i class="bi bi-envelope"></i>
         <span>Contact</span>
       </a>
@@ -476,12 +508,7 @@
       </a>
     </li><!-- End Register Page Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-login.html">
-        <i class="bi bi-box-arrow-in-right"></i>
-        <span>Login</span>
-      </a>
-    </li><!-- End Login Page Nav -->
+
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-error-404.html">
@@ -495,10 +522,8 @@
         <i class="bi bi-file-earmark"></i>
         <span>Blank</span>
       </a>
-    </li><!-- End Blank Page Nav -->
+    </li><!-- End Blank Page Nav --> --}}
 
   </ul>
 
 </aside><!-- End Sidebar-->
-
-
