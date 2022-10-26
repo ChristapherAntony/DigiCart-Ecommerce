@@ -132,13 +132,59 @@ router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
 
 //products----starts here<<<<<<<<<
 router.get('/view-products', verifyAdmin, (req, res, next) => {
-  res.render('admin/view-products', { layout: 'admin-layout' })
+  productHelpers.getAllProducts().then((products)=>{
+    res.render('admin/view-products',{ layout: 'admin-layout',products })
+  })
 })
 
-router.get('/add-Product', verifyAdmin, (req, res, next) => {
+router.get('/add-product', verifyAdmin, (req, res, next) => {
+  res.render('admin/add-product', { layout: 'admin-layout' })
+})///issues
 
-  res.render('admin/add-Product', { layout: 'admin-layout' })
+router.post('/add-product', verifyAdmin, (req, res, next) => {
+  productHelpers.addProduct(req.body,(id)=>{
+    res.redirect('/admin/view-products')
+  })
+  
 })
+
+
+// router.get('/edit-product', verifyAdmin, (req, res, next) => {
+//   res.render('admin/edit-product', { layout: 'admin-layout' })
+// })///issues
+
+
+router.get('/edit-product/:id', verifyAdmin,async (req, res, next) => {
+  let productId = req.params.id   //to get the clicked item id
+  let product = await productHelpers.getProductDetails(productId) 
+  console.log(product);
+  res.render('admin/edit-product', {  layout: 'admin-layout',product })
+})
+
+router.post('/update-product/:id', (req, res) => {
+  productHelpers.updateProduct(req.params.id, req.body).then(() => {
+    res.redirect('/admin/view-products')
+    //to update img
+    if (req.files?.image) {
+      let image = req.files.image
+      image.mv('./public/product-images/' + productId + '.jpg')
+    }
+  })
+})
+
+router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
+  productHelpers.deleteProduct(req.params.id).then((response)=>{
+    res.redirect('/admin/view-products',)
+  })
+})
+
+
+
+
+
+
+
+
 //products section ends here>>>>>>>>>
 
 

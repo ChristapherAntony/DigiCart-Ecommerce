@@ -1,12 +1,12 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Add product</h1>
+        <h1>Edit product</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Forms</li>
-                <li class="breadcrumb-item active">Elements</li>
+                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item active">Edit</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -21,18 +21,18 @@
                         <h5 class="card-title">Floating labels Form</h5>
 
                         <!-- Floating Labels Form -->
-                        <form class="row g-3" action="/admin/add-product" method="post" enctype="multipart/form-data">
+                        <form class="row g-3" action="/admin/update-product/{{product._id}}" method="post" enctype="multipart/form-data">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input name="title" type="text" class="form-control" id="floatingName"
-                                        placeholder="State">
+                                    <input name="title" value="{{product.title}}" type="text" class="form-control"
+                                        id="floatingName" placeholder="State">
                                     <label for="floatingName">Title</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select name="category" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected></option>
+                                        <option selected value="{{product.category}}">{{product.category}}</option>
                                         <option value="Mobile">Mobile</option>
                                         <option value="Laptop">Laptop</option>
                                         <option value="3">Audio</option>
@@ -44,7 +44,7 @@
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select name="brand" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option></option>
+                                        <option value="{{product.brand}}">{{product.brand}}</option>
                                         <option value="Apple">Apple</option>
                                         <option value="Samsung">Samsung</option>
                                         <option value="MI">MI</option>
@@ -58,15 +58,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input name="color" type="text" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                    <input name="color" value="{{product.color}}" type="text" class="form-control"
+                                        id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Color</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select name="RAM" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected></option>
+                                        <option selected value="{{product.RAM}}">{{product.RAM}}</option>
                                         <option value="2">2</option>
                                         <option value="4">4</option>
                                         <option value="6">6</option>
@@ -81,7 +81,7 @@
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select name="ROM" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected></option>
+                                        <option selected value="{{product.ROM}}">{{product.ROM}}</option>
                                         <option value="4">4</option>
                                         <option value="8">8</option>
                                         <option value="12">12</option>
@@ -97,32 +97,41 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input name="os" type="text" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                    <input name="os" value="{{product.os}}" type="text" class="form-control"
+                                        id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Operating System</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating">
-                                    <input name="actualPrice" type="text" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                    <input name="actualPrice" value="{{product.actualPrice}}" type="text"
+                                        class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Actual Price</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating">
-                                    <input name="offerPrice" type="text" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                    <input name="offerPrice" value="{{product.offerPrice}}" type="text"
+                                        class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Offer Price</label>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            {{!-- <div class="col-12">
                                 <div class="form-floating">
+                                    
                                     <textarea name="productDescription" class="form-control" placeholder="Address"
-                                        id="floatingTextarea" style="height: 100px;"></textarea>
+                                        value="{{product.productDescription}}" id="floatingTextarea"
+                                        style="height: 100px;"></textarea>
                                     <label for="floatingTextarea">Product Description</label>
                                 </div>
+                            </div> --}}
+                            <div class="col-12 pb-5" >
+                                <div class="form-floating">
+                                    <label for="">Product Description</label><br><br>
+                                    <input type="text" name="productDescription" value="{{product.productDescription}}" style="height: fit-content; width: 100%; ">
+                                </div>
                             </div>
+                            
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                                 <div class="col-sm-10">
