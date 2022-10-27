@@ -7,10 +7,10 @@ var objectId = require('mongodb').ObjectId
 
 module.exports = {
 
-    addCategory: (categoryDetails, callback) => {
-        db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryDetails).then((data) => {
-            callback(data.insertedId)
-        })
+    addCategory: (categoryDetails) => {
+        console.log("from add cawegoryt********************************");
+        console.log(categoryDetails);
+        db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryDetails)
     },
     getAllCategory: () => {
         return new Promise(async (resolve, reject) => {   //getting data should write in await 
@@ -38,7 +38,8 @@ module.exports = {
             db.get().collection(collections.CATEGORY_COLLECTION).updateOne({ _id: objectId(categoryId) }, {
                 $set: {
                     category: categoryDetails.category,
-                    Description: categoryDetails.Description
+                    Description: categoryDetails.Description,
+                    image:categoryDetails.image
                 }
             }).then((response) => {
                 resolve()
@@ -64,7 +65,7 @@ module.exports = {
 
 
 
-
+ 
 
 
 

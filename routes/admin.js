@@ -6,22 +6,32 @@ var router = express.Router();
 const userHelper = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
-
-
-/***********multer */
 const multer = require('multer')
+
+/***********multer for products imgs*/
 const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/images/product-img");
   },
   filename: function (req, file, cb) {
-    // cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
     cb(null, Date.now() + '-' + file.originalname)
   }
 })
 const upload = multer({ storage: multerStorage });
 const uploadMultiple = upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
-/**********multer  */
+/************************multer  */
+const multerStorageCategory = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/category-img");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+const uploadOne = multer({ storage: multerStorageCategory });
+const uploadSingleFile = uploadOne.fields([{ name: 'image', maxCount: 1 }])
+
+/****************************** */
 
 
 
@@ -97,20 +107,13 @@ router.get('/product-category', verifyAdmin, (req, res, next) => {
 router.get('/add-category', verifyAdmin, (req, res, next) => {
   res.render('admin/add-category', { layout: 'admin-layout' })
 })
-router.post('/add-category', verifyAdmin, (req, res, next) => {
-  categoryHelpers.addCategory(req.body, (id) => {
-    let image = req.files?.image
-    if (image)
-      image.mv('./public/images/category-img/' + id + '.jpg', (err) => {
-        if (!err) {
-          res.redirect("/admin/product-category")
-        } else {
-          console.log(err);
-        }
-      })
-    else
-      res.redirect("/admin/product-category")
-  })
+
+
+router.post('/addNewCategory', uploadSingleFile, (req, res, next) => {
+  req.body.image = req.files.image[0].filename
+  categoryHelpers.addCategory(req.body)
+  res.redirect("/admin/product-category")
+
 })
 
 router.get('/edit-category/:id', async (req, res) => {
@@ -119,15 +122,20 @@ router.get('/edit-category/:id', async (req, res) => {
   res.render('admin/edit-category', { categoryDetails, layout: 'admin-layout' })
 })
 
-router.post('/update-category/:id', (req, res) => {
-  let categoryId = req.params.id
-  categoryHelpers.updateCategory(categoryId, req.body).then(() => {
+router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
+  console.log("######################");
+  console.log(req.files);
+  console.log(req.files.image);
+  if (req.files.image == null) {
+    Image1 = await productHelpers.fetchImage(req.params.id)
+  } else {
+    Image1 = req.files.image[0].filename
+  }
+  req.body.image = Image1
+  categoryHelpers.updateCategory(req.params.id, req.body).then(() => {
     res.redirect('/admin/product-category')
-    //to update img
-    if (req.files?.image) {
-      let image = req.files.image
-      image.mv('./public/images/category-img/' + categoryId + '.jpg')
-    }
+
+
   })
 })
 
@@ -148,8 +156,17 @@ router.get('/view-products', verifyAdmin, (req, res, next) => {
   })
 })
 
+/*********** */
+
+/********** */
+
+
+
 router.get('/add-product', verifyAdmin, (req, res, next) => {
-  res.render('admin/add-product', { layout: 'admin-layout' })
+  categoryHelpers.getAllCategory().then((category) => {
+    res.render('admin/add-product', { layout: 'admin-layout',category })
+  })
+
 })
 
 router.post('/add-products', uploadMultiple, (req, res) => {
@@ -168,7 +185,7 @@ router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
   res.render('admin/edit-product', { layout: 'admin-layout', product })
 })
 
-router.post('/update-product/:id',  uploadMultiple, async (req, res) => {
+router.post('/update-product/:id', uploadMultiple, async (req, res) => {
   if (req.files.image1 == null) {
     Image1 = await productHelpers.fetchImage1(req.params.id)
   } else {
@@ -177,7 +194,7 @@ router.post('/update-product/:id',  uploadMultiple, async (req, res) => {
   if (req.files.image2 == null) {
     Image2 = await productHelpers.fetchImage2(req.params.id)
   } else {
-    Image2 = req.files.image2[0].filename   
+    Image2 = req.files.image2[0].filename
   }
   if (req.files.image3 == null) {
     Image3 = await productHelpers.fetchImage3(req.params.id)

@@ -33,10 +33,10 @@
                                 <div class="form-floating mb-3">
                                     <select name="category" class="form-select" id="floatingSelect" aria-label="State">
                                         <option selected></option>
-                                        <option value="Mobile">Mobile</option>
-                                        <option value="Laptop">Laptop</option>
-                                        <option value="3">Audio</option>
-                                        <option value="4">Televsion</option>
+                                        {{#each category}}
+                                        <option value="Mobile">{{this.category}}</option>
+                                        {{/each}}
+                                        
                                     </select>
                                     <label for="floatingSelect">Category</label>
                                 </div>
@@ -52,6 +52,7 @@
                                         <option value="Bose">Bose</option>
                                         <option value="Dell">Dell</option>
                                         <option value="Nokia">Nokia</option>
+                                        <option value="Nokia">Oneplus</option>
                                     </select>
                                     <label for="floatingSelect">Brand</label>
                                 </div>
@@ -102,18 +103,25 @@
                                     <label for="floatingCity">Operating System</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="actualPrice" type="text" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity">Actual Price</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="offerPrice" type="text" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity">Offer Price</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input name="stock" type="text" class="form-control" id="floatingCity"
+                                        placeholder="City">
+                                    <label for="floatingCity">Quantity</label>
                                 </div>
                             </div>
                             <div class="col-12">

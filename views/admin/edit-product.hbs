@@ -4,8 +4,8 @@
         <h1>Edit product</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"> <a href="/admin/view-products">View Products</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
         </nav>
@@ -21,7 +21,8 @@
                         <h5 class="card-title">Floating labels Form</h5>
 
                         <!-- Floating Labels Form -->
-                        <form class="row g-3" action="/admin/update-product/{{product._id}}" method="post" enctype="multipart/form-data">
+                        <form class="row g-3" action="/admin/update-product/{{product._id}}" method="post"
+                            enctype="multipart/form-data">
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input name="title" value="{{product.title}}" type="text" class="form-control"
@@ -102,50 +103,51 @@
                                     <label for="floatingCity">Operating System</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="actualPrice" value="{{product.actualPrice}}" type="text"
                                         class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Actual Price</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="offerPrice" value="{{product.offerPrice}}" type="text"
                                         class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Offer Price</label>
                                 </div>
                             </div>
-                            {{!-- <div class="col-12">
+                            <div class="col-md-2">
                                 <div class="form-floating">
-                                    
-                                    <textarea name="productDescription" class="form-control" placeholder="Address"
-                                        value="{{product.productDescription}}" id="floatingTextarea"
-                                        style="height: 100px;"></textarea>
-                                    <label for="floatingTextarea">Product Description</label>
+                                    <input name="stock" value="{{product.stock}}" type="text" class="form-control" id="floatingCity"
+                                        placeholder="City">
+                                    <label for="floatingCity">Quantity</label>
                                 </div>
-                            </div> --}}
-                            <div class="col-12 pb-5" >
+                            </div>
+
+                            <div class="col-12 pb-5">
                                 <div class="form-floating">
                                     <label for="">Product Description</label><br><br>
-                                    <input type="text" name="productDescription" value="{{product.productDescription}}" style="height: fit-content; width: 100%; ">
+                                    <input type="text" name="productDescription" value="{{product.productDescription}}"
+                                        style="height: fit-content; width: 100%; ">
                                 </div>
                             </div>
 
 
-                            
+
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Image 1</label>
-                                <img src="/images/product-img/{{product.image1}}" style="width: 100px" alt="" >
+                                <img src="/images/product-img/{{product.image1}}" style="width: 100px" alt="">
                                 <div class="col-sm-8">
-                                    <input type="file" class="form-control" name="image1" value="" id="formFile " multiple>
+                                    <input type="file" class="form-control" name="image1" value="" id="formFile "
+                                        multiple>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Image 2</label>
                                 <img src="/images/product-img/{{product.image2}}" style="width: 100px" alt="">
                                 <div class="col-sm-8">
-                                    
+
                                     <input type="file" class="form-control" name="image2" value="" id="formFile">
                                 </div>
                             </div>
