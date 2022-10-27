@@ -3,7 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var hbs=require('express-handlebars');
+var hbs = require('express-handlebars');
+
+
+
 
 
 var usersRouter = require('./routes/users');
@@ -12,12 +15,12 @@ var adminRouter = require('./routes/admin');
 
 var app = express();
 var session = require('express-session')  // session npm 
-var fileupload = require('express-fileupload')
+// var fileupload = require('express-fileupload')
 //var cache = require('cache-control');
 
 const nocache = require("nocache");
 var db = require('./config/connection')
- 
+
 
 
 // view engine setup
@@ -31,25 +34,34 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileupload())
-app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } })) // session use
+//app.use(fileupload())
+app.use(session({ resave: true, saveUninitialized: true, secret: "Key", cookie: { maxAge: 6000000 } })) // session use
 app.use(nocache());
-db.connect((err)=>{
-  if(err) console.log("connection error"+err);  
+db.connect((err) => {
+  if (err) console.log("connection error" + err);
   else console.log("data base connected");
 })
- 
+
+
+
+/********************** */
+
+
+
+
+//var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+/*********************** */
 
 app.use('/', usersRouter);
-app.use('/admin', adminRouter); 
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
-         
+
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

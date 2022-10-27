@@ -8,18 +8,32 @@ const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 
 
+/***********multer */
+const multer = require('multer')
+const multerStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/product-img");
+  },
+  filename: function (req, file, cb) {
+    // cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+const upload = multer({ storage: multerStorage });
+const uploadMultiple = upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
+/**********multer  */
+
+
+
 const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
     next();
     // rs
-    res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+    // res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
-
-
-
 /* GET users listing. */
 
 router.get('/', verifyAdmin, function (req, res, next) {
@@ -50,13 +64,13 @@ router.get('/view-users', verifyAdmin, (req, res, next) => {
   })
 })
 
-router.get('/block/:id', function (req, res) {
+router.get('/block/:id', verifyAdmin, function (req, res) {
   let userID = req.params.id
   userHelpers.blockUser(userID)
   res.redirect('/admin/view-users')
 })
 
-router.get('/unBlock/:id', function (req, res) {
+router.get('/unBlock/:id', verifyAdmin, function (req, res) {
   let userID = req.params.id
   userHelpers.unBlockUser(userID)
   res.redirect('/admin/view-users')
@@ -86,7 +100,6 @@ router.get('/add-category', verifyAdmin, (req, res, next) => {
 router.post('/add-category', verifyAdmin, (req, res, next) => {
   categoryHelpers.addCategory(req.body, (id) => {
     let image = req.files?.image
-    console.log(image);
     if (image)
       image.mv('./public/images/category-img/' + id + '.jpg', (err) => {
         if (!err) {
@@ -101,9 +114,9 @@ router.post('/add-category', verifyAdmin, (req, res, next) => {
 })
 
 router.get('/edit-category/:id', async (req, res) => {
-  let categoryId = req.params.id 
-  let categoryDetails = await categoryHelpers.getCategoryDetails(categoryId)    
-  res.render('admin/edit-category', {categoryDetails, layout: 'admin-layout' }) 
+  let categoryId = req.params.id
+  let categoryDetails = await categoryHelpers.getCategoryDetails(categoryId)
+  res.render('admin/edit-category', { categoryDetails, layout: 'admin-layout' })
 })
 
 router.post('/update-category/:id', (req, res) => {
@@ -118,11 +131,9 @@ router.post('/update-category/:id', (req, res) => {
   })
 })
 
-
 router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
   let categoryId = req.params.id
   categoryHelpers.deleteCategory(categoryId).then((response) => {
-    console.log(response);
     res.redirect('/admin/product-category')
   })
 })
@@ -132,48 +143,65 @@ router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
 
 //products----starts here<<<<<<<<<
 router.get('/view-products', verifyAdmin, (req, res, next) => {
-  productHelpers.getAllProducts().then((products)=>{
-    res.render('admin/view-products',{ layout: 'admin-layout',products })
+  productHelpers.getAllProducts().then((products) => {
+    res.render('admin/view-products', { layout: 'admin-layout', products })
   })
 })
 
 router.get('/add-product', verifyAdmin, (req, res, next) => {
   res.render('admin/add-product', { layout: 'admin-layout' })
-})///issues
-
-router.post('/add-product', verifyAdmin, (req, res, next) => {
-  productHelpers.addProduct(req.body,(id)=>{
-    res.redirect('/admin/view-products')
-  })
-  
 })
 
+router.post('/add-products', uploadMultiple, (req, res) => {
+  req.body.image1 = req.files.image1[0].filename
+  req.body.image2 = req.files.image2[0].filename
+  req.body.image3 = req.files.image3[0].filename
+  req.body.image4 = req.files.image4[0].filename
+  productHelpers.addProduct(req.body)
+  res.redirect('/admin/view-products')
 
-// router.get('/edit-product', verifyAdmin, (req, res, next) => {
-//   res.render('admin/edit-product', { layout: 'admin-layout' })
-// })///issues
+})
 
-
-router.get('/edit-product/:id', verifyAdmin,async (req, res, next) => {
+router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
-  let product = await productHelpers.getProductDetails(productId) 
-  console.log(product);
-  res.render('admin/edit-product', {  layout: 'admin-layout',product })
+  let product = await productHelpers.getProductDetails(productId)
+  res.render('admin/edit-product', { layout: 'admin-layout', product })
 })
 
-router.post('/update-product/:id', (req, res) => {
+router.post('/update-product/:id',  uploadMultiple, async (req, res) => {
+  if (req.files.image1 == null) {
+    Image1 = await productHelpers.fetchImage1(req.params.id)
+  } else {
+    Image1 = req.files.image1[0].filename
+  }
+  if (req.files.image2 == null) {
+    Image2 = await productHelpers.fetchImage2(req.params.id)
+  } else {
+    Image2 = req.files.image2[0].filename   
+  }
+  if (req.files.image3 == null) {
+    Image3 = await productHelpers.fetchImage3(req.params.id)
+  } else {
+    Image3 = req.files.image3[0].filename
+  }
+  if (req.files.image4 == null) {
+    Image4 = await productHelpers.fetchImage4(req.params.id)
+  } else {
+    Image4 = req.files.image4[0].filename
+  }
+  req.body.image1 = Image1
+  req.body.image2 = Image2
+  req.body.image3 = Image3
+  req.body.image4 = Image4
+
   productHelpers.updateProduct(req.params.id, req.body).then(() => {
     res.redirect('/admin/view-products')
-    //to update img
-    if (req.files?.image) {
-      let image = req.files.image
-      image.mv('./public/product-images/' + productId + '.jpg')
-    }
   })
 })
 
+
 router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
-  productHelpers.deleteProduct(req.params.id).then((response)=>{
+  productHelpers.deleteProduct(req.params.id).then((response) => {
     res.redirect('/admin/view-products',)
   })
 })
