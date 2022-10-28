@@ -5,8 +5,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
-                <li class="breadcrumb-item">Product Management</li>
-                <li class="breadcrumb-item active">View Stock</li>
+                <li class="breadcrumb-item"><a href="/admin/view-products">Product Management</a></li>
+                
             </ol>
             <a href="/admin/add-product" type="button" class="btn btn-success "> <i class="bi bi-check-circle"></i> Add
                 New</a>
@@ -19,6 +19,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Brand</th>
+                <th scope="col">Stock</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -27,8 +28,9 @@
             <tr>
                 <th scope="row">{{@index}}</th>
                 <td>{{this.title}}</td>
-                <td>{{this.brand}}</td>
                 <td>{{this.category}}</td>
+                <td>{{this.brand}}</td>
+                <td>{{this.stock}}</td>
                 <td><a href="/admin/edit-product/{{this._id}}" class="btn btn-warning btn-sm "> <i
                             class="bi bi-pencil-square"></i></a>
                     <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger btn-sm"> <i

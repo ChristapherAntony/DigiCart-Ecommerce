@@ -32,12 +32,12 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected value="{{product.category}}">{{product.category}}</option>
-                                        <option value="Mobile">Mobile</option>
-                                        <option value="Laptop">Laptop</option>
-                                        <option value="3">Audio</option>
-                                        <option value="4">Televsion</option>
+                                    <select name="category" value="{{product.category}}" class="form-select" id="floatingSelect" aria-label="State">
+                                        {{!-- <option selected value="{{product.category}}">{{product.category}}</option> --}}
+                                        {{#each category}}
+                                        <option value="{{this.category}}">{{this.category}}</option>
+                                        {{/each}}
+
                                     </select>
                                     <label for="floatingSelect">Category</label>
                                 </div>
@@ -119,8 +119,8 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="stock" value="{{product.stock}}" type="text" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                    <input name="stock" value="{{product.stock}}" type="text" class="form-control"
+                                        id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Quantity</label>
                                 </div>
                             </div>

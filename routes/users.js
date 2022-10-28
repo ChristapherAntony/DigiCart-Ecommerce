@@ -1,18 +1,46 @@
 var express = require('express');
 var router = express.Router();
 const userHelpers=require('../helpers/user-helpers')
+const productHelpers = require('../helpers/product-helpers');
+const categoryHelpers = require('../helpers/category-helpers');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('users/user-home');
+  categoryHelpers.getAllCategory().then((category) => {
+    //productHelpers.getAllProducts().then(())
+    res.render('users/user-home',  {category} )
+  })
 });
 
 router.get('/viewAll', function(req, res, next) {
-  res.render('users/user-viewAll');
+  productHelpers.getAllProducts().then((products) => {
+    categoryHelpers.getAllCategory().then((category) => {
+      res.render('users/user-viewAll', { products,category })
+    })
+  })
+}); 
+router.get('/viewAll/:category', function(req, res, next) {
+  let category=req.params.category
+  productHelpers.getCategoryProducts(category).then((products) => {
+    categoryHelpers.getAllCategory().then((category) => {
+      res.render('users/user-viewAll', { products,category })
+    })
+  })
 });
 
-router.get('/details', function(req, res, next) {
-  res.render('users/product-details');
+router.get('/details/:id', (req, res, next)=> {
+  let productId = req.params.id   //to get the clicked item id
+  productHelpers.getProductDetails(productId).then((product)=>{
+    let category=product.category
+    console.log(category);
+    productHelpers.getCategoryProducts(category).then((products) => {
+      
+      res.render('users/product-details',{product,products});
+
+    })
+    // res.render('users/product-details',{product});
+  })
+  
 });
 
 router.get('/cart', (req, res, next)=> {

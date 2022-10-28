@@ -182,7 +182,10 @@ router.post('/add-products', uploadMultiple, (req, res) => {
 router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
   let product = await productHelpers.getProductDetails(productId)
-  res.render('admin/edit-product', { layout: 'admin-layout', product })
+  categoryHelpers.getAllCategory().then((category) => {
+    res.render('admin/edit-product', {category, layout: 'admin-layout', product })
+  })
+  
 })
 
 router.post('/update-product/:id', uploadMultiple, async (req, res) => {

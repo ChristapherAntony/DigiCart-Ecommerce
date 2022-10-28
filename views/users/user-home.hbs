@@ -48,98 +48,30 @@
     <div class="container">
         <div class="section-title-btn-wrap mb-25">
             <div class="section-title-8">
-                <h2>Popular Categories</h2>
+                <h2>Shop by Categories</h2>
             </div>
             <div class="btn-style-9">
-                <a href="shop.html">All Product</a>
+                <a href="#">All Product</a>
             </div>
         </div>
         <div class="section-wrap-1">
             <div class="product-categories-slider-1 nav-style-3">
+                {{#each category}}
+                
                 <div class="product-plr-1">
                     <div class="single-product-wrap">
                         <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="/assets/images/product/product-50.png" alt="">
+                            <a href="#">
+                              <img src="/images/category-img/{{this.image}}" alt="">  
                             </a>
                         </div>
                         <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">Fashion</a></h5>
+                            <h5 class="font-width-dec"><a href="#">{{this.category}}</a></h5>
                         </div>
                     </div>
                 </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="assets/images/product/product-51.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">Electronic</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="/assets/images/product/product-52.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">computer</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="assets/images/product/product-53.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">beauty</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="assets/images/product/product-54.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">sport</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="assets/images/product/product-55.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">baby</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-border-transparent mb-15">
-                            <a href="shop.html">
-                                <img src="assets/images/product/product-52.png" alt="">
-                            </a>
-                        </div>
-                        <div class="product-content-categories-2 product-content-orange text-center">
-                            <h5 class="font-width-dec"><a href="shop.html">computer</a></h5>
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
+
             </div>
         </div>
     </div>
@@ -193,7 +125,7 @@
                             <h2>Activities Boys <br>with HelloKid</h2>
                             <p>Discover collection from Hello Kid brand</p>
                             <div class="btn-style-4">
-                                <a href="product-details.html">explore <i class="icon-arrow-right"></i></a>
+                                <a href="product-details.html">explore <i class="bi bi-chevron-compact-right"></i></i></a>
                             </div>
                         </div>
                     </div>
