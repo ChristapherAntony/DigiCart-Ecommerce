@@ -28,17 +28,39 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <form action="/signUp" method="post">
-                                        <input type="text" name="UserName" placeholder="Name">
-                                        <input name="UserEmail" placeholder="Email" type="Email">
-                                        <input type="text" name="MobileNo" placeholder="Mobile Number">
-                                        <input type="password" name="Password" placeholder="Password">
-                                        <input type="password" placeholder="Conform Password">
+                                    
+                                        
+                                        <span id="name-error" class="disappear"></span>
+                                        <input type="text"  name="UserName" placeholder="Name" id="name" onkeyup="validateName()">
+
+
+                                        
+                                        <span id="email-error" class="disappear"></span>
+                                        <input name="UserEmail" placeholder="Email" type="Email" id="email"  onkeyup=" validateEmail()">
+
+                                        <span id="phone-error" class="disappear"></span>
+                                        <input type="text" name="MobileNo" placeholder="Mobile Number" id="phone"  onkeyup=" validatePhone()">
+                                        
+
+                                        <span id = "pw1-error" class="disappear"></span>
+                                        <input type="password" name="Password" placeholder="Password" id="password1" onkeyup="validatePassword()" >
+                                       
+
+                                        
+                                        <span id = "confirm-error" class="disappear"></span>
+                                        <input type="password" placeholder="Conform Password" id="password2 " onkeyup="validateConfirmPwd()">
+                                        
+
+                                        <input type="checkbox" onclick="myFunction()">Show Password
+
                                         <div class="button-box">
-                                            <button type="submit">Register</button>
+                                            <button onclick="return validateForm()" type="submit">Register</button>
 
                                             {{#if emailError}}
-                                            <span class="text-danger pl-5 disappear" >{{'emailError'}}</span>
+                                            <span class="text-danger pl-5 disappear1" >{{'emailError'}}</span>
                                             {{/if}}
+                                            <br>
+                                            <br><span id="submit-error"></span>
                                             
                                         </div>
                                     </form>

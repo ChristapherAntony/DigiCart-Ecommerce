@@ -28,16 +28,19 @@
                                         <label for="yourUsername" class="form-label">Username</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="text" name="UserName" class="form-control" id="yourUsername" value="admin"
-                                                required>
+                                            <input type="text" name="UserName" class="form-control" id="yourUsername"
+                                                value="admin" required>
                                             <div class="invalid-feedback">Please enter your username.</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="yourPassword" class="form-label"  >Password</label>
-                                        <input type="password" name="Password" class="form-control" id="yourPassword" value="123"
-                                            required>
+                                        <label for="yourPassword" class="form-label">Password</label>
+
+                                        <input type="password" name="Password" class="form-control" id="yourPassword"
+                                            >
+                                        <input type="checkbox" onclick="myFunction3()">Show Password
+
                                         <div class="invalid-feedback">Please enter your password!</div>
                                         {{!-- {{#if emailError}}
                                         <span class="text-danger pl-5 disappear">{{'emailError'}}</span>

@@ -25,7 +25,7 @@ router.get('/viewAll/:category', function(req, res, next) {
     categoryHelpers.getAllCategory().then((category) => {
       res.render('users/user-viewAll', { products,category })
     })
-  })
+  }) 
 });
 
 router.get('/details/:id', (req, res, next)=> {

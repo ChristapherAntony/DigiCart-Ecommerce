@@ -1,0 +1,15 @@
+/* for top bar home/ shop   etc*/
+.menuBarTop{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#name-error, #email-error,#phone-error, #password-error, #pw1-error,#confirm-error,#submit-error{
+    color: rgb(255,47,47);
+}
+
+form i {
+    margin-left: 500px;
+   
+    cursor: pointer;
+}

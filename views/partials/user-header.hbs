@@ -13,10 +13,9 @@
                             <div class="categori-style-1">
                                 <select class="nice-select nice-select-style-1">
                                     <option>All Categories </option>
-                                    <option>Mobiles</option>
-                                    <option>Laptops</option>
-                                    <option>Audio</option>
-                                    <option>TV</option>
+                                    {{#each category }}
+                                    <option>{{this.category}}</option>
+                                    {{/each}}
                                 </select>
                             </div>
                             <div class="search-wrap-3">
@@ -39,8 +38,7 @@
                             <div
                                 class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                                 <a class="cart-active" href="#">
-                                    <i class="bi bi-cart3 fa-sm"></i><span
-                                        class="pro-count black">02</span>
+                                    <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black">02</span>
                                     <span class="cart-amount white">$2,435.30</span>
                                 </a>
                             </div>
@@ -62,6 +60,17 @@
                                             <li><a href="#">menu 1</a></li>
                                         </ul> --}}
                                     </li>
+
+                                    <li><a href="/viewAll">SHOP <i class="bi bi-chevron-down"></i> </a>
+                                        <ul class="sub-menu-style">
+                                            <li>
+                                                <a class="dropdown-title text-bold font-weight-bold" href="/viewAll">Shop All</a>
+                                            </li>
+                                            {{#each category}}
+                                            <li> <a href="/viewAll/{{this.category}}">{{this.category}}</a></li>
+                                            {{/each}}
+                                        </ul>
+                                    </li>
                                     <li><a href="/viewAll">All Products </a>
                                     </li>
                                     <li><a href="/viewAll">All Products </a>
@@ -70,50 +79,7 @@
                                     </li>
                                     <li><a href="/account">User Account </a>
                                     </li>
-                                    {{!-- <li><a href="/viewAll">SHOP <i class="icon-arrow-down"></i> </a>
-                                        <ul class="mega-menu-style mega-menu-mrg-1">
-                                            <li>
-                                                <ul>
-                                                    <li>
-                                                        <a class="dropdown-title" href="#">Shop Layout</a>
-                                                        <ul>
-                                                            <li><a href="shop.html">standard style</a></li>
-                                                            <li><a href="shop-list.html">shop list style</a></li>
-                                                            <li><a href="shop-fullwide.html">shop fullwide</a></li>
-                                                            <li><a href="shop-no-sidebar.html">grid no sidebar</a></li>
-                                                            <li><a href="shop-list-no-sidebar.html">list no sidebar</a>
-                                                            </li>
-                                                            <li><a href="shop-right-sidebar.html">shop right sidebar</a>
-                                                            </li>
-                                                            <li><a href="store-location.html">store location</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-title" href="#">Products Layout</a>
-                                                        <ul>
-                                                            <li><a href="product-details.html">tab style 1</a></li>
-                                                            <li><a href="product-details-2.html">tab style 2</a></li>
-                                                            <li><a href="product-details-sticky.html">sticky style</a>
-                                                            </li>
-                                                            <li><a href="product-details-gallery.html">gallery style
-                                                                </a></li>
-                                                            <li><a href="product-details-affiliate.html">affiliate
-                                                                    style</a></li>
-                                                            <li><a href="product-details-group.html">group style</a>
-                                                            </li>
-                                                            <li><a href="product-details-fixed-img.html">fixed image
-                                                                    style </a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a href="shop.html"><img
-                                                                src="assets/images/banner/banner-12.png" alt=""></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">PAGES <i class="icon-arrow-down"></i> </a>
+                                    {{!-- <li><a href="#">PAGES <i class="icon-arrow-down"></i> </a>
                                         <ul class="sub-menu-style">
                                             <li><a href="about-us.html">about us </a></li>
                                             <li><a href="cart.html">cart page</a></li>
