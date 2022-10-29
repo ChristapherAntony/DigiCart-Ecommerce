@@ -3,6 +3,8 @@ var router = express.Router();
 const userHelpers=require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
+const otpHelpers=require("../helpers/otp-helpers")
+const { response } = require('express');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -54,9 +56,55 @@ router.get('/wishlist', (req, res, next)=> {
 router.get('/login-register', (req, res, next)=> {
   res.render('users/login-signUp');
 });
-router.get('/signUp', (req, res, next)=> {
-  res.render('users/signUp');
+router.get('/otpLogin', (req, res, next)=> {
+  res.render('users/otpLogin',{mobileError:req.session.mobileError});
+  req.session.mobileError=null;
 });
+router.get('/otpVerify',(req,res,next)=>{
+
+  res.render('users/enterOtp',{otpError:req.session.otpError})
+  req.session.otpError=null;
+
+});
+
+
+
+
+router.post('/enterOtp',(req,res,next)=>{
+  userHelpers.verifyMobile(req.body.mobile).then((response)=>{
+    mobile=`+91${req.body.mobile}`
+    console.log(mobile);
+    if(response.status){
+      otpHelpers.sendOTP(mobile).then((data)=>{
+        res.render('users/enterOtp')
+      })
+    }else{
+      req.session.mobileError="Please Enter a Registered Mobile Number! ";
+      res.redirect('/otpLogin');
+      
+    }
+  })
+})
+
+
+
+router.post('/verifyOtp', (req, res, next)=> {
+  otpHelpers.verifyOTP(req.body.otp).then((response)=>{
+    if(response.status){
+      res.redirect('/');
+    } 
+    else{
+      req.session.otpError="Invalid OTP";
+      res.redirect('/otpVerify');
+    }
+  })
+  
+});
+
+router.get('/signUp', (req, res, next)=> {
+  res.render('users/signUp')
+});
+
 
 router.post('/signUp',(req,res)=>{
   console.log(req.body);

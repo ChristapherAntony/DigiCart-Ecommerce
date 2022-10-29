@@ -2,7 +2,7 @@ const db = require('../config/connection')
 const collection = require('../config/collections')
 var bcrypt = require('bcrypt')
 const { response } = require('express')
-var objectId=require('mongodb').ObjectId
+var objectId = require('mongodb').ObjectId
 
 
 module.exports = {
@@ -21,13 +21,25 @@ module.exports = {
             }
         })
     },
+    verifyMobile: (mobileNo) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mobileNo })
+            if (user) {
+                resolve({ status: true })
+            }
+            else {
+                resolve({ status: false })
+            }
+        })
+
+    },
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
             let loginStatus = false;
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.userID }, { MobileNo: userData.userID }] })
             if (user) {
-                if(user.block)resolve({active: false })
+                if (user.block) resolve({ active: false })
                 bcrypt.compare(userData.Password, user.Password).then((status) => {    // if user true the check pw with bcrypt
                     if (status) {
                         response.user = user;
@@ -42,27 +54,27 @@ module.exports = {
             }
         })
     },
-    getAllUsers:()=>{
-        return new Promise(async(resolve,reject)=>{
+    getAllUsers: () => {
+        return new Promise(async (resolve, reject) => {
             let users = await db.get().collection(collection.USER_COLLECTION).find().toArray()
             resolve(users)
         })
     },
-    blockUser:(userID)=>{
-        return new Promise(async(resolve,reject)=>{
-            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:true}})  
+    blockUser: (userID) => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, { $set: { block: true } })
         })
-        
+
     },
-    unBlockUser:(userID)=>{
-        return new Promise(async(resolve,reject)=>{
-            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},{$set:{block:false}})       
+    unBlockUser: (userID) => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, { $set: { block: false } })
         })
-        
+
     },
     adminLogin: (adminID) => {
         return new Promise(async (resolve, reject) => {
-            
+
             let response = {}
             let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName }) // check email
             if (user) {
