@@ -39,9 +39,9 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-    //next();
+    next();
     
-    res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+   //  res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 /* GET users listing. */
