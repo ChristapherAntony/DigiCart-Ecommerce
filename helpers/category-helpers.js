@@ -15,6 +15,7 @@ module.exports = {
     getAllCategory: () => {
         return new Promise(async (resolve, reject) => {   //getting data should write in await 
             let categories = await db.get().collection(collections.CATEGORY_COLLECTION).find().toArray()  // toArray- convert into an array
+            console.log(categories);
             resolve(categories)
         })
     },

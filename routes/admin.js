@@ -40,8 +40,8 @@ const verifyAdmin = (req, res, next) => {
     next();
   } else {
     next();
-    
-   //  res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+
+    //  res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 /* GET users listing. */
@@ -164,7 +164,7 @@ router.get('/view-products', verifyAdmin, (req, res, next) => {
 
 router.get('/add-product', verifyAdmin, (req, res, next) => {
   categoryHelpers.getAllCategory().then((category) => {
-    res.render('admin/add-product', { layout: 'admin-layout',category })
+    res.render('admin/add-product', { layout: 'admin-layout', category })
   })
 
 })
@@ -182,10 +182,15 @@ router.post('/add-products', uploadMultiple, (req, res) => {
 router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
   let product = await productHelpers.getProductDetails(productId)
+  let productCategory = await productHelpers.getProductCategory(product.category)
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+  console.log(productCategory);
+
+  productCategoryName = productCategory.category
   categoryHelpers.getAllCategory().then((category) => {
-    res.render('admin/edit-product', {category, layout: 'admin-layout', product })
+    res.render('admin/edit-product', { category, layout: 'admin-layout', product, productCategoryName })
   })
-  
+
 })
 
 router.post('/update-product/:id', uploadMultiple, async (req, res) => {

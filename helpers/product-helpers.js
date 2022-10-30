@@ -2,6 +2,7 @@ const db = require('../config/connection')
 //const collection = require('../config/collections')
 const { Collection } = require('mongodb')
 const collections = require('../config/collections')
+const { response } = require('express')
 
 var objectId = require('mongodb').ObjectId
 
@@ -31,16 +32,27 @@ module.exports = {
             })
         })
     },
-    getCategoryProducts:(category)=>{
+    getCategoryProducts:(categoryId)=>{
+        
+
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: category }).toArray()
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category:categoryId}).toArray()
+            //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
+           //console.log(categoryTitle);
+           console.log(products);
+           //response.categoryTitle=categoryTitle;
+           response.products=products;
             resolve(products)
         })
     },
-
-
-
-
+    getProductCategory:(productCategoryId)=>{
+        console.log(productCategoryId);
+        return new Promise(async(resolve,reject)=>{
+            let categoryName=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({_id: objectId(productCategoryId)})
+            console.log(categoryName.category);
+           resolve(categoryName)
+        })
+    },
     updateProduct: (productId, productDetails) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)

@@ -17,14 +17,24 @@ router.get('/', function (req, res, next) {
 router.get('/viewAll', function (req, res, next) {
   productHelpers.getAllProducts().then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
+      
       res.render('users/user-viewAll', { products, category })
     })
   })
 });
-router.get('/viewAll/:category', function (req, res, next) {
-  let category = req.params.category
-  productHelpers.getCategoryProducts(category).then((products) => {
+router.get('/viewAll/:id', function (req, res, next) {
+  console.log(req.params);
+  let categoryId = req.params.id
+ 
+  console.log(categoryId)
+  console.log("+++++++++++++++++++++++++++++++++");
+  productHelpers.getCategoryProducts(categoryId).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
+      
+      console.log("++++++++++++++++last before render");
+      console.log(products);
+   
+
       res.render('users/user-viewAll', { products, category })
     })
   })
@@ -32,15 +42,25 @@ router.get('/viewAll/:category', function (req, res, next) {
 
 router.get('/details/:id', (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
+  //let productCategory = await productHelpers.getProductCategory(product.category)
   productHelpers.getProductDetails(productId).then((product) => {
     let category = product.category
+    console.log("****#############################################");
     console.log(category);
-    productHelpers.getCategoryProducts(category).then((products) => {
+    productHelpers.getProductCategory(category).then((categoryName)=>{
+      productHelpers.getCategoryProducts(category).then((categoryTitle) => {
+        console.log("************the whole data sending");
+        console.log(categoryTitle.category);
+  
+        res.render('users/product-details', { product ,categoryTitle,categoryName});
+  
+      })
+      // res.render('users/product-details',{product});
 
-      res.render('users/product-details', { product, products });
+
 
     })
-    // res.render('users/product-details',{product});
+
   })
 
 });

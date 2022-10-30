@@ -32,10 +32,18 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select name="category" value="{{product.category}}" class="form-select" id="floatingSelect" aria-label="State">
-                                        {{!-- <option selected value="{{product.category}}">{{product.category}}</option> --}}
+                                    <select name="category"  class="form-select" id="floatingSelect" aria-label="State">
+                                       
+                                        {{!-- <option selected value="{{product._id}}">{{productCategoryName}}</option>
                                         {{#each category}}
-                                        <option value="{{this.category}}">{{this.category}}</option>
+                                        <option value="{{this._id}}">{{categoryName.category}}</option>
+                                        {{/each}}
+ --}}
+
+
+                                        <option selected value="{{product._id}}">{{productCategoryName}}</option>
+                                        {{#each category}}
+                                        <option value="{{this._id}}">{{this.category}}</option>
                                         {{/each}}
 
                                     </select>
