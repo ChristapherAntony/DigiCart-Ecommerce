@@ -1,53 +1,29 @@
-{{!-- <div class="breadcrumb-area bg-gray">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <ul>
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                <li class="active">login - register </li>
-            </ul>
-        </div>
-    </div>
-</div> --}}
-<div class="login-register-area pt-20 pb-120">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                <div class="login-register-wrapper">
-                    <div class="login-register-tab-list nav">
-                        <a class="active" data-toggle="tab" href="#lg1">
-                            <h4>OTP Verification</h4>
-                        </a>
 
-                    </div>
-                    <div class="tab-content">
-                        <div id="lg1" class="tab-pane active">
-                            <div class="login-form-container">
-                                <div class="login-register-form">
-                                    <form action="/verifyOtp" method="post">
-                                        <label for="">Please Enter the OTP here to Login </label>
-                                        <input type="text" name="otp" placeholder="Enter 6 Digit OTP">
-
-
-                                        {{#if otpError}}
-                                        <span class="text-danger font-weight-bold disappear">{{'otpError'}}</span>
-                                        {{/if}}
-                                        <div class="button-box">
-                                            <div class="login-toggle-btn">
-                                                <button type="submit">Send OTP</button>
-                                                <a href="/login-register">Login With Password</a>
-                                            </div>
-
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+<div class="container  d-flex justify-content-center align-items-center" style="height:600px ;">
+    <div class="position-relative">
+        <div class="card p-2 text-center">
+            <h6>Please enter the one time password <br> to verify your account</h6>
+            <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
+            <form action="/verifyOtp" method="post">
+                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                    <input class="m-2 text-center form-control rounded" name="one" type="number" id="first" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" name="two" type="number" id="second" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" name="three" type="number" id="third" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" name="four" type="number" id="fourth" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" name="five" type="number" id="fifth" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" name="six" type="number" id="sixth" maxlength="1" />
                 </div>
-            </div>
+                <div class="mt-4"> <button type="submit" class="btn btn-danger px-4 validate">Validate</button> </div>
+            </form>
+
+        </div>
+        <div class="card-2">
+            <div class="content d-flex justify-content-center align-items-center"> <span>Didn't get the code</span> <a
+                    href="/otpLogin" class="text-decoration-none ms-3">Resend</a> </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -84,12 +84,17 @@ router.post('/enterOtp',(req,res,next)=>{
       
     }
   })
+  ////////////////////////////
+ // res.render('users/enterOtp') bypass otp
+
 })
 
 
 
 router.post('/verifyOtp', (req, res, next)=> {
-  otpHelpers.verifyOTP(req.body.otp).then((response)=>{
+  let number=(req.body.one+req.body.two+req.body.three+req.body.four+req.body.five+req.body.six)
+  OTP=(+number) // to convert string type to number format
+  otpHelpers.verifyOTP(OTP).then((response)=>{
     if(response.status){
       res.redirect('/');
     } 
@@ -98,6 +103,7 @@ router.post('/verifyOtp', (req, res, next)=> {
       res.redirect('/otpVerify');
     }
   })
+ //   res.redirect('/'); //for with out otp
   
 });
 
@@ -112,7 +118,7 @@ router.post('/signUp',(req,res)=>{
     if(response.status==false){                 
       res.render('users/signUp',{'emailError':"Email / Mobile Number Already Exists"})
     }else{                                 
-      res.redirect('/login-register')
+      res.redirect('/login-register')  
     }
   })
 })

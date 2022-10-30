@@ -1,15 +1,4 @@
-{{!-- <div class="breadcrumb-area bg-gray">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <ul>
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                <li class="active">login - register </li>
-            </ul>
-        </div>
-    </div>
-</div> --}}
+
 <div class="login-register-area pt-20 pb-120">
     <div class="container">
         <div class="row">
@@ -23,12 +12,11 @@
                     </div>
                     <div class="tab-content">
                         <div id="lg1" class="tab-pane active">
-                            <div class="login-form-container">
+                            <div class="login-form-container"> 
                                 <div class="login-register-form">
                                     <form action="/enterOtp" method="post">
-                                        <input type="text" name="mobile" placeholder="Enter Registered Mobile Number">
-
-                                        
+                                    <label class="font-weight-light" for="">Please Enter Your Registered mobile number to continue</label>
+                                        <input type="text" name="mobile" placeholder="Enter Mobile Number">
                                             {{#if mobileError}}
                                             <span class="text-danger  disappear1 " >{{'mobileError'}}</span>
                                             {{/if}}
