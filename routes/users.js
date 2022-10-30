@@ -1,149 +1,165 @@
 var express = require('express');
 var router = express.Router();
-const userHelpers=require('../helpers/user-helpers')
+const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
-const otpHelpers=require("../helpers/otp-helpers")
+const otpHelpers = require("../helpers/otp-helpers")
 const { response } = require('express');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   categoryHelpers.getAllCategory().then((category) => {
     //productHelpers.getAllProducts().then(())
-    res.render('users/user-home',  {category} )
+    res.render('users/user-home', { category })
   })
 });
 
-router.get('/viewAll', function(req, res, next) {
+router.get('/viewAll', function (req, res, next) {
   productHelpers.getAllProducts().then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products,category })
+      res.render('users/user-viewAll', { products, category })
     })
   })
-}); 
-router.get('/viewAll/:category', function(req, res, next) {
-  let category=req.params.category
+});
+router.get('/viewAll/:category', function (req, res, next) {
+  let category = req.params.category
   productHelpers.getCategoryProducts(category).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products,category })
+      res.render('users/user-viewAll', { products, category })
     })
-  }) 
+  })
 });
 
-router.get('/details/:id', (req, res, next)=> {
+router.get('/details/:id', (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
-  productHelpers.getProductDetails(productId).then((product)=>{
-    let category=product.category
+  productHelpers.getProductDetails(productId).then((product) => {
+    let category = product.category
     console.log(category);
     productHelpers.getCategoryProducts(category).then((products) => {
-      
-      res.render('users/product-details',{product,products});
+
+      res.render('users/product-details', { product, products });
 
     })
     // res.render('users/product-details',{product});
   })
-  
+
 });
 
-router.get('/cart', (req, res, next)=> {
+router.get('/cart', (req, res, next) => {
   res.render('users/cart');
 });
 
-router.get('/wishlist', (req, res, next)=> {
+router.get('/wishlist', (req, res, next) => {
   res.render('users/wishlist');
 });
 
-router.get('/login-register', (req, res, next)=> {
+router.get('/login-register', (req, res, next) => {
   res.render('users/login-signUp');
 });
-router.get('/otpLogin', (req, res, next)=> {
-  res.render('users/otpLogin',{mobileError:req.session.mobileError});
-  req.session.mobileError=null;
+router.get('/otpLogin', (req, res, next) => {
+  res.render('users/otpLogin', { mobileError: req.session.mobileError });
+  req.session.mobileError = null;
 });
-router.get('/otpVerify',(req,res,next)=>{
+router.get('/otpVerify', (req, res, next) => {
 
-  res.render('users/enterOtp',{otpError:req.session.otpError})
-  req.session.otpError=null;
+  res.render('users/enterOtp', { otpError: req.session.otpError })
+  req.session.otpError = null;
 
 });
+// router.post('/enterOtp',(req,res,next)=>{
+//   userHelpers.verifyMobile(req.body.mobile).then((response)=>{
+//     mobile=`+91${req.body.mobile}`
+//     console.log(mobile);
+//     if(response.status){
+//       otpHelpers.sendOTP(mobile).then((data)=>{
+//         res.render('users/enterOtp')
+//       })
+//     }else{
+//       req.session.mobileError="Please Enter a Registered Mobile Number! ";
+//       res.redirect('/otpLogin');
 
+//     }
+//   })
+//   ////////////////////////////
+//  // res.render('users/enterOtp') bypass otp
 
-
-
-router.post('/enterOtp',(req,res,next)=>{
-  userHelpers.verifyMobile(req.body.mobile).then((response)=>{
-    mobile=`+91${req.body.mobile}`
-    console.log(mobile);
-    if(response.status){
-      otpHelpers.sendOTP(mobile).then((data)=>{
+// })
+router.post('/enterOtp', (req, res, next) => {
+  userHelpers.verifyMobile(req.body.mobile).then((response) => {
+    if (response.status == false) {
+      req.session.mobileError = "Please Enter a Registered Mobile Number! ";
+      res.redirect('/otpLogin');
+    } else if (response.active == false) {
+      req.session.mobileError = "Your account is Blocked!";
+      res.redirect('/otpLogin');
+    } else {
+      mobile = `+91${req.body.mobile}`
+      console.log(mobile);
+      otpHelpers.sendOTP(mobile).then((data) => {
         res.render('users/enterOtp')
       })
-    }else{
-      req.session.mobileError="Please Enter a Registered Mobile Number! ";
-      res.redirect('/otpLogin');
-      
     }
   })
   ////////////////////////////
- // res.render('users/enterOtp') bypass otp
+  // res.render('users/enterOtp') bypass otp
 
 })
 
 
 
-router.post('/verifyOtp', (req, res, next)=> {
-  let number=(req.body.one+req.body.two+req.body.three+req.body.four+req.body.five+req.body.six)
-  OTP=(+number) // to convert string type to number format
-  otpHelpers.verifyOTP(OTP).then((response)=>{
-    if(response.status){
+router.post('/verifyOtp', (req, res, next) => {
+  let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
+  OTP = (+number) // to convert string type to number format
+  otpHelpers.verifyOTP(OTP).then((response) => {
+    if (response.status) {
       res.redirect('/');
-    } 
-    else{
-      req.session.otpError="Invalid OTP";
+    }
+    else {
+      req.session.otpError = "Invalid OTP";
       res.redirect('/otpVerify');
     }
   })
- //   res.redirect('/'); //for with out otp
-  
+  //   res.redirect('/'); //for with out otp
+
 });
 
-router.get('/signUp', (req, res, next)=> {
+router.get('/signUp', (req, res, next) => {
   res.render('users/signUp')
 });
 
 
-router.post('/signUp',(req,res)=>{
+router.post('/signUp', (req, res) => {
   console.log(req.body);
-  userHelpers.doSignUP(req.body).then((response)=>{
-    if(response.status==false){                 
-      res.render('users/signUp',{'emailError':"Email / Mobile Number Already Exists"})
-    }else{                                 
-      res.redirect('/login-register')  
+  userHelpers.doSignUP(req.body).then((response) => {
+    if (response.status == false) {
+      res.render('users/signUp', { 'emailError': "Email / Mobile Number Already Exists" })
+    } else {
+      res.redirect('/login-register')
     }
   })
 })
 
-router.post('/logIn',(req,res)=>{
+router.post('/logIn', (req, res) => {
 
-  userHelpers.doLogin(req.body).then((response)=>{
-    if(response.status==false){     
-      res.render('users/login-signUp',{'emailError':"Invalid Credentials! "})
-    }else if(response.active==false){
-      res.render('users/login-signUp',{'emailError':"Your Account is Blocked!"})
+  userHelpers.doLogin(req.body).then((response) => {
+    if (response.status == false) {
+      res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
+    } else if (response.active == false) {
+      res.render('users/login-signUp', { 'emailError': "Your Account is Blocked!" })
     }
-    else{                               
+    else {
       res.redirect('/')
     }
-  }) 
+  })
 })
 
 
 
 
-router.get('/account', (req, res, next)=> {
+router.get('/account', (req, res, next) => {
   res.render('users/account');
-}); 
- 
+});
+
 
 
 

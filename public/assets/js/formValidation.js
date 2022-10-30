@@ -7,7 +7,7 @@ $.fn.delayedHide = function (delay) {
     return that;
 }
 
-//$(".disappear").delayedHide(); 
+//(".disappear").delayedHide(); 
 $(".disappear1").delayedHide();
 
 // form validation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,8 +24,6 @@ var submitError = document.getElementById('submit-error')
 // function for validating the input field  
 function validateName() {
     var name = document.getElementById('name').value
-
-
     if (name.length == 0) {
         nameError.innerHTML = 'Name required'
         return false
@@ -40,25 +38,23 @@ function validateName() {
     return true
 }
 
-
 function validateEmail() {
     var email = document.getElementById("email").value;
 
     if (email.length == 0) {
-        emailError.innerHTML = "Email is required";
+        emailError.innerHTML = "Email is required"
         return false;
     }
     if (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-        emailError.innerHTML = "Email is invalid";
+        emailError.innerHTML = "Email is invalid"
         return false
     }
-    emailError.innerHTML = '';
-    return true;
+    emailError.innerHTML = ''
+    return true
 
 }
 function validatePhone() {
-    var phone = document.getElementById("phone").value;
-
+    var phone = document.getElementById("phone").value
     if (phone.length == 0) {
         phoneError.innerHTML = "Mobile Number is required";
         return false;
@@ -67,13 +63,9 @@ function validatePhone() {
         phoneError.innerHTML = "Mobile Number is invalid";
         return false
     }
-    phoneError.innerHTML = '';
-    return true;
-
+    phoneError.innerHTML = ''
+    return true
 }
-
-
-
 function validatePassword() {
     var pw1 = document.getElementById("password1").value;
 
@@ -99,8 +91,7 @@ function validateConfirmPwd() {
         passwordConfirmError.innerHTML = "Password did not match!";
         return false;
     }
-
-    passwordConfirmError.innerHTML = '';
+    passwordConfirmError.innerHTML = ''
     return true;
 }
 
@@ -108,11 +99,11 @@ function validateForm() {
     if (!validateConfirmPwd() || !validateName() || !validateEmail() || !validateSubject() || !validateMessage() || !validatePassword() || !validatePhone()) {
 
         submitError.innerHTML = 'Please fill the form!'
-        submitError.style.display = 'block';
-        setTimeout(function () { submitError.style.display = 'none'; }, 3000)
-        return false;
+       submitError.style.display = 'block';
+       setTimeout(function () { submitError.style.display = 'none'; }, 3000);
+        return false
     }
-    return true;
+    return true
 }
 
 /*888888888*/
@@ -156,7 +147,7 @@ function myFunction() {
     } else {
         y.type = "password";
     }
-}
+};
 function myFunction2() {
     var x = document.getElementById("pw");
     if (x.type === "password") {
@@ -164,7 +155,7 @@ function myFunction2() {
     } else {
         x.type = "password";
     }
-}
+};
 function myFunction3() {
     var a = document.getElementById("yourPassword");
     if (a.type === "password") {
@@ -172,7 +163,7 @@ function myFunction3() {
     } else {
         a.type = "password";
     }
-}
+};
 
 
 

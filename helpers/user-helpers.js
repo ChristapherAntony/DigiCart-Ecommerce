@@ -25,6 +25,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mobileNo })
             if (user) {
+                if (user.block) resolve({ active: false })
                 resolve({ status: true })
             }
             else {
