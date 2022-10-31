@@ -118,7 +118,8 @@ module.exports = {
             }
         })
     },
-    getCartProducts: (userId) => {
+     getCartProducts: (userId) => {
+        console.log("inside the helprer");
         console.log(userId);
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             console.log("inside the get cart p return");
@@ -145,7 +146,7 @@ module.exports = {
                 }
 
             ]).toArray()
-            resolve(cartItems)
+            resolve(cartItems[0].cartItems)
 
         })
     }

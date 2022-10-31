@@ -24,42 +24,42 @@ const verifyUser = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  let userData=req.session.user
+  let userData = req.session.user
   categoryHelpers.getAllCategory().then((category) => {
     //productHelpers.getAllProducts().then(())
-    res.render('users/user-home', { category ,userData})
+    res.render('users/user-home', { category, userData })
   })
 });
 
 router.get('/viewAll', function (req, res, next) {
-  let userData=req.session.user
+  let userData = req.session.user
   productHelpers.getAllProducts().then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category ,userData})
+      res.render('users/user-viewAll', { products, category, userData })
     })
   })
 });
 router.get('/viewAll/:id', function (req, res, next) {
   let categoryId = req.params.id
-  let userData=req.session.user
+  let userData = req.session.user
   productHelpers.getCategoryProducts(categoryId).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category ,userData })
+      res.render('users/user-viewAll', { products, category, userData })
     })
   })
 });
 
 router.get('/details/:id', (req, res, next) => {
-  let userData=req.session.user
+  let userData = req.session.user
   let productId = req.params.id   //to get the clicked item id
   //let productCategory = await productHelpers.getProductCategory(product.category)
   productHelpers.getProductDetails(productId).then((product) => {
     let category = product.category
-    productHelpers.getProductCategory(category).then((categoryName)=>{
+    productHelpers.getProductCategory(category).then((categoryName) => {
       productHelpers.getCategoryProducts(category).then((categoryTitle) => {
 
-        res.render('users/product-details', { product ,categoryTitle,categoryName,userData});
-  
+        res.render('users/product-details', { product, categoryTitle, categoryName, userData });
+
       })
       // res.render('users/product-details',{product});
 
@@ -72,14 +72,14 @@ router.get('/details/:id', (req, res, next) => {
 });
 
 
-router.get('/wishlist',verifyUser, (req, res, next) => {
+router.get('/wishlist', verifyUser, (req, res, next) => {
   res.render('users/wishlist');
 });
 
-router.get('/login-register',verifyUser, (req, res, next) => {
+router.get('/login-register', verifyUser, (req, res, next) => {
   res.redirect('/');
 });
-router.get('/logOut',verifyUser, (req, res, next) => {
+router.get('/logOut', verifyUser, (req, res, next) => {
   req.session.loggedIn = false
   req.session.user = null
   //req.session.destroy()
@@ -95,7 +95,7 @@ router.get('/otpVerify', (req, res, next) => {
 
   res.render('users/enterOtp', { otpError: req.session.otpError })
   req.session.otpError = null;
- 
+
 });
 
 router.post('/enterOtp', (req, res, next) => {
@@ -116,7 +116,7 @@ router.post('/enterOtp', (req, res, next) => {
   ////////////////////////////
   res.render('users/enterOtp') //bypass otp
 
-})  
+})
 
 router.post('/verifyOtp', (req, res, next) => {
   let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
@@ -130,7 +130,7 @@ router.post('/verifyOtp', (req, res, next) => {
   //     res.redirect('/otpVerify');
   //   }
   // })
-    res.redirect('/'); //for with out otp
+  res.redirect('/'); //for with out otp
 
 });
 
@@ -159,35 +159,40 @@ router.post('/logIn', (req, res) => {
     }
     else {
       req.session.loggedIn = true
-      req.session.user = response.user 
+      req.session.user = response.user
       res.redirect('/')
     }
   })
 })
 
-router.get('/account',verifyUser, (req, res, next) => {
-  let userData=req.session.user;
-  res.render('users/account',userData);
+router.get('/account', verifyUser, (req, res, next) => {
+  let userData = req.session.user;
+  res.render('users/account', userData);
 });
 
-router.get('/cart',verifyUser, (req, res, next) => {
-  let userData=req.session.user;
-  let products =userHelpers.getCartProducts(req.session._id)
-  console.log(products);
-  //res.render('users/cart');
+router.get('/cart', verifyUser, (req, res, next) => {
+  let userData = req.session.user;
+  console.log(userData)
+  console.log(req.session.user.id);
+  console.log("eeeeeeeeeeeeeeeeeeeeeee");
+  console.log(req.session.user._id);
+  userHelpers.getCartProducts(req.session.user._id).then((products) => {
+    console.log(products);
+    res.render('users/cart',{products,userData});
+  })
 });
 
-router.get('/add-to-cart/:id',verifyUser,(req,res,next)=>{ 
+router.get('/add-to-cart/:id', verifyUser, (req, res, next) => {
   console.log(req.params.id);
   console.log(req.session.user._id);
   console.log("====================");
-  userHelpers.addToCart(req.params.id,req.session.user._id).then(()=>{
-    res.redirect('/')
+  userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
+    res.redirect('/viewAll')
   })
-  
+
 })
 
-  
+
 
 
 

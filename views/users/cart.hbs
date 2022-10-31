@@ -29,12 +29,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{#each products}}
                                         <tr>
                                             <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
+                                                <a href="#"><img src="images/product-img/{{this.image1}}" alt="" width="100"></a>
                                             </td>
-                                            <td class="product-name"><a href="#">Simple Black T-Shirt</a></td>
-                                            <td class="product-price-cart"><span class="amount">$260.00</span></td>
+                                            <td class="product-name"><a href="#">{{this.title}}</a></td>
+                                            <td class="product-price-cart"><span class="amount">{{this.offerPrice}}</span></td>
                                             <td class="product-quantity pro-details-quality">
                                                 <div class="cart-plus-minus">
                                                     <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
@@ -42,41 +43,11 @@
                                             </td>
                                             <td class="product-subtotal">$110.00</td>
                                             <td class="product-remove">
-                                                <a href="#"><i class="icon_close"></i></a>
+                                                <a href="#"><i class="icon_close">close</i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Norda Simple Backpack</a></td>
-                                            <td class="product-price-cart"><span class="amount">$150.00</span></td>
-                                            <td class="product-quantity pro-details-quality">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">$150.00</td>
-                                            <td class="product-remove">
-                                                <a href="#"><i class="icon_close"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Simple Black T-Shirt </a></td>
-                                            <td class="product-price-cart"><span class="amount">$170.00</span></td>
-                                            <td class="product-quantity pro-details-quality">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">$170.00</td>
-                                            <td class="product-remove">
-                                                <a href="#"><i class="icon_close"></i></a>
-                                            </td>
-                                        </tr>
+                                        {{/each}}
+
                                     </tbody>
                                 </table>
                             </div>
