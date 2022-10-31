@@ -88,7 +88,7 @@
             </div>
             <div class="col-lg-6 col-md-12">
                 <div class="product-details-content pro-details-content-mt-md">
-                    <h2>{{product.title}}</h2>
+                    <h2>{{product.titleMain}}</h2>
                     <div class="product-ratting-review-wrap">
                         <div class="product-ratting-digit-wrap">
                             <div class="product-ratting">
@@ -107,16 +107,16 @@
                             <span>242 orders</span>
                         </div>
                     </div>
-                    <p>{{categoryName.category}}</p>
-                    <p>{{product.brand}}</p>
-
                     <div class="pro-details-price">
                         <span class="new-price">{{product.offerPrice}}</span>
-                        <span class="old-price">{{product.actualPrice}}</span>
+                        <span class="old-price">{{product.sellingPrice}}</span>
                     </div>
+
+
+
                     <div class="pro-details-color-wrap">
-                        <span>Color:</span>
-                        <p>{{product.color}}</p>
+
+
                         {{!-- <div class="pro-details-color-content">
                             <ul>
                                 <li><a class="dolly" href="#">dolly</a></li>
@@ -128,28 +128,19 @@
                             </ul>
                         </div> --}}
                     </div>
-                    <div class="pro-details-size">
-                        <span>RAM</span>
-                        <div class="pro-details-size-content">
-                            <ul>
-                                <li><a href="#">{{product.RAM}}</a></li>
-                                {{!-- <li><a href="#">S</a></li>
-                                <li><a href="#">M</a></li>
-                                <li><a href="#">L</a></li>
-                                <li><a href="#">XL</a></li> --}}
-                            </ul>
-                        </div>
-                    </div>
+
                     <div class="pro-details-quality">
-                        <span>Quantity:</span> <span> <i class="fa-thin fa-scale-balanced"></i></span>
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                        </div>
+                        <span>Quantity:</span> <span>
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                            </div>
                     </div>
                     <div class="product-details-meta">
+ 
                         <ul>
-                            <li><span>Categories:</span> <a href="#">{{product.category}}</li>
-                            <li><span>Brand: </span> <a href="#">{{product.brand}}</a> </li>
+                            <li><span>Brand:</span><a href="#">{{product.brand}}</a></li> 
+                            <li><span>Category: </span> <a href="#">{{categoryName.category}}</a></li> 
+                            <li><span>Color:</span> <a href="#">{{product.color}}</li>
                         </ul>
                     </div>
                     <div class="pro-details-action-wrap">
@@ -351,7 +342,7 @@
                 <div class="single-product-wrap">
                     <div class="product-img product-img-zoom mb-15">
                         <a href="/details/{{this._id}}">
-                            <img src="/images/product-img/{{this.image1}}" alt="" >
+                            <img src="/images/product-img/{{this.image1}}" alt="">
                         </a>
                         <div class="product-action-2 tooltip-style-2">
                             <button title="Wishlist"><i class="icon-heart"></i></button>

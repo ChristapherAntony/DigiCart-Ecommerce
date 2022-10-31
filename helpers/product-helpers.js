@@ -9,11 +9,20 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addProduct: (product) => {
+        product.category=objectId(product.category)
+        
         db.get().collection(collections.PRODUCT_COLLECTION).insertOne(product)
     },
     getAllProducts: () => {
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find().toArray()
+            resolve(products)
+        })
+    },
+    getAllProductsLookUP: () => {
+        return new Promise(async (resolve, reject) => {
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).aggregate([ { $lookup: { from: "category", localField: "category", foreignField: "_id", as: "categoryDetails" } },{$unwind:"$categoryDetails"}]).toArray()
+            
             resolve(products)
         })
     },
@@ -36,7 +45,7 @@ module.exports = {
         
 
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category:categoryId}).toArray()
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category:objectId(categoryId)}).toArray()
             //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
            //console.log(categoryTitle);
            console.log(products);
@@ -54,19 +63,20 @@ module.exports = {
         })
     },
     updateProduct: (productId, productDetails) => {
+      
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
                 .updateOne({ _id: objectId(productId) }, {
                     $set: {
+                        titleMain:productDetails.titleMain,
                         title: productDetails.title,
-                        category: productDetails.category,
+                        category:objectId(productDetails.category) ,
                         brand: productDetails.brand,
                         color: productDetails.color,
-                        RAM: productDetails.RAM,
-                        ROM: productDetails.ROM,
-                        os: productDetails.os,
                         actualPrice: productDetails.actualPrice,
-                        offerPrice: productDetails.offerPrice,
+                        sellingPrice: productDetails.sellingPrice,
+                        discount: productDetails.discount,
+                        offerPrice: productDetails.offerPrice, 
                         productDescription: productDetails.productDescription,
                         image1: productDetails.image1,
                         image2: productDetails.image2,

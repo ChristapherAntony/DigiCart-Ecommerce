@@ -151,7 +151,9 @@ router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
 
 //products----starts here<<<<<<<<<
 router.get('/view-products', verifyAdmin, (req, res, next) => {
-  productHelpers.getAllProducts().then((products) => {
+  productHelpers.getAllProductsLookUP().then((products) => {
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    console.log(products);
     res.render('admin/view-products', { layout: 'admin-layout', products })
   })
 })
@@ -169,23 +171,36 @@ router.get('/add-product', verifyAdmin, (req, res, next) => {
 
 })
 
-router.post('/add-products', uploadMultiple, (req, res) => {
+// router.post('/add-products', uploadMultiple, (req, res) => {
+//   req.body.image1 = req.files.image1[0].filename
+//   req.body.image2 = req.files.image2[0].filename
+//   req.body.image3 = req.files.image3[0].filename
+//   req.body.image4 = req.files.image4[0].filename
+
+//   productHelpers.addProduct(req.body)
+//   res.redirect('/admin/view-products')
+
+// })
+router.post('/add-products',uploadMultiple, (req, res) => {
+  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+  console.log(req.body);
   req.body.image1 = req.files.image1[0].filename
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
+  console.log(req.body);
+
   productHelpers.addProduct(req.body)
   res.redirect('/admin/view-products')
 
 })
 
+
+
 router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
   let product = await productHelpers.getProductDetails(productId)
   let productCategory = await productHelpers.getProductCategory(product.category)
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-  console.log(productCategory);
-
   productCategoryName = productCategory.category
   categoryHelpers.getAllCategory().then((category) => {
     res.render('admin/edit-product', { category, layout: 'admin-layout', product, productCategoryName })

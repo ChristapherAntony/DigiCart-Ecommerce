@@ -1,0 +1,41 @@
+<!-- ram rom os cropped from edit page -->
+
+<div class="col-md-3">
+    <div class="form-floating mb-3">
+        <select name="RAM" class="form-select" id="floatingSelect" aria-label="State">
+            <option selected value="{{product.RAM}}">{{product.RAM}}</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="12">12</option>
+            <option value="16">16</option>
+            <option value="32">32</option>
+        </select>
+        <label for="floatingSelect">RAM</label>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="form-floating mb-3">
+        <select name="ROM" class="form-select" id="floatingSelect" aria-label="State">
+            <option selected value="{{product.ROM}}">{{product.ROM}}</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="12">12</option>
+            <option value="16">16</option>
+            <option value="32">32</option>
+            <option value="64">64</option>
+            <option value="128">128</option>
+            <option value="256">256</option>
+            <option value="512">512</option>
+        </select>
+        <label for="floatingSelect">ROM</label>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-floating">
+        <input name="os" value="{{product.os}}" type="text" class="form-control"
+            id="floatingCity" placeholder="City">
+        <label for="floatingCity">Operating System</label>
+    </div>
+</div>

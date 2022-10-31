@@ -23,18 +23,9 @@ router.get('/viewAll', function (req, res, next) {
   })
 });
 router.get('/viewAll/:id', function (req, res, next) {
-  console.log(req.params);
   let categoryId = req.params.id
- 
-  console.log(categoryId)
-  console.log("+++++++++++++++++++++++++++++++++");
   productHelpers.getCategoryProducts(categoryId).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      
-      console.log("++++++++++++++++last before render");
-      console.log(products);
-   
-
       res.render('users/user-viewAll', { products, category })
     })
   })
@@ -45,12 +36,9 @@ router.get('/details/:id', (req, res, next) => {
   //let productCategory = await productHelpers.getProductCategory(product.category)
   productHelpers.getProductDetails(productId).then((product) => {
     let category = product.category
-    console.log("****#############################################");
-    console.log(category);
     productHelpers.getProductCategory(category).then((categoryName)=>{
       productHelpers.getCategoryProducts(category).then((categoryTitle) => {
-        console.log("************the whole data sending");
-        console.log(categoryTitle.category);
+
   
         res.render('users/product-details', { product ,categoryTitle,categoryName});
   
@@ -84,7 +72,7 @@ router.get('/otpVerify', (req, res, next) => {
 
   res.render('users/enterOtp', { otpError: req.session.otpError })
   req.session.otpError = null;
-
+ 
 });
 // router.post('/enterOtp',(req,res,next)=>{
 //   userHelpers.verifyMobile(req.body.mobile).then((response)=>{
@@ -114,7 +102,6 @@ router.post('/enterOtp', (req, res, next) => {
       res.redirect('/otpLogin');
     } else {
       mobile = `+91${req.body.mobile}`
-      console.log(mobile);
       otpHelpers.sendOTP(mobile).then((data) => {
         res.render('users/enterOtp')
       })

@@ -23,6 +23,13 @@
                         <!-- Floating Labels Form -->
                         <form class="row g-3" action="/admin/update-product/{{product._id}}" method="post"
                             enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input name="titleMain" value="{{product.titleMain}}" type="text" class="form-control"
+                                        id="floatingName" placeholder="State">
+                                    <label for="floatingName">Title Main</label>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input name="title" value="{{product.title}}" type="text" class="form-control"
@@ -32,16 +39,16 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select name="category"  class="form-select" id="floatingSelect" aria-label="State">
-                                       
+                                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
+
                                         {{!-- <option selected value="{{product._id}}">{{productCategoryName}}</option>
                                         {{#each category}}
                                         <option value="{{this._id}}">{{categoryName.category}}</option>
                                         {{/each}}
- --}}
+                                        --}}
 
 
-                                        <option selected value="{{product._id}}">{{productCategoryName}}</option>
+                                        <option selected value="{{product.category}}">{{productCategoryName}}</option>
                                         {{#each category}}
                                         <option value="{{this._id}}">{{this.category}}</option>
                                         {{/each}}
@@ -61,54 +68,17 @@
                                         <option value="Bose">Bose</option>
                                         <option value="Dell">Dell</option>
                                         <option value="Nokia">Nokia</option>
+                                        <option value="Nokia">LG</option>
+                                        <option value="Nokia">OnePlus</option>
                                     </select>
                                     <label for="floatingSelect">Brand</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="color" value="{{product.color}}" type="text" class="form-control"
                                         id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Color</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select name="RAM" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected value="{{product.RAM}}">{{product.RAM}}</option>
-                                        <option value="2">2</option>
-                                        <option value="4">4</option>
-                                        <option value="6">6</option>
-                                        <option value="8">8</option>
-                                        <option value="12">12</option>
-                                        <option value="16">16</option>
-                                        <option value="32">32</option>
-                                    </select>
-                                    <label for="floatingSelect">RAM</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select name="ROM" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected value="{{product.ROM}}">{{product.ROM}}</option>
-                                        <option value="4">4</option>
-                                        <option value="8">8</option>
-                                        <option value="12">12</option>
-                                        <option value="16">16</option>
-                                        <option value="32">32</option>
-                                        <option value="64">64</option>
-                                        <option value="128">128</option>
-                                        <option value="256">256</option>
-                                        <option value="512">512</option>
-                                    </select>
-                                    <label for="floatingSelect">ROM</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input name="os" value="{{product.os}}" type="text" class="form-control"
-                                        id="floatingCity" placeholder="City">
-                                    <label for="floatingCity">Operating System</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -116,6 +86,22 @@
                                     <input name="actualPrice" value="{{product.actualPrice}}" type="text"
                                         class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity">Actual Price</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input name="sellingPrice" value="{{product.sellingPrice}}" type="text"
+                                        class="form-control" id="floatingCity" placeholder="City">
+                                    <label for="floatingCity">Selling Price</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input name="discount" value="{{product.discount}}" type="text" class="form-control"
+                                        id="floatingCity" placeholder="City">
+                                    <label for="floatingCity">Discount</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -129,9 +115,10 @@
                                 <div class="form-floating">
                                     <input name="stock" value="{{product.stock}}" type="text" class="form-control"
                                         id="floatingCity" placeholder="City">
-                                    <label for="floatingCity">Quantity</label>
+                                    <label for="floatingCity">Stock</label>
                                 </div>
                             </div>
+
 
                             <div class="col-12 pb-5">
                                 <div class="form-floating">
