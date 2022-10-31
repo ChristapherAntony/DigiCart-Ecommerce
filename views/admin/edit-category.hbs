@@ -38,15 +38,15 @@
                             <div class="row mb-3">
                                 <label for="">Image</label>
                                 <div class="col-sm-10 ml-5">
-                                    <input type="image" src="/images/category-img/{{categoryDetails.image}}"
-                                        style="float:right" width="150">
+                                    <input type="image" src="/images/category-img/{{categoryDetails.image}} "
+                                        id="imgView" style="float:right" width="150">
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Change Image </label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" name="image" value="" accept="">
+                                    <input type="file" class="form-control" name="image" onchange="viewImage(event)">
                                 </div>
                             </div>
 
@@ -69,3 +69,9 @@
     </section>
 
 </main><!-- End #main -->
+{{!-- to change the image while slecting new --}}
+<script>
+    function viewImage(event) {
+        document.getElementById("imgView").src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

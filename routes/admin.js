@@ -123,9 +123,6 @@ router.get('/edit-category/:id', async (req, res) => {
 })
 
 router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
-  console.log("######################");
-  console.log(req.files);
-  console.log(req.files.image);
   if (req.files.image == null) {
     Image1 = await productHelpers.fetchImage(req.params.id)
   } else {
@@ -171,28 +168,15 @@ router.get('/add-product', verifyAdmin, (req, res, next) => {
 
 })
 
-// router.post('/add-products', uploadMultiple, (req, res) => {
-//   req.body.image1 = req.files.image1[0].filename
-//   req.body.image2 = req.files.image2[0].filename
-//   req.body.image3 = req.files.image3[0].filename
-//   req.body.image4 = req.files.image4[0].filename
 
-//   productHelpers.addProduct(req.body)
-//   res.redirect('/admin/view-products')
-
-// })
 router.post('/add-products',uploadMultiple, (req, res) => {
-  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-  console.log(req.body);
   req.body.image1 = req.files.image1[0].filename
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
-  console.log(req.body);
-
+  
   productHelpers.addProduct(req.body)
   res.redirect('/admin/view-products')
-
 })
 
 

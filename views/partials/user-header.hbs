@@ -8,7 +8,7 @@
                             <a href="/"><img src="/assets/images/logo/logo-3.png" alt="logo"></a>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-lg-7">
+                    <div class="col-xl-6 col-lg-6">
                         <div class="categori-search-wrap categori-search-wrap-modify-2">
                             <div class="categori-style-1">
                                 <select class="nice-select nice-select-style-1">
@@ -26,10 +26,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    <div class="col-xl-4 col-lg-4">
                         <div class="header-action header-action-flex">
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                                <a href="/login-register"><i class="bi bi-person "></i></a>
+                                {{#if userData}}
+                                <a href="/account"><i class="bi bi-person "></i><span
+                                        style="font-size: small ;">{{userData.UserName}}</span></a>
+                                {{else}}
+                                <a href="/account"><i class="bi bi-person "></i></a>
+                                {{/if}}
+
                             </div>
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                                 <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
@@ -42,6 +48,7 @@
                                     <span class="cart-amount white">$2,435.30</span>
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -64,7 +71,8 @@
                                     <li><a href="/viewAll">SHOP <i class="bi bi-chevron-down"></i> </a>
                                         <ul class="sub-menu-style">
                                             <li>
-                                                <a class="dropdown-title text-bold font-weight-bold" href="/viewAll">Shop All</a>
+                                                <a class="dropdown-title text-bold font-weight-bold"
+                                                    href="/viewAll">Shop All</a>
                                             </li>
                                             {{#each category}}
                                             <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
@@ -75,9 +83,9 @@
                                     </li>
                                     <li><a href="/viewAll">All Products </a>
                                     </li>
-                                    <li><a href="/viewAll">All Products </a>
+                                    <li><a href="/cart">Cart </a>
                                     </li>
-                                    <li><a href="/account">User Account </a>
+                                    <li><a href="/logOut">Log out </a>
                                     </li>
                                     {{!-- <li><a href="#">PAGES <i class="icon-arrow-down"></i> </a>
                                         <ul class="sub-menu-style">

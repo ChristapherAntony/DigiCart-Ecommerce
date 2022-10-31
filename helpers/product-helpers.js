@@ -9,8 +9,8 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addProduct: (product) => {
-        product.category=objectId(product.category)
-        
+        product.category = objectId(product.category)
+
         db.get().collection(collections.PRODUCT_COLLECTION).insertOne(product)
     },
     getAllProducts: () => {
@@ -21,8 +21,19 @@ module.exports = {
     },
     getAllProductsLookUP: () => {
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collections.PRODUCT_COLLECTION).aggregate([ { $lookup: { from: "category", localField: "category", foreignField: "_id", as: "categoryDetails" } },{$unwind:"$categoryDetails"}]).toArray()
-            
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).aggregate([
+                {
+                    $lookup: {
+                        from: "category",
+                        localField: "category",
+                        foreignField: "_id",
+                        as: "categoryDetails"
+                    }
+                },
+                {
+                    $unwind: "$categoryDetails"
+                }
+            ]).toArray()
             resolve(products)
         })
     },
@@ -41,42 +52,42 @@ module.exports = {
             })
         })
     },
-    getCategoryProducts:(categoryId)=>{
-        
+    getCategoryProducts: (categoryId) => {
+
 
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category:objectId(categoryId)}).toArray()
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId(categoryId) }).toArray()
             //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
-           //console.log(categoryTitle);
-           console.log(products);
-           //response.categoryTitle=categoryTitle;
-           response.products=products;
+            //console.log(categoryTitle);
+            console.log(products);
+            //response.categoryTitle=categoryTitle;
+            response.products = products;
             resolve(products)
         })
     },
-    getProductCategory:(productCategoryId)=>{
+    getProductCategory: (productCategoryId) => {
         console.log(productCategoryId);
-        return new Promise(async(resolve,reject)=>{
-            let categoryName=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({_id: objectId(productCategoryId)})
+        return new Promise(async (resolve, reject) => {
+            let categoryName = await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(productCategoryId) })
             console.log(categoryName.category);
-           resolve(categoryName)
+            resolve(categoryName)
         })
     },
     updateProduct: (productId, productDetails) => {
-      
+
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
                 .updateOne({ _id: objectId(productId) }, {
                     $set: {
-                        titleMain:productDetails.titleMain,
+                        titleMain: productDetails.titleMain,
                         title: productDetails.title,
-                        category:objectId(productDetails.category) ,
+                        category: objectId(productDetails.category),
                         brand: productDetails.brand,
                         color: productDetails.color,
                         actualPrice: productDetails.actualPrice,
                         sellingPrice: productDetails.sellingPrice,
                         discount: productDetails.discount,
-                        offerPrice: productDetails.offerPrice, 
+                        offerPrice: productDetails.offerPrice,
                         productDescription: productDetails.productDescription,
                         image1: productDetails.image1,
                         image2: productDetails.image2,
