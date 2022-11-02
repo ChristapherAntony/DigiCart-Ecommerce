@@ -3,7 +3,7 @@
 
     /*------ ScrollUp -------- */
     $.scrollUp({
-        scrollText: '<i class="icon-arrow-up"></i>',
+        scrollText: '<i class="bi bi-arrow-up-square"></i>',
         easingType: 'linear',
         scrollSpeed: 900,
         animation: 'fade'
@@ -20,8 +20,8 @@
         loop: true,
         dots: true,
         arrows: true,
-        prevArrow: '<span class="slider-icon-1-prev"><i class="icon-arrow-left"></i></span>',
-        nextArrow: '<span class="slider-icon-1-next"><i class="icon-arrow-right"></i></span>',
+        prevArrow: '<span class="slider-icon-1-prev"><i class="bi bi-chevron-compact-left"></i></span>',
+        nextArrow: '<span class="slider-icon-1-next"><i class="bi bi-chevron-compact-right"></i></span>',
     });
 
     /*------ Hero slider active 2 ----*/
@@ -32,8 +32,8 @@
         loop: true,
         dots: false,
         arrows: true,
-        prevArrow: '<span class="slider-icon-1-prev"><i class="icon-arrow-left"></i></span>',
-        nextArrow: '<span class="slider-icon-1-next"><i class="icon-arrow-right"></i></span>',
+        prevArrow: '<span class="slider-icon-1-prev"><i class="bi bi-chevron-compact-left"></span>',
+        nextArrow: '<span class="slider-icon-1-next"><i class="bi bi-chevron-compact-right"></i></span>',
     });
 
     /*------ Hero slider active 3 ----*/
@@ -1136,6 +1136,8 @@ function addToCart(proId) {
                 let count = $('#cart-count').html()
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
+            }else{
+                alert("Please Login to Add to Items into your cart!")
             }
 
         }
