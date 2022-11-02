@@ -33,15 +33,13 @@ const uploadSingleFile = uploadOne.fields([{ name: 'image', maxCount: 1 }])
 
 /****************************** */
 
-
-
 const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
     next();
 
-    //  res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+    //res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 /* GET users listing. */
@@ -65,7 +63,7 @@ router.post('/dash', (req, res) => {
 })
 
 router.get('/dash', verifyAdmin, function (req, res, next) {
-  res.render('admin/dash ',{ layout: 'admin-layout' });
+  res.render('admin/dash', { layout: 'admin-layout' });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -149,8 +147,7 @@ router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
 //products----starts here<<<<<<<<<
 router.get('/view-products', verifyAdmin, (req, res, next) => {
   productHelpers.getAllProductsLookUP().then((products) => {
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-    console.log(products);
+
     res.render('admin/view-products', { layout: 'admin-layout', products })
   })
 })
@@ -169,11 +166,16 @@ router.get('/add-product', verifyAdmin, (req, res, next) => {
 })
 
 
-router.post('/add-products',uploadMultiple, (req, res) => {
+router.post('/add-products', uploadMultiple, (req, res) => {
   req.body.image1 = req.files.image1[0].filename
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
+  req.body.actualPrice=parseInt(req.body.actualPrice) ,
+  req.body.sellingPrice=parseInt(req.body.sellingPrice),
+  req.body.discount=parseInt(req.body.discount) ,
+  req.body.offerPrice=parseInt(req.body.offerPrice),
+  req.body.stock=parseInt(req.body.stock)
   
   productHelpers.addProduct(req.body)
   res.redirect('/admin/view-products')
@@ -193,6 +195,7 @@ router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
 })
 
 router.post('/update-product/:id', uploadMultiple, async (req, res) => {
+
   if (req.files.image1 == null) {
     Image1 = await productHelpers.fetchImage1(req.params.id)
   } else {

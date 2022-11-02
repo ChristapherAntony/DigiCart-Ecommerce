@@ -171,7 +171,7 @@ module.exports = {
 
             ]).toArray()
             console.log(total);
-            resolve(total   )
+            resolve(total)
 
         })
     },
@@ -211,9 +211,9 @@ module.exports = {
 
         })
     },
-    getTotalAmount:(userId)=>{
+    getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
-            
+
             let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                 {
                     $match: { user: objectId(userId) }  //get cart of th user
@@ -242,19 +242,58 @@ module.exports = {
                     }
                 },
                 {
-                    $group:{
-                        _id:null,
-                        total:{$sum:{$multiply:['$quantity',parseInt('$product.offerPrice')]}}
+                    $group: {
+                        _id: null,
+                        total: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                     }
                 }
 
 
 
             ]).toArray()
-        console.log(total);
-            resolve(total)
+            // console.log(total[0].total);
+            resolve(total[0].total)
 
         })
-        
+
+    },
+    getCartProductsList: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
+
+            resolve(cart.products)
+        })
+
+    },
+    placeOrder: (order,products,total) => {
+        return new Promise((resolve,reject)=>{
+            console.log(order,products,total);
+            let status=order.payment_method==='COD'?'placed':'pending'
+            let orderObj={
+                date:new Date(),
+                deliveryDetails:{
+                    Name:order.Name,
+                    HouseNo:order.HouseNo,
+                    Street:order.Street,
+                    TownCity:order.TownCity,
+                    State:order.State,
+                    Country:order.Country,
+                    PostCode:order.PostCode,
+                    Mobile:order.Mobile,
+                    Email:order.Email,
+                    message:order.message
+                },
+                userId:objectId(order.userId),
+                payment_method:order.payment_method,    
+                products:products,
+                totalAmount:total,
+                status:status
+            }
+            db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
+                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
+                resolve()
+            })
+
+        })
     }
 }

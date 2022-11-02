@@ -10,7 +10,6 @@ module.exports = {
 
     addProduct: (product) => {
         product.category = objectId(product.category)
-
         db.get().collection(collections.PRODUCT_COLLECTION).insertOne(product)
     },
     getAllProducts: () => {
@@ -72,6 +71,7 @@ module.exports = {
         })
     },
     updateProduct: (productId, productDetails) => {
+        parseInt()
 
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
@@ -82,10 +82,10 @@ module.exports = {
                         category: objectId(productDetails.category),
                         brand: productDetails.brand,
                         color: productDetails.color,
-                        actualPrice: productDetails.actualPrice,
-                        sellingPrice: productDetails.sellingPrice,
-                        discount: productDetails.discount,
-                        offerPrice: productDetails.offerPrice,
+                        actualPrice:parseInt(productDetails.actualPrice) ,
+                        sellingPrice:parseInt(productDetails.sellingPrice) ,
+                        discount:parseInt(productDetails.discount) ,
+                        offerPrice:parseInt( productDetails.offerPrice),
                         productDescription: productDetails.productDescription,
                         image1: productDetails.image1,
                         image2: productDetails.image2,

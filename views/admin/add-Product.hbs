@@ -9,6 +9,14 @@
                 <li class="breadcrumb-item active">View Products</li </ol>
         </nav>
     </div><!-- End Page Title -->
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+    </div>
 
     <section class="section">
         <div class="row">
@@ -23,11 +31,12 @@
                         <form class="row g-3" action="/admin/add-products" method="post" enctype="multipart/form-data">
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input name="titleMain" type="text"
-                                        class="form-control" id="floatingName" placeholder="State">
+                                    <input name="titleMain" type="text" class="form-control" id="floatingName"
+                                        placeholder="State">
                                     <label for="floatingName">Title Main</label>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input name="title" type="text" class="form-control" id="floatingName"
@@ -72,37 +81,38 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="actualPrice" type="text" class="form-control" id="floatingCity"
+                                    <input name="actualPrice" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
-                                    <label for="floatingCity"  ><i class="bi bi-currency-rupee"></i>Actual Price </label>
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Actual Price </label>
                                 </div>
                             </div>
 
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="sellingPrice" type="text" class="form-control" id="floatingCity"
+                                    <input name="sellingPrice" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Selling Price </label>
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Selling Price
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="discount" type="text" class="form-control" id="floatingCity"
+                                    <input name="discount" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-percent"></i> Discount</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="offerPrice" type="text" class="form-control" id="floatingCity"
+                                    <input name="offerPrice" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Offer Price</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="stock" type="text" class="form-control" id="floatingCity"
+                                    <input name="stock" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity">Stock</label>
                                 </div>
@@ -143,6 +153,7 @@
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </form><!-- End floating Labels Form -->
+
 
                     </div>
                 </div>
