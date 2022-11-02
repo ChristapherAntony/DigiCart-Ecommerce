@@ -29,9 +29,9 @@
                     <div class="col-xl-4 col-lg-4">
                         <div class="header-action header-action-flex">
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                                {{#if userData}}
+                                {{#if userName}}
                                 <a href="/account"><i class="bi bi-person "></i><span
-                                        style="font-size: small ;">{{userData.UserName}}</span></a>
+                                        style="font-size: small ;">{{userName}}</span></a>
                                 {{else}}
                                 <a href="/account"><i class="bi bi-person "></i></a>
                                 {{/if}}
@@ -39,12 +39,12 @@
                             </div>
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                                 <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
-                                        class="pro-count black">03</span></a>
+                                        class="pro-count black">1</span></a>
                             </div>
                             <div
                                 class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                                 <a class="cart-active" href="#">
-                                    <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black">02</span>
+                                    <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black" id="cart-count">{{cartCount}}</span>
                                     <span class="cart-amount white">$2,435.30</span>
                                 </a>
                             </div>
@@ -243,6 +243,54 @@
             <h3>Shopping Cart</h3>
             <ul>
                 <li class="single-product-cart">
+                    <div class="cart-img">
+                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
+                    </div>
+                    <div class="cart-title">
+                        <h4><a href="#">Simple Black T-Shirt</a></h4>
+                        <span> 1 × $49.00 </span>
+                    </div>
+                    <div class="cart-delete">
+                        <a href="#">×</a>
+                    </div>
+                </li>
+                <li class="single-product-cart">
+                    <div class="cart-img">
+                        <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
+                    </div>
+                    <div class="cart-title">
+                        <h4><a href="#">Norda Backpack</a></h4>
+                        <span> 1 × $49.00 </span>
+                    </div>
+                    <div class="cart-delete">
+                        <a href="#">×</a>
+                    </div>
+                </li>
+                                <li class="single-product-cart">
+                    <div class="cart-img">
+                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
+                    </div>
+                    <div class="cart-title">
+                        <h4><a href="#">Simple Black T-Shirt</a></h4>
+                        <span> 1 × $49.00 </span>
+                    </div>
+                    <div class="cart-delete">
+                        <a href="#">×</a>
+                    </div>
+                </li>
+                <li class="single-product-cart">
+                    <div class="cart-img">
+                        <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
+                    </div>
+                    <div class="cart-title">
+                        <h4><a href="#">Norda Backpack</a></h4>
+                        <span> 1 × $49.00 </span>
+                    </div>
+                    <div class="cart-delete">
+                        <a href="#">×</a>
+                    </div>
+                </li>
+                                <li class="single-product-cart">
                     <div class="cart-img">
                         <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
                     </div>

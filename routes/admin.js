@@ -65,7 +65,7 @@ router.post('/dash', (req, res) => {
 })
 
 router.get('/dash', verifyAdmin, function (req, res, next) {
-  res.render('admin/dash', { layout: 'admin-layout' });
+  res.render('admin/dash ',{ layout: 'admin-layout' });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {

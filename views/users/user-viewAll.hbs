@@ -94,18 +94,14 @@
                                                 <span>{{this.offerPrice}}</span>
                                             </div>
                                             <div class="pro-add-to-cart">
-                                               <a href="/add-to-cart/{{this._id}}"><button  title="Add to Cart">Add To Cart</button></a> 
+                                               {{!-- <a href="/add-to-cart/{{this._id}}"><button  title="Add to Cart">Add To Cart</button></a>  --}}
+                                               <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{/each}}
-
-
-
-
-
 
 
                             </div>
@@ -452,3 +448,15 @@
         </div>
     </div>
 </div>
+
+{{!-- <script>
+    function addToCart(proId){
+        $.ajax({
+            url:'/add-to-cart/'+proId,
+            method:'get',
+            success:(Response)=>{
+                alert(Response)
+            }
+        })
+    }
+</script> --}}

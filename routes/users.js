@@ -5,6 +5,8 @@ const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const otpHelpers = require("../helpers/otp-helpers")
 const { response } = require('express');
+let cartCount=0
+let userName=null
 
 //session verifying
 
@@ -13,7 +15,8 @@ const verifyUser = (req, res, next) => {
     next();
   } else {
     //next();
-
+    cartCount=0
+    userName=null
     res.render('users/login-signUp');
   }
 }
@@ -23,34 +26,42 @@ const verifyUser = (req, res, next) => {
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/',async function (req, res, next) {
   let userData = req.session.user
+  if(userData){
+    cartCount=await userHelpers.getCartCount(req.session.user._id)
+    userName=req.session.user.UserName
+    console.log(userName);
+  }
+ 
+  
+  
   categoryHelpers.getAllCategory().then((category) => {
     //productHelpers.getAllProducts().then(())
-    res.render('users/user-home', { category, userData })
+    res.render('users/user-home', { category, userName,cartCount })
   })
 });
 
 router.get('/viewAll', function (req, res, next) {
-  let userData = req.session.user
+  // let userData = req.session.user
   productHelpers.getAllProducts().then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category, userData })
+      res.render('users/user-viewAll', { products, category, userName,cartCount })
     })
   })
 });
 router.get('/viewAll/:id', function (req, res, next) {
   let categoryId = req.params.id
-  let userData = req.session.user
+  // let userData = req.session.user
   productHelpers.getCategoryProducts(categoryId).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category, userData })
+      res.render('users/user-viewAll', { products, category, userName ,cartCount})
     })
   })
 });
 
 router.get('/details/:id', (req, res, next) => {
-  let userData = req.session.user
+  // let userData = req.session.user
   let productId = req.params.id   //to get the clicked item id
   //let productCategory = await productHelpers.getProductCategory(product.category)
   productHelpers.getProductDetails(productId).then((product) => {
@@ -58,7 +69,7 @@ router.get('/details/:id', (req, res, next) => {
     productHelpers.getProductCategory(category).then((categoryName) => {
       productHelpers.getCategoryProducts(category).then((categoryTitle) => {
 
-        res.render('users/product-details', { product, categoryTitle, categoryName, userData });
+        res.render('users/product-details', { product, categoryTitle, categoryName, userName ,cartCount});
 
       })
       // res.render('users/product-details',{product});
@@ -73,7 +84,7 @@ router.get('/details/:id', (req, res, next) => {
 
 
 router.get('/wishlist', verifyUser, (req, res, next) => {
-  res.render('users/wishlist');
+  res.render('users/wishlist',{cartCount,userName});
 });
 
 router.get('/login-register', verifyUser, (req, res, next) => {
@@ -83,6 +94,8 @@ router.get('/logOut', verifyUser, (req, res, next) => {
   req.session.loggedIn = false
   req.session.user = null
   //req.session.destroy()
+  cartCount=0
+  userName=null
   res.redirect('/');
 });
 
@@ -151,7 +164,7 @@ router.post('/signUp', (req, res) => {
 
 router.post('/logIn', (req, res) => {
 
-  userHelpers.doLogin(req.body).then((response) => {
+  userHelpers.doLogin  (req.body).then((response) => {
     if (response.status == false) {
       res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
     } else if (response.active == false) {
@@ -160,40 +173,53 @@ router.post('/logIn', (req, res) => {
     else {
       req.session.loggedIn = true
       req.session.user = response.user
+     
       res.redirect('/')
     }
   })
 })
 
 router.get('/account', verifyUser, (req, res, next) => {
-  let userData = req.session.user;
-  res.render('users/account', userData);
+  res.render('users/account',{userName,cartCount} );
 });
 
 router.get('/cart', verifyUser, (req, res, next) => {
-  let userData = req.session.user;
-  console.log(userData)
-  console.log(req.session.user.id);
-  console.log("eeeeeeeeeeeeeeeeeeeeeee");
-  console.log(req.session.user._id);
   userHelpers.getCartProducts(req.session.user._id).then((products) => {
-    console.log(products);
-    res.render('users/cart',{products,userData});
+    userHelpers.getCartCount(req.session.user._id).then((response)=>{
+      cartCount=response
+      res.render('users/cart',{products,userName,cartCount});
+    })
   })
 });
 
-router.get('/add-to-cart/:id', verifyUser, (req, res, next) => {
-  console.log(req.params.id);
-  console.log(req.session.user._id);
-  console.log("====================");
-  userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
-    res.redirect('/viewAll')
+router.get('/add-to-cart/:id', async(req, res, next) => {
+  userHelpers.addToCart (req.params.id, req.session.user._id).then(() => {
+    userHelpers.getCartCount(req.session.user._id).then((response)=>{
+      cartCount=response
+      res.json({status:true})
+    })  
   })
-
 })
 
+router.post('/change-product-quantity',(req, res, next) => {
+  console.log("from saart of rout");
+  userHelpers.changeProductQuantity(req.body).then((response)=>{
+    console.log("from end of rout");
+    console.log(response);
+    res.json(response)
+  })
+})
 
+router.get('/ProceedToCheckOut',verifyUser, async(req,res)=>{
+  let total=await userHelpers.getTotalAmount(req.session.user._id)
 
+  res.render('users/placeOrder',{cartCount})
+})
+
+router.get('/Check-Out',verifyUser,(req,res)=>{
+
+  res.render('/')
+})
 
 
 module.exports = router;

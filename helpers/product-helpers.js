@@ -53,8 +53,6 @@ module.exports = {
         })
     },
     getCategoryProducts: (categoryId) => {
-
-
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId(categoryId) }).toArray()
             //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
