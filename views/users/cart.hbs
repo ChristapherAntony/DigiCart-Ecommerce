@@ -10,12 +10,11 @@
         </div>
     </div>
 </div>
-<div class="cart-main-area pt-50 pb-120 " >
+<div class="cart-main-area pt-50 pb-120 ">
     <div class="container">
         <h3 class="cart-page-title">Your cart items [{{products.length}}] </h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-
                 <div class="table-content table-responsive cart-table-content">
                     <table>
                         <thead>
@@ -46,17 +45,20 @@
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton"
                                             value="{{this.quantity}}">
                                     </div> --}}
-                                    <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',-1)"
+                                    <button
+                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',-1)"
                                         class="cart-item-count  rounded ">-</button>
                                     <span id="{{this.product._id}}">{{this.quantity}}</span>
-                                    <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',1)"
+                                    <button
+                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',1)"
                                         class="cart-item-count  rounded">+</button>
 
-                                    
+
                                 </td>
                                 <td class="product-subtotal">$110.00</td>
                                 <td class="product-remove">
-                                    <a href="">X</a>
+                                    <button
+                                        onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')">X</button>
                                 </td>
                                 {{!-- <td class="product-remove">
                                     <a href="#"><i class="bi bi-x-lg"></i></a>
@@ -145,7 +147,8 @@
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                             </div>
-                            <h5>Total products <span><i class="bi bi-currency-rupee"></i><span id="total">{{totalValue}}</span> </span></h5>
+                            <h5>Total products <span><i class="bi bi-currency-rupee"></i><span
+                                        id="total">{{totalValue}}</span> </span></h5>
                             <div class="total-shipping">
                                 <h5>Total shipping</h5>
                                 <ul>
@@ -153,7 +156,8 @@
                                     <li><input type="checkbox"> Express <span>$30.00</span></li>
                                 </ul>
                             </div>
-                            <h4 class="grand-totall-title">Grand Total <span><i class="bi bi-currency-rupee"></i><span id="g-total">{{totalValue}}</span> </span></h4>
+                            <h4 class="grand-totall-title">Grand Total <span><i class="bi bi-currency-rupee"></i><span
+                                        id="g-total">{{totalValue}}</span> </span></h4>
                             <a href="/ProceedToCheckOut">Proceed to Checkout</a>
                         </div>
                     </div>
@@ -164,32 +168,14 @@
 </div>
 
 <script>
-    function changeQuantity(cartId, proId,userId ,count) {
 
-    let quantity = parseInt(document.getElementById(proId).innerHTML)
-    count = parseInt(count)
-    $.ajax({
-        url: '/change-product-quantity',
-        data: {
-            user:userId,
-            cart: cartId,
-            product: proId,
-            count: count,
-            quantity: quantity
-        },
-        method: 'post',
-        success: (response) => {
-            if (response.removeProduct) {
-               alert("Product Removed from Cart")
-               location.reload()
-            } else {
-                document.getElementById(proId).innerHTML = quantity+count
-                document.getElementById('total').innerHTML = response.total
-                document.getElementById('total').innerHTML = response.total
-            }
-        }
-    })
-}
+
+
+
+
 </script>
 
 
+<script>
+
+</script>

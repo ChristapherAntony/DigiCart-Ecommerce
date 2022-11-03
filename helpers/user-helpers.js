@@ -295,5 +295,17 @@ module.exports = {
             })
 
         })
+    },
+    removeProduct:(details)=>{  // we need cart id and product id to delete
+        console.log("**************************************************");
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CART_COLLECTION)
+            .updateOne({ _id: objectId(details.cart) },
+                {
+                    $pull: { products: { item: objectId(details.product) } }
+                }).then((response) => {
+                    resolve({ removeProduct: true })
+                })
+        })
     }
 }
