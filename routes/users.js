@@ -189,12 +189,12 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   userHelpers.getCartProducts(req.session.user._id).then((products) => {
     userHelpers.getCartCount(req.session.user._id).then(async(response) => {
       cartCount = response
-      if(cartCount!=0){
+      if(cartCount){
         let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
         res.render('users/cart', { products, userName, userId, cartCount, totalValue });
+      }else{
+        res.render('users/cartIsEmpty',{cartCount,userName})  
       }
-  
-      res.render('users/cartIsEmpty',{cartCount,userName})   
     })
   })
 });
