@@ -1145,10 +1145,11 @@ function addToCart(proId) {
 }
 
 
-function changeQuantity(cartId, proId, userId, count) {
-
+function changeQuantity(cartId, proId, userId, price, count) {
+    let totalPrice = parseInt(document.getElementById(price).innerHTML)
     let quantity = parseInt(document.getElementById(proId).innerHTML)
     count = parseInt(count)
+    price = parseInt(price)
     $.ajax({
         url: '/change-product-quantity',
         data: {
@@ -1156,7 +1157,10 @@ function changeQuantity(cartId, proId, userId, count) {
             cart: cartId,
             product: proId,
             count: count,
-            quantity: quantity
+            quantity: quantity,
+            price: price,
+            totalPrice: totalPrice
+
         },
         method: 'post',
         success: (response) => {
@@ -1165,8 +1169,15 @@ function changeQuantity(cartId, proId, userId, count) {
                 location.reload()
             } else {
                 document.getElementById(proId).innerHTML = quantity + count
+
                 document.getElementById('total').innerHTML = response.total
-                document.getElementById('total').innerHTML = response.total
+                document.getElementById('g-total').innerHTML = response.total
+                if (count > 0) {
+                    document.getElementById(price).innerHTML = totalPrice + price
+                } else if (count < 0) {
+                    document.getElementById(price).innerHTML = totalPrice - price
+                }
+
 
             }
         }
@@ -1174,7 +1185,7 @@ function changeQuantity(cartId, proId, userId, count) {
 }
 
 function removeCartProduct(cartId, proId) {
-    
+
     $.ajax({
         url: '/removeProduct',
         data: {

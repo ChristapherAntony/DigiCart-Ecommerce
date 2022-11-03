@@ -144,12 +144,12 @@
                                                 <li>Color : {{this.color}}</li>
                                                 <li>Brand: {{this.brand}}</li>
                                                 <li>Free Delivery</li>
-                                                <li>Specifications  : {{this.RAM}} {{this.ROM}} {{this.os}}</li>
+                                                <li>Specifications :</li>
                                             </ul>
                                             
                                             {{!-- <p>{{this.productDescription}}</p> --}}
                                             <div class="product-list-action">
-                                                <button title="Add To Cart"><i class="bi bi-cart2"></i></button>
+                                                <button onclick="addToCart('{{this._id}}')" title="Add To Cart"><i class="bi bi-cart2"></i></button>
                                                 <button title="Wishlist"><i class="bi bi-heart fa-sm"></i></button>
                                                 <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
                                             </div>

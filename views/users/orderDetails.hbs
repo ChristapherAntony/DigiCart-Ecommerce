@@ -1,0 +1,94 @@
+<div class="breadcrumb-area bg-gray menuBarTop">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/account">Account</a>
+                </li>
+
+                <li class="/active">Your Order </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="cart-main-area pt-10 pb-120">
+
+    <div class="container">
+        <h3 class="cart-page-title">Order history</h3>
+        <h4>Order Id: {{orderDetails._id}}</h4>
+        <hr style="border-top: 5px solid #000000">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Shipped to : {{orderDetails.deliveryDetails.Name}}</h4><br>
+                <h4>Delivery Address:</h4>
+                <div>
+                    {{orderDetails.deliveryDetails.Street}} <br>
+                    {{orderDetails.deliveryDetails.TownCity}}-{{orderDetails.deliveryDetails.State}}
+                    {{orderDetails.deliveryDetails.Country}}-{{orderDetails.deliveryDetails.PostCode}}
+
+                </div>
+
+            </div>
+            <div class="col-md-6 text-right">
+                <h4 class="  ">Invoice Date:{{orderDetails.date}}</h4><br>
+                <a href="" class="btn btn-secondary">Order Cancel</a>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Until Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each productDetails}}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="/images/product-img/{{this.product.image1}}" width="80" alt="">
+                                        {{!-- <a href="#"><img src="" alt=""></a> --}}
+                                    </td>
+                                    <td class="product-name"><a href="#">{{this.product.title}}</a></td>
+                                    <td class="product-price-cart"><span
+                                            class="amount">Rs.{{this.product.offerPrice}}</span></td>
+                                    <td class="product-quantity pro-details-quality"> {{this.quantity}} </td>
+                                    <td class="product-subtotal">$110.00</td>
+
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                            {{!-- <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="product-subtotal">{{orderDetails.totalAmount}}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot> --}}
+                        </table>
+                        <hr style="border-top: 5px solid #000000">
+                        <div class="text-right " style="margin-right: 12rem ;" >
+                            <h4 >Sub Total: Rs.{{orderDetails.totalAmount}}</h4>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

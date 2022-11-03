@@ -1,0 +1,45 @@
+<div class="tab-pane fade show active "  id="orders" role="tabpanel">
+    <div class="myaccount-content">
+        <h3>Orders</h3>
+        <div class="myaccount-table table-responsive ">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Order</th>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Address</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                    <tr>
+                        <td>{{@index}}</td>
+                        <td>{{this._id}}</td>
+                        <td>{{this.date}}</td>
+                        <td>
+                            {{this.deliveryDetails.Name}} <br>
+                            {{this.deliveryDetails.Street}} <br>    
+                            {{this.deliveryDetails.TownCity}}{{this.deliveryDetails.State}} <br>
+                            {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
+                        </td>
+                        <td>Rs.{{this.totalAmount}}</td>
+                        <td>{{this.payment_method}}</td>
+                        <td>{{this.status}}</td>
+
+                        <td>
+                            <button>view</button><br>
+                            <button>cancel</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

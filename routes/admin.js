@@ -171,6 +171,7 @@ router.post('/add-products', uploadMultiple, (req, res) => {
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
+  
   req.body.actualPrice=parseInt(req.body.actualPrice) ,
   req.body.sellingPrice=parseInt(req.body.sellingPrice),
   req.body.discount=parseInt(req.body.discount) ,

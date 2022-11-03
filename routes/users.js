@@ -179,9 +179,12 @@ router.post('/logIn', (req, res) => {
   })
 })
 
-router.get('/account', verifyUser, (req, res, next) => {
-  res.render('users/account', { userName, cartCount });
+router.get('/account', verifyUser, async(req, res, next) => {
+  let orders=await userHelpers.getUserOrders(req.session.user._id)
+
+  res.render('users/account', {orders, userName, cartCount,account: true });
 });
+
 
 router.get('/cart', verifyUser, async (req, res, next) => {
   let userId = req.session.user._id
@@ -244,10 +247,38 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
   userHelpers.placeOrder(req.body, products, totalPrice).then((response) => {
+    cartCount=0
+
     res.json({ status: true })
   })
 
   //res.render('/')
+})
+router.get('/clearCart',verifyUser,(req,res)=>{
+  userHelpers.clearCart(req.session.user._id).then(()=>{
+    cartCount=0
+    res.redirect('/cart')
+  })
+})
+
+router.get('/orderSuccess',verifyUser,(req,res)=>{
+  res.render('users/orderSuccess',{userName,cartCount})
+})
+router.get('/viewOrders',verifyUser,async(req,res)=>{
+  let orders=await userHelpers.getUserOrders(req.session.user._id)
+
+  res.render('users/viewOrders',{userName,cartCount,orders})
+})
+
+router.get('/orderDetails/:id',verifyUser,async(req,res)=>{
+ 
+  let productDetails=await userHelpers.orderProductDetails(req.params.id)
+  let orderDetails=await userHelpers.getOrderDetails(req.params.id)
+
+  console.log(orderDetails);
+  console.log(productDetails);
+
+  res.render('users/orderDetails',{userName,cartCount,orderDetails,productDetails})
 })
 
 

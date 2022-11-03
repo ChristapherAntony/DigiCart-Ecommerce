@@ -11,8 +11,8 @@
     </div>
 </div>
 <div class="cart-main-area pt-50 pb-120 ">
-    <div class="container">
-        <h3 class="cart-page-title">Your cart items [{{products.length}}] </h3>
+    <div class="container" style="margin-left: 100px; margin-right: 100px;">
+        <h3 class="cart-page-title">Your cart items [{{products.length}}] </h3> 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="table-content table-responsive cart-table-content">
@@ -32,10 +32,10 @@
                             <tr>
 
                                 <td class="product-thumbnail">
-                                    <a href="#"><img src="images/product-img/{{this.product.image1}}" alt=""
+                                    <a href="/details/{{this.product._id}}"><img src="images/product-img/{{this.product.image1}}" alt=""
                                             width="100"></a>
                                 </td>
-                                <td class="product-name"><a href="#">{{this.product.title}}</a></td>
+                                <td class="product-name"><a href="/details/{{this.product._id}}">{{this.product.title}}</a></td>
                                 <td class="product-price-cart"><span class="amount">Rs.
                                         {{this.product.offerPrice}}</span>
                                 </td>
@@ -45,20 +45,27 @@
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton"
                                             value="{{this.quantity}}">
                                     </div> --}}
-                                    <button
-                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',-1)"
-                                        class="cart-item-count  rounded ">-</button>
-                                    <span id="{{this.product._id}}">{{this.quantity}}</span>
-                                    <button
-                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}',1)"
-                                        class="cart-item-count  rounded">+</button>
+
+
+                                    <div>
+                                        <button class="btn btn-light" style="display: inline-block;" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}','{{this.product.offerPrice}}',-1)">-</button>
+                                        <span style="display: inline-block; width: 20px; ;"  id="{{this.product._id}}">{{this.quantity}}</span>
+                                        <button class="btn btn-light" style="display: inline-block;"  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userId}}','{{this.product.offerPrice}}', 1)">+</button>
+                                    </div>
+
+
+
+
+
+                                    {{!-- <button>-</button><span>10</span><button>+</button> --}}
 
 
                                 </td>
-                                <td class="product-subtotal">$110.00</td>
+                                <td class="product-subtotal"> Rs.
+                                    <span id="{{this.product.offerPrice}}">{{this.productTotal}}</span>
+                                </td>
                                 <td class="product-remove">
-                                    <button
-                                        onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')">X</button>
+                                    <button class="btn btn-outline-danger" onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')">X</button>
                                 </td>
                                 {{!-- <td class="product-remove">
                                     <a href="#"><i class="bi bi-x-lg"></i></a>
@@ -78,8 +85,9 @@
                             </div>
                             <div class="cart-clear">
                                 <button>Update Cart</button>
-                                <a href="#">Clear Cart</a>
+                                <a href="/clearCart">Clear Cart</a>
                             </div>
+                         
                         </div>
                     </div>
                 </div>
@@ -166,16 +174,3 @@
         </div>
     </div>
 </div>
-
-<script>
-
-
-
-
-
-</script>
-
-
-<script>
-
-</script>
