@@ -70,9 +70,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> --}}
     {{!--
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-{{!--     
+    {{!--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
     {{!--
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
@@ -81,16 +81,20 @@
     {{!--
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> --}}
     <style>
-        {{!-- .tablebody {
-            color: #566787;
-            background: #f5f5f5;
-            font-family: 'Varela Round', sans-serif;
-            font-size: 13px;
-        } --}}
+        {
+                {
+                !-- .tablebody {
+                    color: #566787;
+                    background: #f5f5f5;
+                    font-family: 'Varela Round', sans-serif;
+                    font-size: 13px;
+                }
 
-        .table-responsive {
-           
+                --
+            }
         }
+
+        .table-responsive {}
 
         .table-wrapper {
             min-width: 1000px;
@@ -357,7 +361,7 @@
                 <li class="breadcrumb-item">User Management</li>
                 <li class="breadcrumb-item active">View Orders <i class="bi bi-truck"></i></li>
 
-                <span class="badge rounded-pill bg-danger">Blocked</span>
+
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -369,25 +373,45 @@
             <tr>
                 <th>#</th>
                 <th>User Name</th>
-                <th>Location</th>
                 <th>Order Date</th>
-                <th>Status</th>
+                <th>Location</th>
+
                 <th>Net Amount</th>
-                <th>Action</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>View Order</th>
             </tr>
         </thead>
         <tbody>
+            {{#each OrderHistory}}
+
             <tr>
-                <td>1</td>
-                <td><a href="#">
-                        Michael Holz</a></td>
-                <td>London</td>
-                <td>Jun 15, 2017</td>
-                <td><span class="status text-success">&bull;</span> Delivered</td>
-                <td>$254</td>
-                <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i
-                            class="material-icons">&#xE5C8;</i></a></td>
+                <td class="create_index"></td>
+                <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
+                <td>{{this.date}}</td>
+                <td>{{this.deliveryDetails.State}} {{this.deliveryDetails.PostCode}}</td>
+
+
+                <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
+                <td>{{this.payment_method}}</td>
+
+                <td>
+                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
+                        {{!-- <option selected>{{this.status}}</option> --}}
+                        <option value="{{this.status}}">{{this.status}}</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Shipped">On the Way</option>
+                        <option value="Shipped">Delivered</option>
+                        <option value="Shipped">Cancelled</option>
+                       
+                    </select>
+                </td>
+                {{!-- <td>{{this.status}}</td> --}}
+                <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
+                        data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
             </tr>
+
+            {{/each}}
 
         </tbody>
     </table>

@@ -68,14 +68,9 @@ router.get('/details/:id', (req, res, next) => {
     let category = product.category
     productHelpers.getProductCategory(category).then((categoryName) => {
       productHelpers.getCategoryProducts(category).then((categoryTitle) => {
-
         res.render('users/product-details', { product, categoryTitle, categoryName, userName, cartCount });
-
       })
       // res.render('users/product-details',{product});
-
-
-
     })
 
   })
@@ -112,38 +107,43 @@ router.get('/otpVerify', (req, res, next) => {
 });
 
 router.post('/enterOtp', (req, res, next) => {
-  // userHelpers.verifyMobile(req.body.mobile).then((response) => {
-  //   if (response.status == false) {
-  //     req.session.mobileError = "Please Enter a Registered Mobile Number! ";
-  //     res.redirect('/otpLogin');
-  //   } else if (response.active == false) {
-  //     req.session.mobileError = "Your account is Blocked!";
-  //     res.redirect('/otpLogin');
-  //   } else {
-  //     mobile = `+91${req.body.mobile}`
-  //     otpHelpers.sendOTP(mobile).then((data) => {
-  //       res.render('users/enterOtp')
-  //     })
-  //   }
-  // })
-  ////////////////////////////
-  res.render('users/enterOtp') //bypass otp
+  userHelpers.verifyMobile(req.body.mobile).then((response) => {
+    if (response.status == false) {
+      req.session.mobileError = "Please Enter a Registered Mobile Number! ";
+      res.redirect('/otpLogin');
+    } else if (response.active == false) {
+      req.session.mobileError = "Your account is Blocked!";
+      res.redirect('/otpLogin');
+    } else {
+      req.session.mobileNumber=req.body.mobile
+      mobile = `+91${req.body.mobile}`
+      otpHelpers.sendOTP(mobile).then((data) => {
+        res.render('users/enterOtp')
+      })
+    }
+  })
+  //////////////////////////
+ // res.render('users/enterOtp') //bypass otp
 
 })
 
 router.post('/verifyOtp', (req, res, next) => {
+  console.log(req.body);
   let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
   OTP = (+number) // to convert string type to number format
-  // otpHelpers.verifyOTP(OTP).then((response) => {
-  //   if (response.status) {
-  //     res.redirect('/');
-  //   }
-  //   else {
-  //     req.session.otpError = "Invalid OTP";
-  //     res.redirect('/otpVerify');
-  //   }
-  // })
-  res.redirect('/'); //for with out otp
+  otpHelpers.verifyOTP(OTP).then(async(response) => {
+    if (response.status) {
+      mobileNumber=req.session.mobileNumber
+      req.session.mobileNumber=null
+      req.session.user=await userHelpers.otpLogin(mobileNumber)
+      res.redirect('/');
+    }
+    else {
+      req.session.otpError = "Invalid OTP";
+      res.redirect('/otpVerify');
+    }
+  })
+  //res.redirect('/'); //bypass otp
 
 });
 
@@ -179,7 +179,7 @@ router.post('/logIn', (req, res) => {
   })
 })
 
-router.get('/account', verifyUser, async(req, res, next) => {
+router.get('/account', verifyUser, async(req, res, next) => { 
   let orders=await userHelpers.getUserOrders(req.session.user._id)
 
   res.render('users/account', {orders, userName, cartCount,account: true });
@@ -238,8 +238,9 @@ router.post('/removeProduct', (req, res, next) => {
 router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   let user = req.session.user
   let total = await userHelpers.getTotalAmount(req.session.user._id)
+  let products=await userHelpers.getCartProducts(req.session.user._id)
 
-  res.render('users/placeOrder', { cartCount, total, user, userName })
+  res.render('users/placeOrder', { cartCount, total, user, userName,products })
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
@@ -273,10 +274,11 @@ router.get('/viewOrders',verifyUser,async(req,res)=>{
 router.get('/orderDetails/:id',verifyUser,async(req,res)=>{
  
   let productDetails=await userHelpers.orderProductDetails(req.params.id)
-  let orderDetails=await userHelpers.getOrderDetails(req.params.id)
 
-  console.log(orderDetails);
+  let orderDetails=await userHelpers.getOrderDetails(req.params.id)
   console.log(productDetails);
+  console.log(orderDetails);
+ 
 
   res.render('users/orderDetails',{userName,cartCount,orderDetails,productDetails})
 })

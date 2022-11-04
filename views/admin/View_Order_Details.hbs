@@ -1,0 +1,145 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Order Information</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"></li><a href="/admin/ViewOrders">View Orders/</a></li>
+                <li class="breadcrumb-item active">Order Information <i class="bi bi-truck"></i></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+
+    <!-- Main Container  -->
+    <div class="main-container container">
+
+
+        <div class="row">
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-12">
+                <h3 class="title"> </h3>
+
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="2" class="text-left">Order Details</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%;" class="text-left"> <b>Order ID:</b> {{orderDetails._id}}
+                                <br>
+                                <b>Date Added:</b> 20/06/2016
+                            </td>
+                            <td style="width: 50%;" class="text-left"> <b>Payment Method:</b>
+                                {{orderDetails.payment_method}}
+                                <br>
+                                <b>Shipping Method:</b> Free Delivery <br>
+                                <b>Status :</b>Placed
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;" class="text-left"><b>Shipping Address</b> </td>
+                            <td style="width: 50%; vertical-align: top;" class="text-left"><b>Delivery Note</b> </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">{{orderDetails.deliveryDetails.Name}}
+                                <br>{{orderDetails.deliveryDetails.HouseNo}}
+                                <br>{{orderDetails.deliveryDetails.Street}}
+                                <br>{{orderDetails.deliveryDetails.TownCity}} {{orderDetails.deliveryDetails.PostCode}}
+                                <br>{{orderDetails.deliveryDetails.State}} {{orderDetails.deliveryDetails.Country}}
+                            </td>
+                            <td class="text-left">
+                                {{orderDetails.deliveryDetails.message}}
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-left ">#</td>
+                                <td class="text-left "><b>Product Name</b> </td>
+                                <td class="text-left "><b>Image</b> </td>
+                                <td class="text-left "><b>Brand </b> </td>
+                                <td class="text-left "><b>Product Code</b> </td>
+                                <td class="text-left "><b>Color</b> </td>
+                                <td class="text-right "><b> Quantity</b></td>
+                                <td class="text-right "><b>Price</b> </td>
+                                <td class="text-right "><b>Total</b> </td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each orderDetailsProducts}}
+                            <tr>
+                                <td class="text-left create_index"></td>
+                                <td class="text-left">{{this.product.title}} </td>
+                                <td class="text-left "><img height="50"
+                                        src="/images/product-img/{{this.product.image1}} "></td>
+                                <td class="text-left">{{this.product.brand}} </td>
+                                <td class="text-left">{{this.product._id}} </td>
+                                <td class="text-left ">{{this.product.color}}</td>
+                                <td class="text-right">{{this.quantity}}</td>
+                                <td class="text-right">{{this.product.offerPrice}}</td>
+                                <td class="text-right">{{this.productTotal}}</td>
+
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7"></td>
+
+
+                                <td class="text-right"><b>Sub-Total</b>
+                                </td>
+                                <td class="text-right">{{orderDetails.totalAmount}}</td>
+
+                            </tr>
+                            <tr>
+
+                                <td colspan="7"></td>
+                                <td class="text-right">Shipping Charges<b></b>
+                                </td>
+                                <td class="text-right">0</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td colspan="7"></td>
+                                <td class="text-right"><b>Total</b>
+                                </td>
+                                <td class="text-right">{{orderDetails.totalAmount}}</td>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+            <!--Middle Part End-->
+
+        </div>
+    </div>
+    <!-- //Main Container -->
+
+
+
+
+</main><!-- End #main -->

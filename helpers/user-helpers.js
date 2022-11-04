@@ -50,9 +50,16 @@ module.exports = {
                     }
                 })   // compare userData pw with db pw
             } else {
-                resolve({ status: false })
+                resolve({ status: false }) 
             }
         })
+    },
+    otpLogin:(mobileNumber)=>{
+        return new Promise(async(resolve,reject)=>{
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({  MobileNo: mobileNumber })
+            resolve(user)
+        })
+
     },
     getAllUsers: () => { 
         return new Promise(async (resolve, reject) => {
@@ -76,17 +83,17 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
 
             let response = {}
-            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName }) // check email
+            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName }) 
             if (user) {
-                bcrypt.compare(adminID.Password, user.Password).then((status) => {    // if user true the check pw with bcrypt
+                bcrypt.compare(adminID.Password, user.Password).then((status) => {   
                     if (status) {
                         response.user = user;
                         response.status = true;
-                        resolve(response)  // this response include user data and statues
+                        resolve(response) 
                     } else {
-                        resolve({ status: false }) // this response include only false status
+                        resolve({ status: false }) 
                     }
-                })   // compare userData pw with db pw
+                })   
             } else {
                 resolve({ status: false })
             }
@@ -281,10 +288,8 @@ module.exports = {
                         total: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                     }
                 }
-
-
-
             ]).toArray()
+            
 
             resolve(total[0].total)
 
@@ -301,7 +306,7 @@ module.exports = {
     },
     placeOrder: (order, products, total) => {
         return new Promise((resolve, reject) => {
-            let status = order.payment_method === 'COD' ? 'placed' : 'pending'
+            let status = order.payment_method === 'COD' ? 'Placed' : 'Pending'
             let orderObj = {
                 date: new Date(),
                 deliveryDetails: {
@@ -398,9 +403,12 @@ module.exports = {
                     $project: {
                         item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
                     }
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, product:1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                    }
                 }
-
-
 
             ]).toArray()
             resolve(products)
@@ -415,7 +423,7 @@ module.exports = {
                 .aggregate([{ $match: { _id: objectId(orderId) } },
                 {
                     $project: {
-                        date: { $dateToString: { format: "%d-%m-%Y  %H:%M", date: "$date" } },
+                        date: { $dateToString: { format: "%d-%m-%Y ", date: "$date" } },
                         deliveryDetails: 1,
                         payment_method: 1,
                         totalAmount: 1,
@@ -427,3 +435,5 @@ module.exports = {
         })
     },
 }
+
+

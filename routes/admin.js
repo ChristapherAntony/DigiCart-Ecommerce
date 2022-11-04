@@ -10,7 +10,7 @@ const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
 
 /***********multer for products imgs*/
-const multerStorage = multer.diskStorage({
+const multerStorage = multer.diskStorage({ 
   destination: function (req, file, cb) {
     cb(null, "./public/images/product-img");
   },
@@ -237,10 +237,22 @@ router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
 
 router.get('/viewOrders', verifyAdmin, (req, res, next) => {
   adminHelpers.getOrderHistory().then((OrderHistory) => {
-    console.log("after getting order history********************************************************");
-    console.log(OrderHistory);
     res.render('admin/View_Orders', { layout: 'admin-layout' ,OrderHistory})
   })
+})
+
+router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
+
+  let orderDetails=await adminHelpers.getOrderDetails(req.params.id)
+  let orderDetailsProducts=await adminHelpers.orderDetailsProducts(req.params.id)
+
+ 
+
+    res.render('admin/View_Order_Details', { layout: 'admin-layout',orderDetails,orderDetailsProducts })
+
+  
+
+ 
 })
 
 

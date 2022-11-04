@@ -179,11 +179,15 @@
                                     </div>
                                     <div class="your-order-middle">
                                         <ul>
-                                            <li>Product Name X 1 <span>$329 </span></li>
-                                            <li>Product Name X 1 <span>$329 </span></li>
+                                            {{#each products}}
+                                            <li>{{this.product.title}}  X {{quantity}} <span>Rs. {{this.productTotal}} </span></li>
+                                            {{/each}}
+                                            
                                         </ul>
                                     </div>
+                                    
                                     <div class="your-order-info order-subtotal">
+                                        
                                         <ul>
                                             <li>Subtotal <span>Rs.{{total}} </span>
                                             </li>
