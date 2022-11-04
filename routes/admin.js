@@ -1,4 +1,4 @@
-const { request } = require('express');
+const { request, response } = require('express');
 var express = require('express');
 const { ProfilingLevel } = require('mongodb');
 const userHelpers = require('../helpers/user-helpers');
@@ -10,7 +10,7 @@ const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
 
 /***********multer for products imgs*/
-const multerStorage = multer.diskStorage({ 
+const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/images/product-img");
   },
@@ -237,22 +237,23 @@ router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
 
 router.get('/viewOrders', verifyAdmin, (req, res, next) => {
   adminHelpers.getOrderHistory().then((OrderHistory) => {
-    res.render('admin/View_Orders', { layout: 'admin-layout' ,OrderHistory})
+    res.render('admin/View_Orders', { layout: 'admin-layout', OrderHistory })
   })
 })
 
+
 router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
+  let orderDetails = await adminHelpers.getOrderDetails(req.params.id)
+  let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id)
+  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails, orderDetailsProducts })
+})
 
-  let orderDetails=await adminHelpers.getOrderDetails(req.params.id)
-  let orderDetailsProducts=await adminHelpers.orderDetailsProducts(req.params.id)
+router.post('/changeDeliveryStatus',verifyAdmin,(req,res)=>{
+  adminHelpers.changeDeliveryStatus(req.body).then((response)=>{
+    res.json(response)
+    
+  })
 
- 
-
-    res.render('admin/View_Order_Details', { layout: 'admin-layout',orderDetails,orderDetailsProducts })
-
-  
-
- 
 })
 
 

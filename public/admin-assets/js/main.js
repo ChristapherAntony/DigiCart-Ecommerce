@@ -318,3 +318,22 @@
   }
 
 })();
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+function changeStatus(orderId) {
+  let variableOne = document.getElementById(orderId)
+  let variableTwo = variableOne.options[variableOne.selectedIndex].text
+  $.ajax({
+      url: "/admin/changeDeliveryStatus",
+      data: {
+          cartId: orderId,
+          status: variableTwo
+      },
+      method: 'post',
+      success: (response) => {
+          location.reload()
+      }
+  })
+}

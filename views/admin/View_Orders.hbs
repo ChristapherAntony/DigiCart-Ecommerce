@@ -396,14 +396,21 @@
                 <td>{{this.payment_method}}</td>
 
                 <td>
-                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
-                        {{!-- <option selected>{{this.status}}</option> --}}
+                    {{!-- <select name="category" class="form-select" id="floatingSelect" aria-label="State">
+                        
                         <option value="{{this.status}}">{{this.status}}</option>
                         <option value="Shipped">Shipped</option>
                         <option value="Shipped">On the Way</option>
                         <option value="Shipped">Delivered</option>
                         <option value="Shipped">Cancelled</option>
-                       
+                    </select> --}}
+                    <select onchange="changeStatus('{{this._id}}')" name="orderstatus" id="{{this._id}}" class="form-select" id="floatingSelect">
+                        <option selected value="{{this.status}}">{{this.status}}</option>
+                        <option value="Placed">Placed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="On the Way">On the Way</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
                     </select>
                 </td>
                 {{!-- <td>{{this.status}}</td> --}}

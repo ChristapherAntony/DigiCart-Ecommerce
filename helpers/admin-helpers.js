@@ -114,5 +114,13 @@ module.exports = {
 
 
         })
+    },
+    changeDeliveryStatus:(changes)=>{
+        return new Promise ((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION)
+            .updateOne({_id:objectId(changes.cartId)},{$set:{status:changes.status}}).then((response)=>{
+                resolve()
+            })
+        })
     }
 }
