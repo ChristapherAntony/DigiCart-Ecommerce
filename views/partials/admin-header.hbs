@@ -259,7 +259,8 @@
     </li><!-- End User Management Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#productMgt-nav" data-bs-toggle="collapse" href="/admin/view-products">
+      <a class="nav-link collapsed" data-bs-target="#productMgt-nav" data-bs-toggle="collapse"
+        href="/admin/view-products">
         <i class="bi bi-boxes"></i><span>Products Management</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="productMgt-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -277,7 +278,8 @@
     </li><!-- End Product Management Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#categoryMgt-nav" data-bs-toggle="collapse" href="/admin/product-category">
+      <a class="nav-link collapsed" data-bs-target="#categoryMgt-nav" data-bs-toggle="collapse"
+        href="/admin/product-category">
         <i class="bi bi-journal-text"></i><span>Category management</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="categoryMgt-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -293,6 +295,30 @@
         </li>
       </ul>
     </li><!-- End Category Management Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#orderMgt-nav" data-bs-toggle="collapse"
+        href="/admin/viewOrders">
+        <i class="bi bi-truck"></i></i><span>Order management</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="orderMgt-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="/admin/viewOrders">
+            <i class="bi bi-circle"></i><span>View Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/add-category">
+            <i class="bi bi-circle"></i><span>Order History</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bi bi-circle"></i><span>Track Order</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Order Management Nav -->
 
     {{!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -473,14 +499,14 @@
       </a>
     </li><!-- End Profile Page Nav -->
 
-            <li class="nav-item">
+    <li class="nav-item">
       <a class="nav-link collapsed" href="#">
         <i class="bi bi-gear"></i>
         <span>Settings</span>
       </a>
     </li><!-- Settings Page Nav -->
 
-        <li class="nav-item">
+    <li class="nav-item">
       <a class="nav-link collapsed" href="/admin/signOut">
         <i class="bi bi-box-arrow-in-right"></i>
         <span>Sign Out</span>

@@ -6,6 +6,7 @@ var router = express.Router();
 const userHelper = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
+const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
 
 /***********multer for products imgs*/
@@ -171,13 +172,13 @@ router.post('/add-products', uploadMultiple, (req, res) => {
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
-  
-  req.body.actualPrice=parseInt(req.body.actualPrice) ,
-  req.body.sellingPrice=parseInt(req.body.sellingPrice),
-  req.body.discount=parseInt(req.body.discount) ,
-  req.body.offerPrice=parseInt(req.body.offerPrice),
-  req.body.stock=parseInt(req.body.stock)
-  
+
+  req.body.actualPrice = parseInt(req.body.actualPrice),
+    req.body.sellingPrice = parseInt(req.body.sellingPrice),
+    req.body.discount = parseInt(req.body.discount),
+    req.body.offerPrice = parseInt(req.body.offerPrice),
+    req.body.stock = parseInt(req.body.stock)
+
   productHelpers.addProduct(req.body)
   res.redirect('/admin/view-products')
 })
@@ -231,6 +232,14 @@ router.post('/update-product/:id', uploadMultiple, async (req, res) => {
 router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
   productHelpers.deleteProduct(req.params.id).then((response) => {
     res.redirect('/admin/view-products',)
+  })
+})
+
+router.get('/viewOrders', verifyAdmin, (req, res, next) => {
+  adminHelpers.getOrderHistory().then((OrderHistory) => {
+    console.log("after getting order history********************************************************");
+    console.log(OrderHistory);
+    res.render('admin/View_Orders', { layout: 'admin-layout' ,OrderHistory})
   })
 })
 

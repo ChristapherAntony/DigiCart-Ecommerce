@@ -1,5 +1,4 @@
 const db = require('../config/connection')
-//const collection = require('../config/collections')
 const { Collection } = require('mongodb')
 const collections = require('../config/collections')
 const { response } = require('express')
