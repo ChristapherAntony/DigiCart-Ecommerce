@@ -130,7 +130,7 @@ router.post('/enterOtp', (req, res, next) => {
 router.post('/verifyOtp', (req, res, next) => {
   console.log(req.body);
   let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
-  OTP = (+number) // to convert string type to number format
+  OTP = (number) 
   otpHelpers.verifyOTP(OTP).then(async(response) => {
     if (response.status) {
       mobileNumber=req.session.mobileNumber
