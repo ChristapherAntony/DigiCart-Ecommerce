@@ -88,7 +88,7 @@ router.get('/unBlock/:id', verifyAdmin, function (req, res) {
 
 router.get('/signOut', verifyAdmin, (req, res, next) => {
   req.session.destroy()
-  res.redirect('/admin')
+  res.redirect('/admin') 
 })
 
 // product section starts here
@@ -110,9 +110,9 @@ router.get('/add-category', verifyAdmin, (req, res, next) => {
 router.post('/addNewCategory', uploadSingleFile, (req, res, next) => {
   req.body.image = req.files.image[0].filename
   categoryHelpers.addCategory(req.body)
-  res.redirect("/admin/product-category")
+  res.redirect("/admin/product-category")                 
 
-})
+}) 
 
 router.get('/edit-category/:id', async (req, res) => {
   let categoryId = req.params.id

@@ -20,68 +20,6 @@ const verifyUser = (req, res, next) => {
     res.render('users/login-signUp');
   }
 }
-
-
-
-
-
-/* GET home page. */
-router.get('/', async function (req, res, next) {
-  let userData = req.session.user
-  if (userData) {
-    cartCount = await userHelpers.getCartCount(req.session.user._id)
-    userName = req.session.user.UserName
-    console.log(userName);
-  }
-
-
-
-  categoryHelpers.getAllCategory().then((category) => {
-    //productHelpers.getAllProducts().then(())
-    res.render('users/user-home', { category, userName, cartCount })
-  })
-});
-
-router.get('/viewAll', function (req, res, next) {
-  // let userData = req.session.user
-  productHelpers.getAllProducts().then((products) => {
-    categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category, userName, cartCount })
-    })
-  })
-});
-router.get('/viewAll/:id', function (req, res, next) {
-  let categoryId = req.params.id
-  // let userData = req.session.user
-  productHelpers.getCategoryProducts(categoryId).then((products) => {
-    categoryHelpers.getAllCategory().then((category) => {
-      res.render('users/user-viewAll', { products, category, userName, cartCount })
-    })
-  })
-});
-
-router.get('/details/:id', (req, res, next) => {
-  // let userData = req.session.user
-  let productId = req.params.id   //to get the clicked item id
-  //let productCategory = await productHelpers.getProductCategory(product.category)
-  productHelpers.getProductDetails(productId).then((product) => {
-    let category = product.category
-    productHelpers.getProductCategory(category).then((categoryName) => {
-      productHelpers.getCategoryProducts(category).then((categoryTitle) => {
-        res.render('users/product-details', { product, categoryTitle, categoryName, userName, cartCount });
-      })
-      // res.render('users/product-details',{product});
-    })
-
-  })
-
-});
-
-
-router.get('/wishlist', verifyUser, (req, res, next) => {
-  res.render('users/wishlist', { cartCount, userName });
-});
-
 router.get('/login-register', verifyUser, (req, res, next) => {
   res.redirect('/');
 });
@@ -179,6 +117,66 @@ router.post('/logIn', (req, res) => {
   })
 })
 
+
+
+/* GET home page. */
+router.get('/', async function (req, res, next) {
+  let userData = req.session.user
+  if (userData) {
+    cartCount = await userHelpers.getCartCount(req.session.user._id)
+    userName = req.session.user.UserName
+    console.log(userName);
+  }
+
+
+
+  categoryHelpers.getAllCategory().then((category) => {
+    //productHelpers.getAllProducts().then(())
+    res.render('users/user-home', { category, userName, cartCount })
+  })
+});
+
+router.get('/viewAll', function (req, res, next) {
+  // let userData = req.session.user
+  productHelpers.getAllProducts().then((products) => {
+    categoryHelpers.getAllCategory().then((category) => {
+      res.render('users/user-viewAll', { products, category, userName, cartCount })
+    })
+  })
+});
+router.get('/viewAll/:id', function (req, res, next) {
+  let categoryId = req.params.id
+  // let userData = req.session.user
+  productHelpers.getCategoryProducts(categoryId).then((products) => {
+    categoryHelpers.getAllCategory().then((category) => {
+      res.render('users/user-viewAll', { products, category, userName, cartCount })
+    })
+  })
+});
+
+router.get('/details/:id', (req, res, next) => {
+  // let userData = req.session.user
+  let productId = req.params.id   //to get the clicked item id
+  //let productCategory = await productHelpers.getProductCategory(product.category)
+  productHelpers.getProductDetails(productId).then((product) => {
+    let category = product.category
+    productHelpers.getProductCategory(category).then((categoryName) => {
+      productHelpers.getCategoryProducts(category).then((categoryTitle) => {
+        res.render('users/product-details', { product, categoryTitle, categoryName, userName, cartCount });
+      })
+      // res.render('users/product-details',{product});
+    })
+
+  })
+
+});
+
+
+router.get('/wishlist', verifyUser, (req, res, next) => {
+  res.render('users/wishlist', { cartCount, userName });
+});
+
+
 router.get('/account', verifyUser, async(req, res, next) => { 
   let orders=await userHelpers.getUserOrders(req.session.user._id)
 
@@ -206,7 +204,6 @@ router.get('/cart', verifyUser, async (req, res, next) => {
 router.get('/add-to-cart/:id', async (req, res, next) => {
   if (userName == null) {
     res.json({status:false})
-
   } else {
     userHelpers.addToCart (req.params.id, req.session.user._id).then(() => {
       userHelpers.getCartCount(req.session.user._id).then((response)=>{
