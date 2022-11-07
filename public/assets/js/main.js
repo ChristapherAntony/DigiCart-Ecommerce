@@ -1,3 +1,4 @@
+
 (function ($) {
     "use strict";
 
@@ -1114,8 +1115,6 @@
 
 })(jQuery);
 
-
-
 document.addEventListener("DOMContentLoaded", function (event) {
 
     function OTPInput() {
@@ -1125,8 +1124,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 });
-
-
 function addToCart(proId) {
     $.ajax({
         url: '/add-to-cart/' + proId,
@@ -1137,56 +1134,103 @@ function addToCart(proId) {
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
             } else {
-                alert("Please Login to Add to Items into your cart!")
-                location.reload('/viewAll')
+
+                location.href = '/viewAllVerify'
             }
 
         }
     })
 }
-
-
 function changeQuantity(cartId, proId, userId, price, count) {
     let totalPrice = parseInt(document.getElementById(price).innerHTML)
     let quantity = parseInt(document.getElementById(proId).innerHTML)
     count = parseInt(count)
     price = parseInt(price)
-    $.ajax({
-        url: '/change-product-quantity',
-        data: {
-            user: userId,
-            cart: cartId,
-            product: proId,
-            count: count,
-            quantity: quantity,
-            price: price,
-            totalPrice: totalPrice
-
-        },
-        method: 'post',
-        success: (response) => {
-            if (response.removeProduct) {
-                alert("Product Removed from Cart")
-                location.reload()
-            } else {
-                document.getElementById(proId).innerHTML = quantity + count
-
-                document.getElementById('total').innerHTML = response.total
-                document.getElementById('g-total').innerHTML = response.total
-                if (count > 0) {
-                    document.getElementById(price).innerHTML = totalPrice + price
-                } else if (count < 0) {
-                    document.getElementById(price).innerHTML = totalPrice - price
-                }
-
+    if (count == -1 && quantity == 1) {
+        Swal.fire({
+            title: 'Are you sure ?',
+            text: "Only One Quantity Left In Your Cart !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/change-product-quantity',
+                    data: {
+                        user: userId,
+                        cart: cartId,
+                        product: proId,
+                        count: count,
+                        quantity: quantity,
+                        price: price,
+                        totalPrice: totalPrice
+        
+                    },
+                    method: 'post',
+                    success: (response) => {
+                        if (response.removeProduct) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            location.reload()
+                        } else {
+                            document.getElementById(proId).innerHTML = quantity + count
+                            document.getElementById('total').innerHTML = response.total
+                            document.getElementById('g-total').innerHTML = response.total
+                            if (count > 0) {
+                                document.getElementById(price).innerHTML = totalPrice + price
+                            } else if (count < 0) {
+                                document.getElementById(price).innerHTML = totalPrice - price
+                            }
+        
+        
+                        }
+                    }
+                })
 
             }
-        }
-    })
+        })
+    } else {
+        $.ajax({
+            url: '/change-product-quantity',
+            data: {
+                user: userId,
+                cart: cartId,
+                product: proId,
+                count: count,
+                quantity: quantity,
+                price: price,
+                totalPrice: totalPrice
+
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
+                    alert("Product Removed from Cart")
+                    location.reload()
+                } else {
+                    document.getElementById(proId).innerHTML = quantity + count
+                    document.getElementById('total').innerHTML = response.total
+                    document.getElementById('g-total').innerHTML = response.total
+                    if (count > 0) {
+                        document.getElementById(price).innerHTML = totalPrice + price
+                    } else if (count < 0) {
+                        document.getElementById(price).innerHTML = totalPrice - price
+                    }
+
+
+                }
+            }
+        })
+    }
+
 }
-
 function removeCartProduct(cartId, proId) {
-
     $.ajax({
         url: '/removeProduct',
         data: {
@@ -1195,14 +1239,20 @@ function removeCartProduct(cartId, proId) {
         },
         method: 'post',
         success(response) {
-            alert("Product Removed from Cart")
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
             location.reload()
-
         }
 
     })
 
 }
+
+
+
 
 
 

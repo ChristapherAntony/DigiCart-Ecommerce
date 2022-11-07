@@ -136,16 +136,18 @@
                             </div>
                     </div>
                     <div class="product-details-meta">
- 
+
                         <ul>
-                            <li><span>Brand:</span><a href="#">{{product.brand}}</a></li> 
-                            <li><span>Category: </span> <a href="#">{{categoryName.category}}</a></li> 
+                            <li><span>Brand:</span><a href="#">{{product.brand}}</a></li>
+                            <li><span>Category: </span> <a href="#">{{categoryName.category}}</a></li>
                             <li><span>Color:</span> <a href="#">{{product.color}}</li>
                         </ul>
                     </div>
                     <div class="pro-details-action-wrap">
-                        <div class="pro-details-add-to-cart">
-                            <a title="Add to Cart" href="#">Add To Cart </a>
+                        <div class="pro-details-action">
+                            <a style="background-color: rgb(255,47,47); " class="btn" title="Add to Cart"
+                                onclick="addToCartDetails('{{product._id}}')">Add To Cart
+                            </a>
                         </div>
                         <div class="pro-details-action">
                             <a title="Add to Wishlist" href="#"><i class="bi bi-heart fa-sm"></i></a>
@@ -393,3 +395,43 @@
         </div>
     </div>
 </div>
+
+<script>
+    function addToCartDetails(proId) {
+        $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('#cart-count').html()
+                    count = parseInt(count) + 1
+                    $('#cart-count').html(count)
+                } else {
+                    (
+                        function confirmLoginCart() {
+                            Swal.fire({
+                                title: 'Please Login ',
+                                text: "Please Login to Add this Item Into Your Cart",
+                                icon: 'info',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Continue with Login'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = '/detailsVerify/' + proId
+                                    
+                                }
+                            })
+                        }
+                    )()
+
+
+
+                   // location.href = '/detailsVerify/' + proId
+                }
+
+            }
+        })
+    }
+</script>

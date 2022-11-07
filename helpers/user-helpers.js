@@ -211,7 +211,6 @@ module.exports = {
                 // ])
                 .toArray()
             console.log("get cart profuctd ////////////////******************//////////////////////");
-            console.log(total);
             resolve(total)
 
         })
@@ -289,10 +288,11 @@ module.exports = {
                     }
                 }
             ]).toArray()
-
-
-            resolve(total[0].total)
-
+            if(total){
+                resolve(total[0].total)
+            }else{
+                resolve()
+            }
         })
 
     },

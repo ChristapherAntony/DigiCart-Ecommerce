@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "dbname"
+    ],
+    "cSpell.ignoreWords": [
+        "Swal"
     ]
 }
