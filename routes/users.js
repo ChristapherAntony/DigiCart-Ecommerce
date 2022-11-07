@@ -11,6 +11,8 @@ let userName = null
 //session verifying
 
 const verifyUser = (req, res, next) => {
+  console.log(req.url);
+  req.session.returnTo=req.url
   if (req.session.user) {
     next();
   } else {
@@ -23,7 +25,17 @@ const verifyUser = (req, res, next) => {
 router.get('/login-register', verifyUser, (req, res, next) => {
   res.redirect('/');
 });
-router.get('/logOut', verifyUser, (req, res, next) => {
+router.get('/login', (req, res, next) => {
+  req.session.loggedIn = false
+  req.session.user = null
+  //req.session.destroy()
+  cartCount = 0
+  userName = null
+  res.redirect('/');
+});
+
+
+router.get('/logOut', (req, res, next) => {
   req.session.loggedIn = false
   req.session.user = null
   //req.session.destroy()
@@ -38,7 +50,6 @@ router.get('/otpLogin', (req, res, next) => {
 });
 
 router.get('/otpVerify', (req, res, next) => {
-
   res.render('users/enterOtp', { otpError: req.session.otpError })
   req.session.otpError = null;
 
@@ -102,17 +113,18 @@ router.post('/signUp', (req, res) => {
 
 router.post('/logIn', (req, res) => {
 
-  userHelpers.doLogin(req.body).then((response) => {
+  userHelpers.doLogin(req.body).then(async(response) => {
     if (response.status == false) {
       res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
     } else if (response.active == false) {
       res.render('users/login-signUp', { 'emailError': "Your Account is Blocked!" })
     }
-    else {
+    else { 
       req.session.loggedIn = true
       req.session.user = response.user
-
-      res.redirect('/')
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
+      userName = req.session.user.UserName
+      res.redirect(req.session.returnTo)
     }
   })
 })
@@ -137,7 +149,6 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/viewAll', function (req, res, next) {
-  // let userData = req.session.user
   productHelpers.getAllProducts().then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
       res.render('users/user-viewAll', { products, category, userName, cartCount })
@@ -146,7 +157,6 @@ router.get('/viewAll', function (req, res, next) {
 });
 router.get('/viewAll/:id', function (req, res, next) {
   let categoryId = req.params.id
-  // let userData = req.session.user
   productHelpers.getCategoryProducts(categoryId).then((products) => {
     categoryHelpers.getAllCategory().then((category) => {
       res.render('users/user-viewAll', { products, category, userName, cartCount })
@@ -201,7 +211,7 @@ router.get('/cart', verifyUser, async (req, res, next) => {
 });
 
 
-router.get('/add-to-cart/:id', async (req, res, next) => {
+router.get('/add-to-cart/:id',verifyUser, async (req, res, next) => {
   if (userName == null) {
     res.json({status:false})
   } else {

@@ -50,18 +50,18 @@ module.exports = {
                     }
                 })   // compare userData pw with db pw
             } else {
-                resolve({ status: false }) 
+                resolve({ status: false })
             }
         })
     },
-    otpLogin:(mobileNumber)=>{
-        return new Promise(async(resolve,reject)=>{
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({  MobileNo: mobileNumber })
+    otpLogin: (mobileNumber) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mobileNumber })
             resolve(user)
         })
 
     },
-    getAllUsers: () => { 
+    getAllUsers: () => {
         return new Promise(async (resolve, reject) => {
             let users = await db.get().collection(collection.USER_COLLECTION).find().toArray()
             resolve(users)
@@ -83,17 +83,17 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
 
             let response = {}
-            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName }) 
+            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName })
             if (user) {
-                bcrypt.compare(adminID.Password, user.Password).then((status) => {   
+                bcrypt.compare(adminID.Password, user.Password).then((status) => {
                     if (status) {
                         response.user = user;
                         response.status = true;
-                        resolve(response) 
+                        resolve(response)
                     } else {
-                        resolve({ status: false }) 
+                        resolve({ status: false })
                     }
-                })   
+                })
             } else {
                 resolve({ status: false })
             }
@@ -289,7 +289,7 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            
+
 
             resolve(total[0].total)
 
@@ -346,7 +346,7 @@ module.exports = {
         })
     },
     clearCart: (userId) => {
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(userId) })
             resolve()
         })
@@ -406,7 +406,7 @@ module.exports = {
                 },
                 {
                     $project: {
-                        item: 1, quantity: 1, product:1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                        item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                     }
                 }
 

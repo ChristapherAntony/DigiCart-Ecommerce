@@ -1138,6 +1138,7 @@ function addToCart(proId) {
                 $('#cart-count').html(count)
             } else {
                 alert("Please Login to Add to Items into your cart!")
+                location.reload('/viewAll')
             }
 
         }

@@ -86,7 +86,17 @@
                                     </li>
                                     <li><a href="/cart">Cart </a>
                                     </li>
-                                    <li><a href="/logOut">Log out </a>
+                                    <li>
+                                        {{#if userName}}
+                                        <a href="/logOut">Log out </a>
+                                        {{else}}
+                                        <a href="/login-register">Log In </a>
+                                        {{/if}}
+
+                                        
+
+
+
                                     </li>
                                     {{!-- <li><a href="#">PAGES <i class="icon-arrow-down"></i> </a>
                                         <ul class="sub-menu-style">
