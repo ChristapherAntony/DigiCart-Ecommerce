@@ -49,7 +49,7 @@
                                 <a class="cart-active" href="#">
                                     <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
                                         id="cart-count">{{cartCount}}</span>
-                                    <span class="cart-amount white">$2,435.30</span>
+                                    <span class="cart-amount white"><i class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
                                 </a>
                             </div>
 
@@ -215,85 +215,30 @@
         <div class="cart-content">
             <h3>Shopping Cart</h3>
             <ul>
+                {{#each headerDetails.cartProducts}}
                 <li class="single-product-cart">
                     <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
+
+                        <a href="/details/{{this.product._id}}"><img src="/images/product-img/{{this.product.image1}}"
+                                alt=""></a>
                     </div>
                     <div class="cart-title">
-                        <h4><a href="#">Simple Black T-Shirt</a></h4>
-                        <span> 1 × $49.00 </span>
+                        <h4><a href="/details/{{this.product._id}}">{{this.product.title}}</a></h4>
+                        <span> {{this.quantity}} × {{this.product.offerPrice}} </span>
                     </div>
                     <div class="cart-delete">
-                        <a href="#">×</a>
+                        <a class="btn" onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')" >×</a>
                     </div>
                 </li>
-                <li class="single-product-cart">
-                    <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
-                    </div>
-                    <div class="cart-title">
-                        <h4><a href="#">Norda Backpack</a></h4>
-                        <span> 1 × $49.00 </span>
-                    </div>
-                    <div class="cart-delete">
-                        <a href="#">×</a>
-                    </div>
-                </li>
-                <li class="single-product-cart">
-                    <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
-                    </div>
-                    <div class="cart-title">
-                        <h4><a href="#">Simple Black T-Shirt</a></h4>
-                        <span> 1 × $49.00 </span>
-                    </div>
-                    <div class="cart-delete">
-                        <a href="#">×</a>
-                    </div>
-                </li>
-                <li class="single-product-cart">
-                    <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
-                    </div>
-                    <div class="cart-title">
-                        <h4><a href="#">Norda Backpack</a></h4>
-                        <span> 1 × $49.00 </span>
-                    </div>
-                    <div class="cart-delete">
-                        <a href="#">×</a>
-                    </div>
-                </li>
-                <li class="single-product-cart">
-                    <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
-                    </div>
-                    <div class="cart-title">
-                        <h4><a href="#">Simple Black T-Shirt</a></h4>
-                        <span> 1 × $49.00 </span>
-                    </div>
-                    <div class="cart-delete">
-                        <a href="#">×</a>
-                    </div>
-                </li>
-                <li class="single-product-cart">
-                    <div class="cart-img">
-                        <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
-                    </div>
-                    <div class="cart-title">
-                        <h4><a href="#">Norda Backpack</a></h4>
-                        <span> 1 × $49.00 </span>
-                    </div>
-                    <div class="cart-delete">
-                        <a href="#">×</a>
-                    </div>
-                </li>
+                {{/each}}
+
             </ul>
             <div class="cart-total">
-                <h4>Subtotal: <span>$170.00</span></h4>
+                <h4>Subtotal: <span><i class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span></h4>
             </div>
             <div class="cart-checkout-btn">
                 <a class="btn-hover cart-btn-style" href="/cart">view cart</a>
-                <a class="no-mrg btn-hover cart-btn-style" href="checkout.html">checkout</a>
+                <a class="no-mrg btn-hover cart-btn-style" href="/ProceedToCheckOut">checkout</a>
             </div>
         </div>
     </div>
@@ -333,5 +278,29 @@
         })
 
     }
+
+
+ 
+
+    function removeCartProduct(cartId, proId) {
+    $.ajax({
+        url: '/removeProduct',
+        data: {
+            cart: cartId,
+            product: proId
+        },
+        method: 'post',
+        success(response) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
+            location.reload()
+        }
+
+    })
+
+}
 
 </script>

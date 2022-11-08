@@ -99,6 +99,100 @@ module.exports = {
             }
         })
     },
+    getHeaderDetails: (userId) => {
+        console.log(userId, "88888888888888888888888888");
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
+
+            let CartProducts = await db.get().collection(collection.CART_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { user: objectId(userId) }
+
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            user: 1,
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'product',
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                        }
+                    }
+
+                ]).toArray()
+            console.log(user.UserName);
+            console.log(CartProducts);
+            ///////////////////////////////////////////
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
+            let Total
+            if (cart.products.length > 0) {
+                let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: objectId(userId) }  //get cart of th user
+
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: collection.PRODUCT_COLLECTION,
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            total: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                        }
+                    }
+                ]).toArray()
+                Total = total[0].total
+            }else{
+                Total=0
+            }            
+            ///////////////////////////////
+            const headerDetails={}
+            headerDetails.user=user.UserName
+            headerDetails.cartProducts=CartProducts
+            headerDetails.total=Total
+            resolve(headerDetails)
+        })
+    },
+
     //here we add to cart 
     addToCart: (productId, userId) => {
         let proObj = {
@@ -178,39 +272,7 @@ module.exports = {
                         }
                     }
 
-                ])
-
-
-                // .aggregate([
-                //     {
-                //         $match: { user: objectId(userId) }  //get cart of th user
-
-                //     },
-                //     {
-                //         $unwind: '$products'
-                //     },
-                //     {
-                //         $project: {
-                //             item: '$products.item',
-                //             quantity: '$products.quantity'
-                //         }
-                //     },
-                //     {
-                //         $lookup: {
-                //             from: collection.PRODUCT_COLLECTION,
-                //             localField: 'item',
-                //             foreignField: '_id',
-                //             as: 'product'
-                //         }
-                //     },
-                //     {
-                //         $project: {
-                //             item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                //         }
-                //     }
-                // ])
-                .toArray()
-            console.log("get cart profuctd ////////////////******************//////////////////////");
+                ]).toArray()
             resolve(total)
 
         })
@@ -253,46 +315,50 @@ module.exports = {
     },
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
+            if (cart.products.length > 0) {
+                let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: objectId(userId) }  //get cart of th user
 
-            let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
-                {
-                    $match: { user: objectId(userId) }  //get cart of th user
-
-                },
-                {
-                    $unwind: '$products'
-                },
-                {
-                    $project: {
-                        item: '$products.item',
-                        quantity: '$products.quantity'
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: collection.PRODUCT_COLLECTION,
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: null,
+                            total: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                        }
                     }
-                },
-                {
-                    $lookup: {
-                        from: collection.PRODUCT_COLLECTION,
-                        localField: 'item',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                },
-                {
-                    $project: {
-                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                    }
-                },
-                {
-                    $group: {
-                        _id: null,
-                        total: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
-                    }
+                ]).toArray()
+                if (total) {
+                    resolve(total[0].total)
+                } else {
+                    resolve()
                 }
-            ]).toArray()
-            if(total){
-                resolve(total[0].total)
-            }else{
-                resolve()
             }
+            resolve()
+
         })
 
     },
