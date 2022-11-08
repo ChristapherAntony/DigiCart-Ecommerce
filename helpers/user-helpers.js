@@ -3,7 +3,11 @@ const collection = require('../config/collections')
 var bcrypt = require('bcrypt')
 const { response } = require('express')
 var objectId = require('mongodb').ObjectId
-
+const Razorpay = require('razorpay');
+var instance = new Razorpay({
+    key_id: 'rzp_test_IsLNHEQ2MGIHsd',
+    key_secret: 'NesRoFC2sgBMN8toPYVxtWUa',
+});
 
 module.exports = {
     doSignUP: (userData) => {
@@ -103,7 +107,6 @@ module.exports = {
         console.log(userId, "88888888888888888888888888");
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
-
             let CartProducts = await db.get().collection(collection.CART_COLLECTION)
                 .aggregate([
                     {
@@ -140,12 +143,12 @@ module.exports = {
                     }
 
                 ]).toArray()
-            console.log(user.UserName);
-            console.log(CartProducts);
+
+            let cart = null
             ///////////////////////////////////////////
-            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
-            let Total
-            if (cart.products.length > 0) {
+            cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
+            let Total=0
+            if (CartProducts.length>0) {
                 let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: objectId(userId) }  //get cart of th user
@@ -181,14 +184,12 @@ module.exports = {
                     }
                 ]).toArray()
                 Total = total[0].total
-            }else{
-                Total=0
-            }            
+            }
             ///////////////////////////////
-            const headerDetails={}
-            headerDetails.user=user.UserName
-            headerDetails.cartProducts=CartProducts
-            headerDetails.total=Total
+            const headerDetails = {}
+            headerDetails.user = user.UserName
+            headerDetails.cartProducts = CartProducts
+            headerDetails.total = Total
             resolve(headerDetails)
         })
     },
@@ -395,7 +396,9 @@ module.exports = {
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
-                resolve()
+
+
+                resolve(response.insertedId)
             })
 
         })
@@ -500,6 +503,52 @@ module.exports = {
             resolve(orderDetails[0])
         })
     },
+    generateRazorpay: (orderID, total) => {
+       
+        return new Promise((resolve, reject) => {
+            var options = {
+                amount: total * 100,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: '' + orderID  //to get receipt from razorpay we concatenate string to get it as a string
+            };
+            instance.orders.create(options, function (err, order) {
+                
+                resolve(order)
+            });
+
+        })
+    },
+    verifyPayment:(details)=>{
+        return new Promise((resolve,reject)=>{
+            const crypto = require('crypto');
+            let hmac = crypto.createHmac('sha256', 'NesRoFC2sgBMN8toPYVxtWUa');
+
+            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
+            hmac=hmac.digest('hex') //convert to 
+            if(hmac==details['payment[razorpay_signature]']){
+                resolve()
+            }else{
+                reject()
+            }
+
+
+
+        })
+    },
+    changePaymentStatus:((orderID)=>{
+        return new Promise ((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION)
+            .updateOne({_id:objectId(orderID)},
+            {
+                $set:{
+                    status:'Placed'
+                }
+            })
+            .then(()=>{
+                resolve()
+            })
+        })
+    })
 }
 
 

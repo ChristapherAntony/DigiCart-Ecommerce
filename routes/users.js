@@ -160,7 +160,7 @@ router.get('/viewAll', async function (req, res, next) {
     productHelpers.getAllProducts().then((products) => {
       categoryHelpers.getAllCategory().then(async (category) => {
         let headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-        res.render('users/user-viewAll', { products, category,userName, cartCount, headerDetails })
+        res.render('users/user-viewAll', { products, category, userName, cartCount, headerDetails })
       })
     })
   } else {
@@ -175,8 +175,8 @@ router.get('/viewAll/:id', function (req, res, next) {
   let categoryId = req.params.id
   if (req.session.user) {
     productHelpers.getCategoryProducts(categoryId).then((products) => {
-      categoryHelpers.getAllCategory().then(async(category) => {
-        const headerDetails= await userHelpers.getHeaderDetails(req.session.user._id)
+      categoryHelpers.getAllCategory().then(async (category) => {
+        const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
         res.render('users/user-viewAll', { products, category, userName, cartCount, headerDetails })
       })
     })
@@ -195,7 +195,7 @@ router.get('/viewAllVerify', verifyUser, function (req, res, next) {
 /************************ VIEW PRODUCT DETAILS ******************************************/
 router.get('/details/:id', async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
-  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  //const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
   productHelpers.getProductDetails(productId).then((product) => {
     let category = product.category
@@ -243,9 +243,9 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   userHelpers.getCartProducts(req.session.user._id).then((products) => {
     userHelpers.getCartCount(req.session.user._id).then(async (response) => {
       cartCount = response
-      if (cartCount) {
-        let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
-        console.log("************************************************", totalValue);
+      let totalValue = 0
+      if (products.length > 0) {
+        totalValue = await userHelpers.getTotalAmount(req.session.user._id)
         res.render('users/cart', { products, userName, userId, cartCount, totalValue, headerDetails });
       } else {
         res.render('users/cartIsEmpty', { cartCount, userName })
@@ -302,13 +302,39 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
 router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body, products, totalPrice).then((response) => {
-    cartCount = 0
-    res.json({ status: true })
+  userHelpers.placeOrder(req.body, products, totalPrice).then((orderId) => {
+    if (req.body['payment_method'] === 'COD') {
+      cartCount = 0
+      res.json({ codSuccess: true })
+
+    } else {
+      userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
+        console.log(response.amount, "/---------------------------");
+
+        res.json(response)
+      })
+
+    }
+
+
   })
 
   //res.render('/')
 })
+
+router.post('/verify-payment', (req, res) => {
+  console.log(req.body);
+  userHelpers.verifyPayment(req.body).then(() => {
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
+      console.log('payment Status ');
+      res.json({ status: true })
+    })
+  }).catch((err) => {
+    console.log(err);
+    res.json({ status: false })
+  })
+})
+
 router.get('/clearCart', verifyUser, (req, res) => {
   userHelpers.clearCart(req.session.user._id).then(() => {
     cartCount = 0

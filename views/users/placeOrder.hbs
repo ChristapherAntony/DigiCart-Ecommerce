@@ -103,7 +103,7 @@
                                 </div>
 
                                 <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-                                
+
                                 <div class="col-lg-12 col-md-12">
                                     <div class="billing-info mb-20 form-floating">
                                         <input type="text" name="Name" class="form-control" id="floatingName"
@@ -161,8 +161,8 @@
                                 </div>
                             </div>
                             <div class="additional-info-wrap">
-                                <label >Order notes</label>
-                                <textarea  placeholder="Notes about your order, e.g. special notes for delivery. "
+                                <label>Order notes</label>
+                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
                                     name="message"></textarea>
                             </div>
                         </div>
@@ -180,14 +180,15 @@
                                     <div class="your-order-middle">
                                         <ul>
                                             {{#each products}}
-                                            <li>{{this.product.title}}  X {{quantity}} <span>Rs. {{this.productTotal}} </span></li>
+                                            <li>{{this.product.title}} X {{quantity}} <span>Rs. {{this.productTotal}}
+                                                </span></li>
                                             {{/each}}
-                                            
+
                                         </ul>
                                     </div>
-                                    
+
                                     <div class="your-order-info order-subtotal">
-                                        
+
                                         <ul>
                                             <li>Subtotal <span>Rs.{{total}} </span>
                                             </li>
@@ -217,25 +218,14 @@
                                     </div>
                                     <div class="pay-top sin-payment">
                                         <input id="payment_method_1" class="input-radio" type="radio"
-                                            value="DirectTransfer" name="payment_method">
-                                        <label for="payment_method_1"> Direct Bank Transfer </label>
+                                            value="OnlinePayment" name="payment_method">
+                                        <label for="payment_method_1"> Online Payment</label>
                                         <div class="payment-box payment_method_bacs">
                                             <p>Make your payment directly into our bank account. Please use your Order
                                                 ID as
                                                 the payment reference.</p>
                                         </div>
                                     </div>
-                                    <div class="pay-top sin-payment">
-                                        <input id="payment-method-2" class="input-radio" type="radio" value="cheque"
-                                            name="payment_method">
-                                        <label for="payment-method-2">Check payments</label>
-                                        <div class="payment-box payment_method_bacs">
-                                            <p>Make your payment directly into our bank account. Please use your Order
-                                                ID as
-                                                the payment reference.</p>
-                                        </div>
-                                    </div>
-
                                     <div class="pay-top sin-payment sin-payment-3">
                                         <input id="payment-method-4" class="input-radio" type="radio" value="payPal"
                                             name="payment_method">
@@ -265,6 +255,76 @@
 </div>
 
 
+
+{{!-- <script>
+    $('#checkout-form').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/placeOrder',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                console.log("hello")
+                console.log(response)
+                if (response.codSuccess) {
+                    location.href = '/orderSuccess'
+                } else {
+                    console.log("out side  the rs function ", response)
+                    razorpayPayment(response)
+                }
+            }
+        })
+    })
+
+    function razorpayPayment(order) {
+        console.log("inside the rs function ", order)
+        var options = {
+            "key": "rzp_test_bZDcL6JRT4zjki", // Enter the Key ID generated from the Dashboard
+            "amount": 12000000, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "DigiCart",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature);
+                verifyPayment(response, order)
+
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+
+    }
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post'
+
+        })
+    }
+</script> --}}
+
+
+
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()
@@ -273,10 +333,70 @@
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
-                if(response.status){
-                    location.href='/orderSuccess'
+
+                if (response.codSuccess) {
+                    location.href = '/orderSuccess'
+                }
+                else {
+                    razorpayPayment(response)
                 }
             }
         })
     })
+
+    function razorpayPayment(order) {
+
+        console.log(order)
+
+
+        var options = {
+            "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
+            "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "DigiCart",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+
+                verifyPayment(response, order)          //aftergetting these ids and signature pass it to ajax with order 
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+    
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success:(response)=>{
+                if(response.status){
+                    location.href = '/orderSuccess'
+                }else{
+                    alert('Payment Failed')
+                }
+            }
+        })
+    }
+
+
+
 </script>
