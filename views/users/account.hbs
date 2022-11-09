@@ -28,7 +28,7 @@
                                 <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
                                     Method</a>
                                 <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
+                                <a href="#account-info" data-toggle="tab"  ><i class="fa fa-user"></i> Account Details</a>
                                 <a href="/logOut"><i class="fa fa-sign-out"></i> Logout</a>
                             </div>
                         </div>
@@ -172,30 +172,21 @@
                                     <div class="myaccount-content">
                                         <h3>Account Details</h3>
                                         <div class="account-details-form">
-                                            <form action="#">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="single-input-item">
-                                                            <label for="first-name" class="required">First Name</label>
-                                                            <input type="text" id="first-name" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="single-input-item">
-                                                            <label for="last-name" class="required">Last Name</label>
-                                                            <input type="text" id="last-name" />
-                                                        </div>
-                                                    </div>
+                                            <form id="profile-form" action="#" method="post"  >
+                                                <input type="text" name="userId" id="" value="{{userDetails._id}}" hidden>
+                                                <div class="single-input-item">   
+                                                    <label for="UserName" class="required">Name</label>                                                 
+                                                    <input type="text" id="field1" name="UserName"     value="{{userDetails.UserName}}" />
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <label for="display-name" class="required">Display Name</label>
-                                                    <input type="text" id="display-name" />
+                                                    <label for="email" class="required">Email Adders</label>
+                                                    <input type="text" id="field2" name="UserEmail"    value="{{userDetails.UserEmail}}" />
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <label for="email" class="required">Email Addres</label>
-                                                    <input type="email" id="email" />
+                                                    <label for="mobile" class="required">Mobile Number</label>
+                                                    <input type="number" id="field3" name="MobileNo"  value="{{userDetails.MobileNo}}" />
                                                 </div>
-                                                <fieldset>
+                                                {{!-- <fieldset>
                                                     <legend>Password change</legend>
                                                     <div class="single-input-item">
                                                         <label for="current-pwd" class="required">Current
@@ -218,9 +209,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </fieldset>
+                                                </fieldset> --}}
                                                 <div class="single-input-item">
-                                                    <button class="check-btn sqr-btn ">Save Changes</button>
+                                                    <button type="submit" class="btn btn-danger float-left " id="save" >save</button>
+                                                    <a class="btn btn-danger float-right " id="edit" >Edit</a>
+                                                    
                                                 </div>
                                             </form>
                                         </div>
@@ -234,3 +227,104 @@
         </div>
     </div>
 </div>
+
+<script>
+    function disable(){
+        document.getElementById("field1").disabled = true;
+        document.getElementById("field2").disabled = true;
+        document.getElementById("field3").disabled = true;
+        
+
+
+          let x = document.getElementById("save");
+            if (x.style.display === "none") {
+             x.style.display = "block";
+            } else {
+             x.style.display = "none";
+            }
+          let y = document.getElementById("edit");
+            if (y.style.display === "block") {
+             y.style.display = "none";
+            } else {
+             y.style.display = "block";
+            }
+        
+    }
+        function enable(){
+        document.getElementById("field1").disabled = false;
+        document.getElementById("field2").disabled = false;
+        document.getElementById("field3").disabled = false;
+        let y = document.getElementById("edit");
+            if (y.style.display === "none") {
+             y.style.display = "block";
+            } else {
+             y.style.display = "none";
+            }
+        let x = document.getElementById("save");
+            if (x.style.display === "block") {
+             x.style.display = "none";
+            } else {
+             x.style.display = "block";
+            }
+    }
+
+
+
+    
+ 
+
+
+
+
+
+
+
+
+
+
+        $('#profile-form').submit((e) => {
+         console.log("inside ajax")
+        e.preventDefault()
+    
+
+
+Swal.fire({
+  title: 'Do you want to save the changes?',
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: 'Save',
+  denyButtonText: `Don't save`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+
+
+
+        $.ajax({
+            
+            url: '/updateProfile',
+            method: 'post',
+            data: $('#profile-form').serialize(),
+            success: (response) => {
+                console.log(response.UserName)
+                document.getElementById('field1').innerHTML = response.UserName
+                document.getElementById('field2').innerHTML = response.UserEmail
+                document.getElementById('field3').innerHTML = response.MobileNo
+
+
+
+            }
+        })
+           Swal.fire('Saved!', '', 'success')
+  } else if (result.isDenied) {
+    Swal.fire('Changes are not saved', '', 'info')
+  }
+})
+
+
+
+        })
+
+
+
+</script>

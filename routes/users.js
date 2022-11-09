@@ -9,6 +9,13 @@ let cartCount = 0
 let userName = null
 const headerDetails = null
 
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
+    'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
+});
+
 
 
 //session verifying
@@ -48,16 +55,19 @@ router.get('/logOut', (req, res, next) => {
   res.redirect('/');
 });
 
+
 router.get('/otpLogin', (req, res, next) => {
   res.render('users/otpLogin', { mobileError: req.session.mobileError });
   req.session.mobileError = null;
 });
+
 
 router.get('/otpVerify', (req, res, next) => {
   res.render('users/enterOtp', { otpError: req.session.otpError })
   req.session.otpError = null;
 
 });
+
 
 router.post('/enterOtp', (req, res, next) => {
   userHelpers.verifyMobile(req.body.mobile).then((response) => {
@@ -80,6 +90,7 @@ router.post('/enterOtp', (req, res, next) => {
 
 })
 
+
 router.post('/verifyOtp', (req, res, next) => {
   console.log(req.body);
   let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
@@ -100,9 +111,11 @@ router.post('/verifyOtp', (req, res, next) => {
 
 });
 
+
 router.get('/signUp', (req, res, next) => {
   res.render('users/signUp')
 });
+
 
 router.post('/signUp', (req, res) => {
   console.log(req.body);
@@ -230,10 +243,24 @@ router.get('/wishlist', verifyUser, async (req, res, next) => {
 router.get('/account', verifyUser, async (req, res, next) => {
   let orders = await userHelpers.getUserOrders(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  let userDetails =await userHelpers.getUserDetails(req.session.user._id)
+  console.log(userDetails);
 
 
-  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails });
+  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails ,userDetails});
 });
+
+router.post('/updateProfile',verifyUser,async(req,res)=>{
+  let updatedUser =await userHelpers.updateAndFetchProfile(req.body)
+
+  console.log(updatedUser);
+  console.log("bofore jason");
+  response.UserName=updatedUser.UserName
+  response.UserEmail=updatedUser.UserName
+  response.MobileNo=updatedUser.MobileNo
+
+  res.json(response)
+})
 
 
 router.get('/cart', verifyUser, async (req, res, next) => {
@@ -307,19 +334,65 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
       cartCount = 0
       res.json({ codSuccess: true })
 
-    } else {
+    } else if (req.body['payment_method'] === 'ONLINE') {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
-        console.log(response.amount, "/---------------------------");
-
+        response.razor=true
         res.json(response)
       })
 
+    } else if (req.body['payment_method'] === 'PAYPAL') {
+      let payment = {
+        "intent": "authorize",
+        "payer": {
+          "payment_method": "paypal"
+        },
+        "redirect_urls": {
+          "return_url": "http://localhost:3000/orderSuccess",
+          "cancel_url": "http://localhost:3000/paymentFailed"
+        },
+        "transactions": [{
+          "amount": {
+            "total": totalPrice,
+            "currency": "USD"
+          },
+          "description": orderId
+        }]
+      }
+      userHelpers.createPay(payment).then((transaction) => {
+        
+        console.log(transaction);
+        console.log("just came out side the create pay");
+        var id = transaction.id;
+        var links = transaction.links;
+        var counter = links.length;
+        while (counter--) {
+          if (links[counter].rel == 'approval_url') {
+            transaction.payPal=true
+            transaction.linkto=links[counter].href
+            transaction.orderId=orderId
+            //return res.redirect(links[counter].href)
+            userHelpers.changePaymentStatus(orderId).then(()=>{
+              console.log(transaction);
+              res.json(transaction)
+            })
+          }
+        }
+      })
+        .catch((err) => {
+          console.log(err);
+          res.redirect('/err');
+        });
+
+
     }
-
-
   })
+})
 
-  //res.render('/')
+
+router.get('/paymentFailed', verifyUser, async (req, res) => {
+  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  
+  res.render('users/paymentFailed', { userName, cartCount })
 })
 
 router.post('/verify-payment', (req, res) => {
@@ -362,8 +435,6 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   let orderDetails = await userHelpers.getOrderDetails(req.params.id)
   console.log(productDetails);
   console.log(orderDetails);
-
-
   res.render('users/orderDetails', { userName, cartCount, orderDetails, productDetails, headerDetails })
 })
 

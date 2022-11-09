@@ -46,7 +46,13 @@
                             {{#if userName}}
                             <div
                                 class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                               {{#if headerDetails.cartProducts}}
                                 <a class="cart-active" href="#">
+                               {{else}}
+                               <a  href="/cart">
+                               {{/if}}
+                                {{!-- <a class="cart-active" href="#"> --}}
+                               
                                     <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
                                         id="cart-count">{{cartCount}}</span>
                                     <span class="cart-amount white"><i class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
@@ -209,6 +215,7 @@
     </div>
 </div>
 <!-- mini cart start -->
+
 <div class="sidebar-cart-active">
     <div class="sidebar-cart-all">
         <a class="cart-close" href="#"><i class="icon_close"></i></a>

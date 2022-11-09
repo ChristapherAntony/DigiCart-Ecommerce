@@ -9,6 +9,14 @@ var instance = new Razorpay({
     key_secret: 'NesRoFC2sgBMN8toPYVxtWUa',
 });
 
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
+    'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
+});
+
+
 module.exports = {
     doSignUP: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -147,8 +155,8 @@ module.exports = {
             let cart = null
             ///////////////////////////////////////////
             cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
-            let Total=0
-            if (CartProducts.length>0) {
+            let Total = 0
+            if (CartProducts.length > 0) {
                 let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: objectId(userId) }  //get cart of th user
@@ -193,7 +201,32 @@ module.exports = {
             resolve(headerDetails)
         })
     },
+    getUserDetails:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId)},{Password:0} )
+            user.Password=null
+            resolve(user)
+        })
 
+    },
+    updateAndFetchProfile:(userDetails)=>{
+        let userId=userDetails.userId
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION)
+            .updateOne({_id:objectId(userId)},{
+                $set:{
+                    UserName:userDetails.UserName,
+                    UserEmail:userDetails.UserEmail,
+                    MobileNo:userDetails.MobileNo
+                }
+            })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId)},{Password:0} )
+            user.Password=null
+            resolve(user)
+        })
+
+    },
+     
     //here we add to cart 
     addToCart: (productId, userId) => {
         let proObj = {
@@ -321,7 +354,6 @@ module.exports = {
                 let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: objectId(userId) }  //get cart of th user
-
                     },
                     {
                         $unwind: '$products'
@@ -359,9 +391,7 @@ module.exports = {
                 }
             }
             resolve()
-
         })
-
     },
     getCartProductsList: (userId) => {
         return new Promise(async (resolve, reject) => {
@@ -373,7 +403,10 @@ module.exports = {
     },
     placeOrder: (order, products, total) => {
         return new Promise((resolve, reject) => {
-            let status = order.payment_method === 'COD' ? 'Placed' : 'Pending'
+            let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
+            console.log("status changed to pending because of paypal");
+            console.log(order);
+
             let orderObj = {
                 date: new Date(),
                 deliveryDetails: {
@@ -394,10 +427,9 @@ module.exports = {
                 totalAmount: total,
                 status: status
             }
+            console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
-
-
                 resolve(response.insertedId)
             })
 
@@ -419,9 +451,6 @@ module.exports = {
             db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(userId) })
             resolve()
         })
-
-
-
     },
     getUserOrders: (userId) => {
         return new Promise(async (resolve, reject) => {
@@ -504,7 +533,6 @@ module.exports = {
         })
     },
     generateRazorpay: (orderID, total) => {
-       
         return new Promise((resolve, reject) => {
             var options = {
                 amount: total * 100,  // amount in the smallest currency unit
@@ -512,43 +540,53 @@ module.exports = {
                 receipt: '' + orderID  //to get receipt from razorpay we concatenate string to get it as a string
             };
             instance.orders.create(options, function (err, order) {
-                
+
                 resolve(order)
             });
 
         })
     },
-    verifyPayment:(details)=>{
-        return new Promise((resolve,reject)=>{
+    verifyPayment: (details) => {
+        return new Promise((resolve, reject) => {
             const crypto = require('crypto');
             let hmac = crypto.createHmac('sha256', 'NesRoFC2sgBMN8toPYVxtWUa');
 
-            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
-            hmac=hmac.digest('hex') //convert to 
-            if(hmac==details['payment[razorpay_signature]']){
+            hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]'])
+            hmac = hmac.digest('hex') //convert to 
+            if (hmac == details['payment[razorpay_signature]']) {
                 resolve()
-            }else{
+            } else {
                 reject()
             }
-
-
-
         })
     },
-    changePaymentStatus:((orderID)=>{
-        return new Promise ((resolve,reject)=>{
+    changePaymentStatus: ((orderID) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION)
-            .updateOne({_id:objectId(orderID)},
-            {
-                $set:{
-                    status:'Placed'
-                }
-            })
-            .then(()=>{
-                resolve()
-            })
+                .updateOne({ _id: objectId(orderID) },
+                    {
+                        $set: {
+                            status: 'Placed'
+                        }
+                    })
+                .then(() => {
+                    resolve()
+                })
         })
-    })
+    }),
+    createPay: (payment) => {
+        return new Promise((resolve, reject) => {
+            paypal.payment.create(payment, function (err, payment) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(payment);
+                }
+            });
+        });
+    }
 }
+
+
 
 

@@ -218,7 +218,7 @@
                                     </div>
                                     <div class="pay-top sin-payment">
                                         <input id="payment_method_1" class="input-radio" type="radio"
-                                            value="OnlinePayment" name="payment_method">
+                                            value="ONLINE" name="payment_method">
                                         <label for="payment_method_1"> Online Payment</label>
                                         <div class="payment-box payment_method_bacs">
                                             <p>Make your payment directly into our bank account. Please use your Order
@@ -227,7 +227,7 @@
                                         </div>
                                     </div>
                                     <div class="pay-top sin-payment sin-payment-3">
-                                        <input id="payment-method-4" class="input-radio" type="radio" value="payPal"
+                                        <input id="payment-method-4" class="input-radio" type="radio" value="PAYPAL"
                                             name="payment_method">
                                         <label for="payment-method-4">PayPal <img alt=""
                                                 src="assets/images/icon-img/payment.png"><a href="#">What is
@@ -327,28 +327,32 @@
 
 <script>
     $('#checkout-form').submit((e) => {
+         console.log("inside ajax")
         e.preventDefault()
         $.ajax({
+            
             url: '/placeOrder',
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
+                console.log("inside the success stage")
+                console.log(response)
 
                 if (response.codSuccess) {
                     location.href = '/orderSuccess'
                 }
-                else {
+                else if(response.razor) {
                     razorpayPayment(response)
+                }
+                else if(response.payPal){
+
+                    location.replace(response.linkto)
                 }
             }
         })
     })
 
     function razorpayPayment(order) {
-
-        console.log(order)
-
-
         var options = {
             "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
             "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -358,8 +362,6 @@
             "image": "https://example.com/your_logo",
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-
-
                 verifyPayment(response, order)          //aftergetting these ids and signature pass it to ajax with order 
             },
             "prefill": {
