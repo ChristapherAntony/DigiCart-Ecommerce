@@ -1,4 +1,10 @@
 /* for top bar home/ shop   etc*/
+.swalAddToCart-size {
+   width: 200px !important;
+}
+
+
+
 .menuBarTop {
     padding-top: 15px;
     padding-bottom: 15px;

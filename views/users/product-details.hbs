@@ -406,29 +406,31 @@
                     let count = $('#cart-count').html()
                     count = parseInt(count) + 1
                     $('#cart-count').html(count)
+                    Swal.fire({
+                        position: 'top-end',
+                        width: 300,
+                        height:100,
+                        icon: 'success',
+                        
+                        text: "Item Added to Cart",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 } else {
-                    (
-                        function confirmLoginCart() {
-                            Swal.fire({
-                                title: 'Please Login ',
-                                text: "Please Login to Add this Item Into Your Cart",
-                                icon: 'info',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Continue with Login'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.href = '/detailsVerify/' + proId
-                                    
-                                }
-                            })
+                    Swal.fire({
+                        title: 'Please Login ',
+                        text: "Please Login to Add this Item Into Your Cart",
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Continue with Login'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '/detailsVerify/' + proId
                         }
-                    )()
-
-
-
-                   // location.href = '/detailsVerify/' + proId
+                    })
+                    // location.href = '/detailsVerify/' + proId
                 }
 
             }

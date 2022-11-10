@@ -4,24 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
-
-
-
-
-
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
-
-
 var app = express();
 var session = require('express-session')  // session npm 
-// var fileupload = require('express-fileupload')
-//var cache = require('cache-control');
-
 const nocache = require("nocache");
 var db = require('./config/connection')
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +22,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(fileupload())
 app.use(session({ resave: true, saveUninitialized: true, secret: "Key", cookie: { maxAge: 6000000 } })) // session use
 app.use(nocache());
 db.connect((err) => {
@@ -42,15 +29,6 @@ db.connect((err) => {
   else console.log("data base connected");
 })
 
-
-
-/********************** */
-
-
-
-
-//var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-/*********************** */
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);

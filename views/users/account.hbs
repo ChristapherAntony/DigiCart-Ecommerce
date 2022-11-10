@@ -28,7 +28,7 @@
                                 <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
                                     Method</a>
                                 <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
-                                <a href="#account-info" data-toggle="tab"  ><i class="fa fa-user"></i> Account Details</a>
+                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
                                 <a href="/logOut"><i class="fa fa-sign-out"></i> Logout</a>
                             </div>
                         </div>
@@ -86,16 +86,18 @@
                                                         <td>
                                                             <div class="dropdown">
                                                                 <button class="btn  btn-sm dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"  
+                                                                    type="button" id="dropdownMenuButton"
                                                                     data-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
-                                                                    View    
+                                                                    View
                                                                 </button>
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="/orderDetails/{{this._id}}">View Details</a>
+                                                                    <a class="dropdown-item"
+                                                                        href="/orderDetails/{{this._id}}">View
+                                                                        Details</a>
                                                                     <a class="dropdown-item" href="#">Cancel</a>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -157,13 +159,26 @@
                                     <div class="myaccount-content">
                                         <h3>Billing Address</h3>
                                         <address>
-                                            <p><strong>Alex Tuntuni</strong></p>
-                                            <p>1355 Market St, Suite 900 <br>
-                                                San Francisco, CA 94103</p>
-                                            <p>Mobile: (123) 456-7890</p>
+                                            <a href="/addAddress" class="float-right btn btn-primary">Add new</a>
                                         </address>
-                                        <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Edit
-                                            Address</a>
+                                        {{#each address}}
+                                        <div id="{{this.Address.addressId}}">
+                                            <address>
+                                                <p><strong>{{this.Address.Name}}</strong></p>
+                                                <p>{{this.Address.HouseNo}} , {{this.Address.Street}} ,{{this.Address.TownCity}} <br>
+                                                    {{this.Address.State}} , {{this.Address.Country}} ,
+                                                    Pin-{{this.Address.PostCode}}</p>
+                                                <p>Mobile: {{this.Address.Mobile}}</p>
+                                            </address>
+                                            <a href="/editAddress/{{@index}}" class="check-btn sqr-btn "><i
+                                                    class="fa fa-edit"></i> Edit
+                                                Address</a>
+                                            <button style="border: none;" onclick="removeAddress('{{this.Address.addressId}}')"
+                                                class="check-btn sqr-btn "><i class="bi bi-trash3"></i> Delete</button>
+                                        </div>
+                                        <br>
+                                        <hr>
+                                        {{/each}}
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
@@ -172,19 +187,23 @@
                                     <div class="myaccount-content">
                                         <h3>Account Details</h3>
                                         <div class="account-details-form">
-                                            <form id="profile-form" action="#" method="post"  >
-                                                <input type="text" name="userId" id="" value="{{userDetails._id}}" hidden>
-                                                <div class="single-input-item">   
-                                                    <label for="UserName" class="required">Name</label>                                                 
-                                                    <input type="text" id="field1" name="UserName"     value="{{userDetails.UserName}}" />
+                                            <form id="profile-form" action="#" method="post">
+                                                <input type="text" name="userId" id="" value="{{userDetails._id}} "
+                                                    hidden>
+                                                <div class="single-input-item">
+                                                    <label for="UserName" class="required">Name</label>
+                                                    <input type="text" id="field1" name="UserName"
+                                                        value="{{userDetails.UserName}}" />
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="email" class="required">Email Adders</label>
-                                                    <input type="text" id="field2" name="UserEmail"    value="{{userDetails.UserEmail}}" />
+                                                    <input type="text" id="field2" name="UserEmail"
+                                                        value="{{userDetails.UserEmail}}" />
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="mobile" class="required">Mobile Number</label>
-                                                    <input type="number" id="field3" name="MobileNo"  value="{{userDetails.MobileNo}}" />
+                                                    <input type="number" id="field3" name="MobileNo"
+                                                        value="{{userDetails.MobileNo}}" />
                                                 </div>
                                                 {{!-- <fieldset>
                                                     <legend>Password change</legend>
@@ -211,9 +230,9 @@
                                                     </div>
                                                 </fieldset> --}}
                                                 <div class="single-input-item">
-                                                    <button type="submit" class="btn btn-danger float-left " id="save" >save</button>
-                                                    <a class="btn btn-danger float-right " id="edit" >Edit</a>
-                                                    
+                                                    <button type="submit" class="btn btn-danger float-left "
+                                                        id="save">Update </button>
+                                                    {{!-- <a class="btn btn-danger float-right " id="edit">Edit</a> --}}
                                                 </div>
                                             </form>
                                         </div>
@@ -229,101 +248,120 @@
 </div>
 
 <script>
-    function disable(){
-        document.getElementById("field1").disabled = true;
-        document.getElementById("field2").disabled = true;
-        document.getElementById("field3").disabled = true;
-        
-
-
-          let x = document.getElementById("save");
-            if (x.style.display === "none") {
-             x.style.display = "block";
-            } else {
-             x.style.display = "none";
-            }
-          let y = document.getElementById("edit");
-            if (y.style.display === "block") {
-             y.style.display = "none";
-            } else {
-             y.style.display = "block";
-            }
-        
-    }
-        function enable(){
-        document.getElementById("field1").disabled = false;
-        document.getElementById("field2").disabled = false;
-        document.getElementById("field3").disabled = false;
-        let y = document.getElementById("edit");
-            if (y.style.display === "none") {
-             y.style.display = "block";
-            } else {
-             y.style.display = "none";
-            }
-        let x = document.getElementById("save");
-            if (x.style.display === "block") {
-             x.style.display = "none";
-            } else {
-             x.style.display = "block";
-            }
-    }
-
-
-
-    
- 
-
-
-
-
-
-
-
-
-
-
-        $('#profile-form').submit((e) => {
-         console.log("inside ajax")
+    $('#profile-form').submit((e) => {
         e.preventDefault()
-    
+        let UserName = document.getElementById('field1')
+        let UserEmail = document.getElementById('field2')
+        let MobileNo = document.getElementById('field3')
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/updateProfile',
+                    method: 'post',
+                    data: $('#profile-form').serialize(),
+                    success: (response) => {
+                        console.log(response.UserName)
+                        document.getElementById('field1').innerHTML = response.UserName
+                        document.getElementById('field2').innerHTML = response.UserEmail
+                        document.getElementById('field3').innerHTML = response.MobileNo
+                    }
+                })
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Your Profile Updated',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            } else if (result.isDenied) {
+                document.getElementById('field1').innerHTML = UserName
+                document.getElementById('field2').innerHTML = UserEmail
+                document.getElementById('field3').innerHTML = MobileNo
+                Swal.fire({
 
-
-Swal.fire({
-  title: 'Do you want to save the changes?',
-  showDenyButton: true,
-  showCancelButton: true,
-  confirmButtonText: 'Save',
-  denyButtonText: `Don't save`,
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-
-
-
-        $.ajax({
-            
-            url: '/updateProfile',
-            method: 'post',
-            data: $('#profile-form').serialize(),
-            success: (response) => {
-                console.log(response.UserName)
-                document.getElementById('field1').innerHTML = response.UserName
-                document.getElementById('field2').innerHTML = response.UserEmail
-                document.getElementById('field3').innerHTML = response.MobileNo
-
-
-
+                    icon: 'info',
+                    title: 'Changes are not saved',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
             }
         })
-           Swal.fire('Saved!', '', 'success')
-  } else if (result.isDenied) {
-    Swal.fire('Changes are not saved', '', 'info')
-  }
-})
+    })
 
-
-
+    function removeAddress(addressId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/deleteAddress',
+                    data: {
+                        addressId: addressId
+                    },
+                    method: 'get',
+                    success(response) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        document.getElementById(addressId).remove()
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
         })
+    }
+
+
+
+    function disable() {
+        document.getElementById("field1").disabled = true;
+        let x = document.getElementById("save");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+        let y = document.getElementById("edit");
+        if (y.style.display === "block") {
+            y.style.display = "none";
+        } else {
+            y.style.display = "block";
+        }
+
+    }
+    function enable() {
+        document.getElementById("field1").disabled = false;
+        let y = document.getElementById("edit");
+        if (y.style.display === "none") {
+            y.style.display = "block";
+        } else {
+            y.style.display = "none";
+        }
+        let x = document.getElementById("save");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
 
 
 

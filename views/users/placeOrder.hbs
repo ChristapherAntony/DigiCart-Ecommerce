@@ -93,70 +93,68 @@
                                     <div class="billing-select mb-20">
                                         <label>Choose Your Address <abbr class="required"
                                                 title="required">*</abbr></label>
-                                        <select>
-                                            <option>Address 1</option>
-                                            <option>Address 2</option>
-                                            <option>Address 3</option>
+                                        <select onchange="getAddress()"placeholder="Please" id="address" >
+                                            <option  >Select</option>
+                                            {{#each address}}
+                                            
+                                            <option value="{{this.Address.addressId}}">{{this.Address.Name}}, {{this.Address.Street}}, Pin-{{this.Address.PostCode}} </option>
+                                            {{/each}}
+                                            
                                         </select>
                                     </div>
-                                    <h4>Add New Delivery Address</h4>
+                                    <h4>Delivery Address</h4>
                                 </div>
 
                                 <input type="text" name="userId" id="" value="{{user._id}}" hidden>
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input type="text" name="Name" class="form-control" id="floatingName"
+                                        <input type="text" name="Name" class="form-control" id="Name" 
                                             placeholder=".">
-                                        <label for="floatingName">Your Name </label>
+                                        <label for="Name">Your Name </label>
                                     </div>
                                 </div>
+                                
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-20 form-floating">
 
-                                        <input name="HouseNo" placeholder="." type="text" class="form-control" id="1">
-                                        <label for="1">House number and street name.</label>
+                                        <input name="HouseNo" placeholder="." type="text" class="form-control" id="HouseNo" required>
+                                        <label for="HouseNo">House number and street name.</label>
                                     </div>
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Street" placeholder="." type="text" class="form-control" id="1">
-                                        <label for="1">Street Address.</label>
+                                        <input name="Street" placeholder="." type="text" class="form-control" id="Street" required>
+                                        <label for="Street">Street Address.</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="TownCity" placeholder="." type="text" class="form-control" id="1">
-                                        <label for="1">Town / City</label>
+                                        <input name="TownCity" placeholder="." type="text" class="form-control" id="TownCity" required>
+                                        <label for="TownCity">Town / City</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="State" placeholder="." type="text" class="form-control" id="1">
-                                        <label for="1">State</label>
+                                        <input name="State" placeholder="." type="text" class="form-control" id="State" required>
+                                        <label for="State">State</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Country" placeholder="." type="text" class="form-control" id="1">
-                                        <label for="1">Country</label>
+                                        <input name="Country" placeholder="." type="text" class="form-control" id="Country" required>
+                                        <label for="Country">Country</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
                                         <input name="PostCode" placeholder="." type="number" class="form-control"
-                                            id="1">
-                                        <label for="1">Post Code / ZIP</label>
+                                            id="PostCode" required>
+                                        <label for="PostCode">Post Code / ZIP</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Mobile" placeholder="." type="number" class="form-control" id="1">
-                                        <label for="1">Mobile</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="billing-info mb-20 form-floating">
-                                        <input name="Email" placeholder="." type="email" class="form-control" id="1">
-                                        <label for="1">Email Address</label>
+                                        <input name="Mobile" placeholder="." type="number" class="form-control" id="Mobile" required>
+                                        <label for="Mobile">Mobile</label>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +208,7 @@
                                     <div class="pay-top sin-payment">
                                         {{!-- checked="checked" --}}
                                         <input id="payment-method-3" class="input-radio" type="radio" value="COD"
-                                            name="payment_method">
+                                            name="payment_method" required>
                                         <label for="payment-method-3">Cash on delivery </label>
                                         <div class="payment-box payment_method_bacs">
                                             <p>Pay cash Only on Delivery.</p>
@@ -398,6 +396,8 @@
             }
         })
     }
+
+
 
 
 

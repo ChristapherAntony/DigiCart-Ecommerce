@@ -11,9 +11,9 @@ const headerDetails = null
 
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
-    'mode': 'sandbox', //sandbox or live
-    'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
-    'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
+  'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
 });
 
 
@@ -241,24 +241,58 @@ router.get('/wishlist', verifyUser, async (req, res, next) => {
 
 
 router.get('/account', verifyUser, async (req, res, next) => {
-  let orders = await userHelpers.getUserOrders(req.session.user._id)
+  const orders = await userHelpers.getUserOrders(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  let userDetails =await userHelpers.getUserDetails(req.session.user._id)
-  console.log(userDetails);
+  const userDetails = await userHelpers.getUserDetails(req.session.user._id)
+  const address = await userHelpers.getAllAddress(req.session.user._id)
+  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address });
+});
+router.get('/addAddress', verifyUser, async (req, res, next) => {
+  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
+  res.render('users/addAddress', { userName, cartCount, account: true, headerDetails });
+});
+router.post('/postAddress', verifyUser, async (req, res, next) => {
+  const add = await userHelpers.addNewAddress(req.body, req.session.user._id)
+  res.redirect('/account')
+});
+router.get('/editAddress/:position', verifyUser, async (req, res, next) => {
+  let position=req.params.position
+  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  const getOneAddress= await userHelpers.getOneAddress(req.session.user._id,position)
+  res.render('users/editAddress', { userName, cartCount, account: true, headerDetails,getOneAddress,position });
+});
+router.get('/getAddress', verifyUser, async (req, res, next) => {
 
-  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails ,userDetails});
+  let addressId=req.query.addressId
+  if(addressId!="Select"){
+    let getOneAddress= await userHelpers.getOneAddressById(req.session.user._id,addressId)
+    console.log(getOneAddress);
+    let response=getOneAddress.Address
+    response.status=true
+    res.json(response)
+  }else{
+    res.json({status:false})
+  }
 });
 
-router.post('/updateProfile',verifyUser,async(req,res)=>{
-  let updatedUser =await userHelpers.updateAndFetchProfile(req.body)
+router.post('/updateAddress', verifyUser, async (req, res, next) => {
+  console.log(req.body);
+  
+  const update = await userHelpers.updateAddress(req.body, req.session.user._id,)
+  res.redirect('/account')
+});
+router.get('/deleteAddress', verifyUser, async (req, res, next) => {
+  const deleteAddress =await userHelpers.deleteAddress(req.session.user._id,req.query.addressId)
+  res.json(response)
+});
 
-  console.log(updatedUser);
-  console.log("bofore jason");
-  response.UserName=updatedUser.UserName
-  response.UserEmail=updatedUser.UserName
-  response.MobileNo=updatedUser.MobileNo
 
+router.post('/updateProfile', verifyUser, async (req, res) => {
+  let updatedUser = await userHelpers.updateAndFetchProfile(req.body)
+  response.UserName = updatedUser.UserName
+  response.UserEmail = updatedUser.UserName
+  response.MobileNo = updatedUser.MobileNo
   res.json(response)
 })
 
@@ -322,8 +356,8 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   let total = await userHelpers.getTotalAmount(req.session.user._id)
   let products = await userHelpers.getCartProducts(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
-  res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails })
+  const address = await userHelpers.getAllAddress(req.session.user._id)
+  res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails,address })
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
@@ -336,7 +370,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
 
     } else if (req.body['payment_method'] === 'ONLINE') {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
-        response.razor=true
+        response.razor = true
         res.json(response)
       })
 
@@ -359,7 +393,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
         }]
       }
       userHelpers.createPay(payment).then((transaction) => {
-        
+
         console.log(transaction);
         console.log("just came out side the create pay");
         var id = transaction.id;
@@ -367,11 +401,11 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
         var counter = links.length;
         while (counter--) {
           if (links[counter].rel == 'approval_url') {
-            transaction.payPal=true
-            transaction.linkto=links[counter].href
-            transaction.orderId=orderId
+            transaction.payPal = true
+            transaction.linkto = links[counter].href
+            transaction.orderId = orderId
             //return res.redirect(links[counter].href)
-            userHelpers.changePaymentStatus(orderId).then(()=>{
+            userHelpers.changePaymentStatus(orderId).then(() => {
               console.log(transaction);
               res.json(transaction)
             })
@@ -391,7 +425,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
 
 router.get('/paymentFailed', verifyUser, async (req, res) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  
+
   res.render('users/paymentFailed', { userName, cartCount })
 })
 

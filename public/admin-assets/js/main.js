@@ -338,8 +338,6 @@ function changeStatus(orderId) {
   })
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function(event) {
   
   function OTPInput() {

@@ -32,6 +32,110 @@ module.exports = {
             }
         })
     },
+    addNewAddress: (address, userId) => {
+        return new Promise((resolve, reject) => {
+            address.addressId = new Date().valueOf() // added new field as with date value for editing address
+            db.get().collection(collection.USER_COLLECTION).updateOne(
+                { _id: objectId(userId) },
+                { $push: { Address: address } }
+            )
+            resolve()
+        })
+    },
+    getAllAddress: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            const allAddress = await db.get().collection(collection.USER_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { _id: objectId(userId) }
+                    },
+                    {
+                        $unwind: '$Address'
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            Address: '$Address'
+
+                        }
+                    }
+                ]).toArray()
+            resolve(allAddress)
+        })
+    },
+    getOneAddress: (userId, position) => {
+        position = parseInt(position)
+        return new Promise(async (resolve, reject) => {
+            const address = await db.get().collection(collection.USER_COLLECTION)
+                .aggregate([
+                    {
+                        $match: {
+                            _id: objectId(userId)
+                        }
+                    },
+                    {
+                        "$project": { "matched": { "$arrayElemAt": ['$Address', position] } }
+                    }
+                ]).toArray()
+            resolve(address[0])
+        })
+    },
+    getOneAddressById: (userId, address) => {
+        console.log(userId, address);
+        let addressId = parseInt(address)
+        console.log(typeof (addressId));
+
+        return new Promise(async (resolve, reject) => {
+            const address = await db.get().collection(collection.USER_COLLECTION)
+                .aggregate([
+                    {
+                        $match: {
+                            _id: objectId(userId)
+                        }
+                    },
+                    {
+                        $unwind: '$Address'
+                    },
+                    {
+                        $match: { 'Address.addressId': addressId }
+                    },
+                    {
+                        $project: {
+                            Address: 1
+                        }
+                    }
+                ]).toArray()
+            resolve(address[0])
+        })
+    },
+
+    updateAddress: (newAddress, userId) => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION)       //parseInt is for form data in the from of string
+                .updateOne({ _id: objectId(userId), 'Address.addressId': parseInt(newAddress.addressId) },
+                    {
+                        $set: {
+                            'Address.$.Name': newAddress.Name,
+                            'Address.$.HouseNo': newAddress.HouseNo,
+                            'Address.$.Street': newAddress.Street,
+                            'Address.$.TownCity': newAddress.TownCity,
+                            'Address.$.State': newAddress.State,
+                            'Address.$.Country': newAddress.Country,
+                            'Address.$.PostCode': newAddress.PostCode,
+                            'Address.$.Mobile': newAddress.Mobile,
+                            'Address.$.addressId': parseInt(newAddress.addressId)
+                        }
+                    })
+            resolve()
+        })
+    },
+    deleteAddress: (userId, addressId) => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION)       //parseInt is for form data in the from of string
+                .updateOne({ _id: objectId(userId) }, { $pull: { Address: { addressId: parseInt(addressId) } } })
+            resolve()
+        })
+    },
     verifyMobile: (mobileNo) => {
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mobileNo })
@@ -112,7 +216,7 @@ module.exports = {
         })
     },
     getHeaderDetails: (userId) => {
-        console.log(userId, "88888888888888888888888888");
+
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
             let CartProducts = await db.get().collection(collection.CART_COLLECTION)
@@ -201,32 +305,32 @@ module.exports = {
             resolve(headerDetails)
         })
     },
-    getUserDetails:(userId)=>{
-        return new Promise(async(resolve,reject)=>{
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId)},{Password:0} )
-            user.Password=null
+    getUserDetails: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }, { Password: 0 })
+            user.Password = null
             resolve(user)
         })
 
     },
-    updateAndFetchProfile:(userDetails)=>{
-        let userId=userDetails.userId
-        return new Promise(async(resolve,reject)=>{
+    updateAndFetchProfile: (userDetails) => {
+        let userId = userDetails.userId
+        return new Promise(async (resolve, reject) => {
             db.get().collection(collection.USER_COLLECTION)
-            .updateOne({_id:objectId(userId)},{
-                $set:{
-                    UserName:userDetails.UserName,
-                    UserEmail:userDetails.UserEmail,
-                    MobileNo:userDetails.MobileNo
-                }
-            })
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId)},{Password:0} )
-            user.Password=null
+                .updateOne({ _id: objectId(userId) }, {
+                    $set: {
+                        UserName: userDetails.UserName,
+                        UserEmail: userDetails.UserEmail,
+                        MobileNo: userDetails.MobileNo
+                    }
+                })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }, { Password: 0 })
+            user.Password = null
             resolve(user)
         })
 
     },
-     
+
     //here we add to cart 
     addToCart: (productId, userId) => {
         let proObj = {
