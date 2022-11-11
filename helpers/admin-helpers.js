@@ -22,7 +22,7 @@ module.exports = {
                     {
                         $project: {
                             _id: 1,
-                            date: { $dateToString: { format: "%d-%m-%Y", date: "$date" } },
+                            orderDate: { $dateToString: { format: "%d-%m-%Y", date: "$orderDate" } },
                             deliveryDetails: 1,
                             payment_method: 1,
                             totalAmount: 1,

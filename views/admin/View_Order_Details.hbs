@@ -81,18 +81,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each orderDetailsProducts}}
+                            {{#each orderProductsDetails}}
                             <tr>
                                 <td class="text-left create_index"></td>
-                                <td class="text-left">{{this.product.title}} </td>
+                                <td class="text-left">{{this.cartDetails.product.title}} </td>
                                 <td class="text-left "><img height="50"
-                                        src="/images/product-img/{{this.product.image1}} "></td>
-                                <td class="text-left">{{this.product.brand}} </td>
-                                <td class="text-left">{{this.product._id}} </td>
-                                <td class="text-left ">{{this.product.color}}</td>
-                                <td class="text-right">{{this.quantity}}</td>
-                                <td class="text-right">{{this.product.offerPrice}}</td>
-                                <td class="text-right">{{this.productTotal}}</td>
+                                        src="/images/product-img/{{this.cartDetails.product.image1}} "></td>
+                                <td class="text-left">{{this.cartDetails.product.brand}} </td>
+                                <td class="text-left">{{this.cartDetails.product._id}} </td>
+                                <td class="text-left ">{{this.cartDetails.product.color}}</td>
+                                <td class="text-right">{{this.cartDetails.quantity}}</td>
+                                <td class="text-right">{{this.cartDetails.product.offerPrice}}</td>
+                                <td class="text-right">{{this.cartDetails.productTotal}}</td>
 
                             </tr>
                             {{/each}}

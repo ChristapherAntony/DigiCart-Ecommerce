@@ -243,8 +243,10 @@ router.get('/viewOrders', verifyAdmin, (req, res, next) => {
 
 router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
   let orderDetails = await adminHelpers.getOrderDetails(req.params.id)
-  let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id)
-  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails, orderDetailsProducts })
+  //let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id) // old method chnaged to static
+  let orderProductsDetails= await userHelpers.oldProductDetails(req.params.id)
+  console.log(orderProductsDetails);
+  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails,orderProductsDetails })
 })
 
 router.post('/changeDeliveryStatus',verifyAdmin,(req,res)=>{

@@ -342,7 +342,6 @@ router.post('/change-product-quantity', (req, res, next) => {
 router.post('/removeProduct', (req, res, next) => {
   userHelpers.removeProduct(req.body).then(async (response) => {
     const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
     // response.total = await userHelpers.getTotalAmount(req.body.user)
     res.json(response)
   })
@@ -357,13 +356,16 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProducts(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
+  console.log(products);
   res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails,address })
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
+  let cartDetails= await userHelpers.getCartProducts(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body, products, totalPrice).then((orderId) => {
+  console.log(products,req.body);
+  userHelpers.placeOrder(req.body, products,cartDetails ,totalPrice).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0
       res.json({ codSuccess: true })
@@ -442,6 +444,9 @@ router.post('/verify-payment', (req, res) => {
   })
 })
 
+
+
+
 router.get('/clearCart', verifyUser, (req, res) => {
   userHelpers.clearCart(req.session.user._id).then(() => {
     cartCount = 0
@@ -457,19 +462,23 @@ router.get('/orderSuccess', verifyUser, async (req, res) => {
 router.get('/viewOrders', verifyUser, async (req, res) => {
   let orders = await userHelpers.getUserOrders(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
-
   res.render('users/viewOrders', { userName, cartCount, orders, headerDetails })
 })
 
 router.get('/orderDetails/:id', verifyUser, async (req, res) => {
 
-  let productDetails = await userHelpers.orderProductDetails(req.params.id)
+  //let productDetails = await userHelpers.orderProductDetails(req.params.id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   let orderDetails = await userHelpers.getOrderDetails(req.params.id)
-  console.log(productDetails);
-  console.log(orderDetails);
-  res.render('users/orderDetails', { userName, cartCount, orderDetails, productDetails, headerDetails })
+  let oldProductDetails=await userHelpers.oldProductDetails(req.params.id)
+  
+  console.log("++++++++++++++++++++++++++++++++++++");
+  res.render('users/orderDetails', { userName, cartCount, orderDetails,oldProductDetails, headerDetails })
+})
+router.get('/cancelTheOrder/:Id', verifyUser, (req, res) => {
+  userHelpers.cancelOrder(req.params.Id).then(() => {
+    res.json(response)
+  })
 })
 
 

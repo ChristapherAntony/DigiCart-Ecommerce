@@ -505,14 +505,14 @@ module.exports = {
         })
 
     },
-    placeOrder: (order, products, total) => {
+    placeOrder: (order, products, cartDetails, total) => {
         return new Promise((resolve, reject) => {
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
             console.log("status changed to pending because of paypal");
             console.log(order);
 
             let orderObj = {
-                date: new Date(),
+                orderDate: new Date(),
                 deliveryDetails: {
                     Name: order.Name,
                     HouseNo: order.HouseNo,
@@ -522,12 +522,12 @@ module.exports = {
                     Country: order.Country,
                     PostCode: order.PostCode,
                     Mobile: order.Mobile,
-                    Email: order.Email,
                     message: order.message
                 },
                 userId: objectId(order.userId),
                 payment_method: order.payment_method,
                 products: products,
+                cartDetails: cartDetails,
                 totalAmount: total,
                 status: status
             }
@@ -576,7 +576,7 @@ module.exports = {
             resolve(orders)
         })
     },
-    orderProductDetails: (orderId) => {
+    orderProductDetails: (orderId) => {    /// old method changed to static price order history 
 
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             let products = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
@@ -629,11 +629,32 @@ module.exports = {
                         deliveryDetails: 1,
                         payment_method: 1,
                         totalAmount: 1,
-                        status: 1
+                        status: 1,
                     }
                 }]).toArray()
 
             resolve(orderDetails[0])
+        })
+    },
+    oldProductDetails: (orderId) => {
+        return new Promise(async (resolve, reject) => {
+            let products = await db.get().collection(collection.ORDER_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { _id:objectId(orderId)}
+
+                    },
+                    {
+                        $project: { cartDetails: 1, _id: 0 }
+                    },
+                    {
+                        $unwind: '$cartDetails'
+                    }
+                ]).toArray()
+                console.log("++++++++++++++++++++++++++++++++++++");
+            //  console.log(products[0]);
+            resolve(products)
+
         })
     },
     generateRazorpay: (orderID, total) => {
@@ -688,7 +709,24 @@ module.exports = {
                 }
             });
         });
-    }
+    },
+    cancelOrder: ((orderID) => {
+        console.log("hello iside the helper");
+        console.log(orderID);
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION)
+                .updateOne({ _id: objectId(orderID) },
+                    {
+                        $set: {
+                            status: 'Cancelled'
+                        }
+                    })
+                .then((response) => {
+                    console.log(response);
+                    resolve()
+                })
+        })
+    }),
 }
 
 

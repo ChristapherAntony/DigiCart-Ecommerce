@@ -351,79 +351,87 @@
     </script>
 </head>
 
-<main id="main" class="main">
+<body >
+    <main id="main" class="main">
 
-    <div class="pagetitle">
-        <h1>Order Management</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
-                <li class="breadcrumb-item">User Management</li>
-                <li class="breadcrumb-item active">View Orders <i class="bi bi-truck"></i></li>
-
-
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
+        <div class="pagetitle">
+            <h1>Order Management</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                    <li class="breadcrumb-item">User Management</li>
+                    <li class="breadcrumb-item active">View Orders <i class="bi bi-truck"></i></li>
 
 
-
-    <table class="table table-striped table-hover tablebody">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>User Name</th>
-                <th>Order Date</th>
-                <th>Location</th>
-
-                <th>Net Amount</th>
-                <th>Payment</th>
-                <th>Status</th>
-                <th>View Order</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each OrderHistory}}
-
-            <tr>
-                <td class="create_index"></td>
-                <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
-                <td>{{this.date}}</td>
-                <td>{{this.deliveryDetails.State}} {{this.deliveryDetails.PostCode}}</td>
-
-
-                <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
-                <td>{{this.payment_method}}</td>
-
-                <td>
-                    {{!-- <select name="category" class="form-select" id="floatingSelect" aria-label="State">
-                        
-                        <option value="{{this.status}}">{{this.status}}</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Shipped">On the Way</option>
-                        <option value="Shipped">Delivered</option>
-                        <option value="Shipped">Cancelled</option>
-                    </select> --}}
-                    <select onchange="changeStatus('{{this._id}}')" name="orderstatus" id="{{this._id}}" class="form-select" id="floatingSelect">
-                        <option selected value="{{this.status}}">{{this.status}}</option>
-                        <option value="Placed">Placed</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="On the Way">On the Way</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
-                </td>
-                {{!-- <td>{{this.status}}</td> --}}
-                <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
-                        data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-            </tr>
-
-            {{/each}}
-
-        </tbody>
-    </table>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
 
 
 
+        <table class="table table-striped table-hover tablebody">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User Name</th>
+                    <th>Order Date</th>
+                    <th>Location</th>
 
-</main><!-- End #main -->
+                    <th>Net Amount</th>
+                    <th>Payment</th>
+
+                    <th>Status</th>
+                    <th>View Order</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each OrderHistory}}
+
+                <tr>
+                    <td class="create_index"></td>
+                    <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
+                    <td>{{this.orderDate}}</td>
+                    <td>{{this.deliveryDetails.State}} {{this.deliveryDetails.PostCode}}</td>
+
+
+
+                    <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
+                    <td>{{this.payment_method}}</td>
+
+                    <td>
+                        {{!-- <select name="category" class="form-select" id="floatingSelect" aria-label="State">
+
+                            <option value="{{this.status}}">{{this.status}}</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Shipped">On the Way</option>
+                            <option value="Shipped">Delivered</option>
+                            <option value="Shipped">Cancelled</option>
+                        </select> --}}
+                        <select onload="Hello()" onchange="changeStatus('{{this._id}}')" name="orderstatus" id="{{this._id}}"
+                            class="form-select" id="floatingSelect">
+                            <option id="selected" selected value="{{this.status}}">{{this.status}}</option>
+                            <option id="shipped" value="Shipped">Shipped</option>
+                            <option id="OnTheWay" value="On the Way">On the Way</option>
+                            <option id="Delivered" value="Delivered">Delivered</option>
+                            <option id="Cancelled" value="Cancelled">Cancelled</option>
+                        </select>
+                    </td>
+                    {{!-- <td>{{this.status}}</td> --}}
+                    <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
+                            data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </main><!-- End #main -->
+</body>
+
+<script>
+    function Hello() {
+        console.log("ajax qoked")
+        
+        //let variableOne = document.getElementById('hello')
+        //let variableTwo = variableOne.options[variableOne.selectedIndex].text
+       // console.log(variableOne)
+    }
+</script>

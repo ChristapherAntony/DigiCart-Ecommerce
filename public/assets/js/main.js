@@ -1136,7 +1136,7 @@ function addToCart(proId) {
                 Swal.fire({
                     position: 'top-end',
                     width: 300,
-                    height:100,
+                    height: 100,
                     icon: 'success',
                     text: "Item Added to Cart",
                     showConfirmButton: false,
@@ -1158,7 +1158,7 @@ function addToCart(proId) {
                 })
 
 
-                
+
             }
 
         }
