@@ -11,10 +11,28 @@ var session = require('express-session')  // session npm
 const nocache = require("nocache");
 var db = require('./config/connection')
 
+
+
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials' }))
+app.engine('hbs', hbs.engine({
+  extname: 'hbs', defaultLayout: 'layout',
+  layoutsDir: __dirname + '/views/layout/',
+  partialsDir: __dirname + '/views/partials',
+  helpers: {
+    isEqual: (status, value, options) => {
+      if (status == value) {
+        return options.fn(this)
+      }
+      return options.inverse(this)
+    }
+  }
+}))
 //app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'admin-layout', layoutsDir: __dirname + '/views/admin-layout/', partialsDir: __dirname + '/views/partials' }))
 
 app.use(logger('dev'));

@@ -85,6 +85,7 @@ module.exports = {
                         sellingPrice:parseInt(productDetails.sellingPrice) ,
                         discount:parseInt(productDetails.discount) ,
                         offerPrice:parseInt( productDetails.offerPrice),
+                        stock:parseInt( productDetails.stock),
                         productDescription: productDetails.productDescription,
                         image1: productDetails.image1,
                         image2: productDetails.image2,

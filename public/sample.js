@@ -131,45 +131,45 @@ db.user.findOne({ 'Address.addressId': 1668065353143 })
 
 
 db.cart.aggregate([
-        {
-            $match: { user: ObjectId("636ca815ae1373bc4f89de1b") }
+    {
+        $match: { user: ObjectId("636ca815ae1373bc4f89de1b") }
 
-        },
-        {
-            $unwind: '$products'
-        },
-        {
-            $project: {
-                user: 1,
-                item: '$products.item',
-                quantity: '$products.quantity'
-            }
-        },
-        {
-            $lookup: {
-                from: 'product',
-                localField: 'item',
-                foreignField: '_id',
-                as: 'product'
-            }
-        },
-        {
-            $project: {
-                item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-            }
-        },
-        {
-            $project: {
-                item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
-            }
+    },
+    {
+        $unwind: '$products'
+    },
+    {
+        $project: {
+            user: 1,
+            item: '$products.item',
+            quantity: '$products.quantity'
         }
+    },
+    {
+        $lookup: {
+            from: 'product',
+            localField: 'item',
+            foreignField: '_id',
+            as: 'product'
+        }
+    },
+    {
+        $project: {
+            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+        }
+    },
+    {
+        $project: {
+            item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+        }
+    }
 
-    ])
+])
 
 
 
 db.order.aggregate([
-    { $match: { _id:ObjectId("636d3b4796e402d724c10468" )} }
+    { $match: { _id: ObjectId("636d3b4796e402d724c10468") } }
 ])
 
 
@@ -180,9 +180,99 @@ db.order.aggregate([
 
     },
     {
-        $project:{cartDetails:1,_id:0}
+        $project: { cartDetails: 1, _id: 0 }
     },
     {
         $unwind: '$cartDetails'
     }
 ])
+
+
+db.order.aggregate([
+    {
+        $group: {
+            _id: "",
+            "Total": { $sum: "$totalAmount" }
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            "TotalAmount": '$Total'
+
+        }
+    }
+
+])
+
+
+
+
+
+
+db.order.aggregate([
+    {
+        $match: {
+            $and: [
+                { payment_method: 'COD' },
+                { $expr: { $gt: ["$orderDate", { $dateSubtract: { startDate: "$$NOW", unit: "day", amount: 14 } }] } }
+            ]
+
+        }
+    },
+    {
+        $group: {
+            _id: '$payment_method',
+            count: { $sum: 1 }
+        }
+    }
+])
+
+
+
+
+
+
+
+
+let ONLINE = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+    {
+        $match: {
+            $and: [
+                { paymentMethod: 'ONLINE' },
+                { $expr: { $gt: ["$date", { $dateSubtract: { startDate: "$$NOW", unit: "day", amount: 7 } }] } }
+            ]
+
+        }
+    },
+
+    {
+        $group: {
+            _id: '$paymentMethod',
+            count: { $sum: 1 }
+        }
+    }
+
+])
+
+let PAYPAL = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+    {
+        $match: {
+            $and: [
+                { paymentMethod: 'PAYPAL' },
+                { $expr: { $gt: ["$date", { $dateSubtract: { startDate: "$$NOW", unit: "day", amount: 7 } }] } }
+            ]
+
+        }
+    },
+
+    {
+        $group: {
+            _id: '$paymentMethod',
+            count: { $sum: 1 }
+        }
+    }
+
+])
+console.log('COD', COD, 'ONLINE', ONLINE, 'PAYPAL', PAYPAL);
+

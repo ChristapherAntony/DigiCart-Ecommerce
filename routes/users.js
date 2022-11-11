@@ -473,6 +473,7 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   let oldProductDetails=await userHelpers.oldProductDetails(req.params.id)
   
   console.log("++++++++++++++++++++++++++++++++++++");
+  
   res.render('users/orderDetails', { userName, cartCount, orderDetails,oldProductDetails, headerDetails })
 })
 router.get('/cancelTheOrder/:Id', verifyUser, (req, res) => {

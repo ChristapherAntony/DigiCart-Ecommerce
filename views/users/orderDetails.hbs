@@ -38,7 +38,7 @@
 
             </div>
             <div class="col-md-6 text-right">
-                <h4 class="  ">Invoice Date:{{orderDetails.date}}</h4><br>
+                <h4 class="  ">Invoice Date:{{orderDetails.orderDate}}</h4><br>
                 {{#if orderDetails.status}}
                 <button id="cancelBtn" onclick="cancelOrder('{{orderDetails._id}}')" class="btn btn-danger">Order Cancel</button>
                 {{/if}}

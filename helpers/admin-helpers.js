@@ -110,17 +110,58 @@ module.exports = {
                     }
 
                 ]).toArray()
-                resolve(orderDetailsProducts)
+            resolve(orderDetailsProducts)
 
 
         })
     },
-    changeDeliveryStatus:(changes)=>{
-        return new Promise ((resolve,reject)=>{
+    changeDeliveryStatus: (changes) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION)
-            .updateOne({_id:objectId(changes.cartId)},{$set:{status:changes.status}}).then((response)=>{
-                resolve()
-            })
+                .updateOne({ _id: objectId(changes.cartId) }, { $set: { status: changes.status } }).then((response) => {
+                    resolve()
+                })
         })
+    },
+    getDashDetails: () => {
+        return new Promise(async (resolve, reject) => {
+            const CODCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "COD" }).count()
+            const PayPalCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "PAYPAL" }).count()
+            const OnlineCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "ONLINE" }).count()
+            const TotalSales = await db.get().collection(collection.ORDER_COLLECTION).find().count()
+            const TotalUsers = await db.get().collection(collection.USER_COLLECTION).find().count()
+            const Revenue = await db.get().collection(collection.ORDER_COLLECTION)
+                .aggregate([
+                    {
+                        $group: {
+                            _id: "",
+                            "Total": { $sum: "$totalAmount" }
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            "TotalAmount": '$Total'
+                        }
+                    }
+                ]).toArray()
+
+            const Count = {}
+            Count.CODCount = CODCount
+            Count.OnlineCount = OnlineCount
+            Count.PayPalCount = PayPalCount
+            Count.TotalSales = TotalSales
+            Count.TotalUsers = TotalUsers
+            Count.TotalRevenue = Revenue[0].TotalAmount
+            resolve(Count)
+        })
+    },
+    getSalesReport: () => {
+        return new Promise((resolve, reject) => {
+            
+            
+            resolve()
+        })
+
     }
 }

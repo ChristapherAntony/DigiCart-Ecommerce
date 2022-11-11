@@ -351,7 +351,7 @@
     </script>
 </head>
 
-<body >
+<body>
     <main id="main" class="main">
 
         <div class="pagetitle">
@@ -386,7 +386,6 @@
             </thead>
             <tbody>
                 {{#each OrderHistory}}
-
                 <tr>
                     <td class="create_index"></td>
                     <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
@@ -407,20 +406,47 @@
                             <option value="Shipped">Delivered</option>
                             <option value="Shipped">Cancelled</option>
                         </select> --}}
-                        <select onload="Hello()" onchange="changeStatus('{{this._id}}')" name="orderstatus" id="{{this._id}}"
-                            class="form-select" id="floatingSelect">
+                        <select onload="Hello()" onchange="changeStatus('{{this._id}}')" name="orderstatus"
+                            id="{{this._id}}" class="form-select" id="floatingSelect">
                             <option id="selected" selected value="{{this.status}}">{{this.status}}</option>
+
+
+
+                            {{#isEqual this.status 'Placed'}}
                             <option id="shipped" value="Shipped">Shipped</option>
                             <option id="OnTheWay" value="On the Way">On the Way</option>
                             <option id="Delivered" value="Delivered">Delivered</option>
                             <option id="Cancelled" value="Cancelled">Cancelled</option>
+                            {{/isEqual}}
+                            {{#isEqual this.status 'Shipped'}}
+                            <option id="OnTheWay" value="On the Way">On the Way</option>
+                            <option id="Delivered" value="Delivered">Delivered</option>
+                            <option id="Cancelled" value="Cancelled">Cancelled</option>
+                            {{/isEqual}}
+                            {{#isEqual this.status 'On the Way'}}
+                            <option id="Delivered" value="Delivered">Delivered</option>
+                            <option id="Cancelled" value="Cancelled">Cancelled</option>
+                            {{/isEqual}}
+                            {{#isEqual this.status 'Delivered'}}
+                            {{/isEqual}}
+                            {{#isEqual this.status 'Cancelled'}}
+                            {{/isEqual}}
+
+
+
+                            {{!-- <option id="shipped" value="Shipped">Shipped</option>
+                            <option id="OnTheWay" value="On the Way">On the Way</option>
+                            <option id="Delivered" value="Delivered">Delivered</option>
+                            <option id="Cancelled" value="Cancelled">Cancelled</option> --}}
                         </select>
+
                     </td>
                     {{!-- <td>{{this.status}}</td> --}}
                     <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
                             data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
                 </tr>
                 {{/each}}
+
             </tbody>
         </table>
     </main><!-- End #main -->
@@ -429,9 +455,9 @@
 <script>
     function Hello() {
         console.log("ajax qoked")
-        
+
         //let variableOne = document.getElementById('hello')
         //let variableTwo = variableOne.options[variableOne.selectedIndex].text
-       // console.log(variableOne)
+        // console.log(variableOne)
     }
 </script>

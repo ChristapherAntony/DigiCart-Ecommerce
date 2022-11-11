@@ -38,6 +38,16 @@
                                 <br>
                                 <b>Shipping Method:</b> Free Delivery <br>
                                 <b>Status :</b>{{orderDetails.status}}
+                                
+                                
+                                {{#isEqual orderDetails.status 'Cancelled'}}
+                                <h1>Cancelled</h1>
+                                {{/isEqual}}
+                                {{#isEqual orderDetails.status 'Shipped'}}
+                                <h1>Shipped</h1>
+                                {{/isEqual}}
+                               
+                               
                             </td>
                         </tr>
                     </tbody>

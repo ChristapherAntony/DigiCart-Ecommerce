@@ -45,7 +45,8 @@ const verifyAdmin = (req, res, next) => {
 }
 /* GET users listing. */
 
-router.get('/', verifyAdmin, function (req, res, next) {
+router.get('/', verifyAdmin,async function (req, res, next) {
+  
   res.redirect('/admin/dash');
 });
 
@@ -63,8 +64,12 @@ router.post('/dash', (req, res) => {
   })
 })
 
-router.get('/dash', verifyAdmin, function (req, res, next) {
-  res.render('admin/dash', { layout: 'admin-layout' });
+router.get('/dash', verifyAdmin,async function (req, res, next) {
+  const DashDetails=await adminHelpers.getDashDetails()
+  const SalesReport=await adminHelpers.getSalesReport()
+  
+
+  res.render('admin/dash', { layout: 'admin-layout',DashDetails,SalesReport });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {

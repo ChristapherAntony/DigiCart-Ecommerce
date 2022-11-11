@@ -563,7 +563,7 @@ module.exports = {
                 {
                     $project: {
                         _id: 1,
-                        date: { $dateToString: { format: "%d-%m-%Y  %H:%M", date: "$date" } },
+                        orderDate: { $dateToString: { format: "%d-%m-%Y  %H:%M", date: "$orderDate" } },
                         deliveryDetails: 1,
                         userId: 1,
                         payment_method: 1,
@@ -625,7 +625,7 @@ module.exports = {
                 .aggregate([{ $match: { _id: objectId(orderId) } },
                 {
                     $project: {
-                        date: { $dateToString: { format: "%d-%m-%Y ", date: "$date" } },
+                        orderDate: { $dateToString: { format: "%d-%m-%Y ", date: "$orderDate" } },
                         deliveryDetails: 1,
                         payment_method: 1,
                         totalAmount: 1,
