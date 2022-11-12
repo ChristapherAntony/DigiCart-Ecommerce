@@ -225,24 +225,26 @@
 
               <div class="card-body pb-0">
                 <h5 class="card-title">Sales Report <span>| Today</span></h5>
-
+                
                 <table class="table table-borderless">
                   <thead>
                     <tr>
                       <th scope="col">Product</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Sold</th>
+                      <th scope="col">Sold Qty</th>
                       <th scope="col">Revenue</th>
+                      <th scope="col">Profit/Loss</th>
                     </tr>
                   </thead>
                   <tbody>
+                    {{#each SalesReport}}
                     <tr>
                 
-                      <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                      <td>$64</td>
-                      <td class="fw-bold">124</td>
-                      <td>$5,828</td>
+                      <td><a href="#" class="text-primary fw-bold">{{this._id}}</a></td>
+                      <td>{{this.SalesQty}}</td>
+                      <td class="fw-bold">	<i class="bi bi-currency-rupee"></i> {{this.Revenue}}</td>
+                      <td>	<i class="bi bi-currency-rupee"></i> {{this.profit}}</td>
                     </tr>
+                    {{/each}}
 
                   </tbody>
                 </table>
@@ -406,7 +408,115 @@
       <!-- Right side columns -->
       <div class="col-lg-4">
 
-        <!-- Recent Activity -->
+        <!-- News & Updates Traffic -->
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Top Selling (5)<span></span></h5>
+
+            <div class="news">
+              {{#products}}
+              <div class="post-item clearfix">
+                <img src="/images/product-img/{{this.image1}}" alt="">
+                <h4><a href="#">{{this.title}}</a></h4>
+                <p></p>
+              </div>
+              {{/products}}
+
+
+
+            </div><!-- End sidebar recent posts-->
+
+          </div>
+        </div><!-- End News & Updates -->
+
+
+
+        <!-- Payment Traffic -->
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Payment Trend <span>| Today</span></h5>
+
+            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                echarts.init(document.querySelector("#trafficChart")).setOption({
+                  tooltip: {
+                    trigger: 'item'
+                  },
+                  legend: {
+                    top: '5%',
+                    left: 'center'
+                  },
+                  series: [{
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                      show: false,
+                      position: 'center'
+                    },
+                    emphasis: {
+                      label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
+                      }
+                    },
+                    labelLine: {
+                      show: false
+                    },
+                    data: [{
+                      value: {{ DashDetails.CODCount }},
+                    name: 'COD'
+                        },
+                  {
+                    value: {{ DashDetails.OnlineCount }},
+                name: 'RazorPay'
+                        },
+                {
+                  value: {{ DashDetails.PayPalCount }},
+                name: 'PayPal'
+                        }
+
+                      ]
+                    }]
+                  });
+                });
+            </script>
+
+          </div>
+        </div><!-- End Payment Traffic -->
+
+
+                <!-- Recent Activity -->
         <div class="card">
           <div class="filter">
             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -478,77 +588,6 @@
 
           </div>
         </div><!-- End Recent Activity -->
-
-        <!-- Payment Traffic -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body pb-0">
-            <h5 class="card-title">Payment Traffic <span>| Today</span></h5>
-
-            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                echarts.init(document.querySelector("#trafficChart")).setOption({
-                  tooltip: {
-                    trigger: 'item'
-                  },
-                  legend: {
-                    top: '5%',
-                    left: 'center'
-                  },
-                  series: [{
-                    name: 'Access From',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    avoidLabelOverlap: false,
-                    label: {
-                      show: false,
-                      position: 'center'
-                    },
-                    emphasis: {
-                      label: {
-                        show: true,
-                        fontSize: '18',
-                        fontWeight: 'bold'
-                      }
-                    },
-                    labelLine: {
-                      show: false
-                    },
-                    data: [{
-                      value: {{ DashDetails.CODCount }},
-                    name: 'COD'
-                        },
-                  {
-                    value: {{ DashDetails.OnlineCount }},
-                name: 'RazorPay'
-                        },
-                {
-                  value: {{ DashDetails.PayPalCount }},
-                name: 'PayPal'
-                        }
-
-                      ]
-                    }]
-                  });
-                });
-            </script>
-
-          </div>
-        </div><!-- End Payment Traffic -->
 
         <!-- Budget Report -->
         <div class="card">
@@ -624,59 +663,7 @@
           </div>
         </div><!-- End Budget Report -->
 
-        <!-- News & Updates Traffic -->
-        <div class="card">
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
 
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
-          <div class="card-body pb-0">
-            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
-
-            <div class="news">
-              <div class="post-item clearfix">
-                <img src="assets/img/news-1.jpg" alt="">
-                <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-2.jpg" alt="">
-                <h4><a href="#">Quidem autem et impedit</a></h4>
-                <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-3.jpg" alt="">
-                <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-4.jpg" alt="">
-                <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/news-5.jpg" alt="">
-                <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-              </div>
-
-            </div><!-- End sidebar recent posts-->
-
-          </div>
-        </div><!-- End News & Updates -->
 
       </div><!-- End Right side columns -->
 

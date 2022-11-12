@@ -406,7 +406,7 @@
                             <option value="Shipped">Delivered</option>
                             <option value="Shipped">Cancelled</option>
                         </select> --}}
-                        <select onload="Hello()" onchange="changeStatus('{{this._id}}')" name="orderstatus"
+                        <select  onchange="changeStatus('{{this._id}}')" name="orderstatus"
                             id="{{this._id}}" class="form-select" id="floatingSelect">
                             <option id="selected" selected value="{{this.status}}">{{this.status}}</option>
 
@@ -452,12 +452,3 @@
     </main><!-- End #main -->
 </body>
 
-<script>
-    function Hello() {
-        console.log("ajax qoked")
-
-        //let variableOne = document.getElementById('hello')
-        //let variableTwo = variableOne.options[variableOne.selectedIndex].text
-        // console.log(variableOne)
-    }
-</script>

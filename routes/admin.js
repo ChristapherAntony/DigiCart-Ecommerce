@@ -67,9 +67,11 @@ router.post('/dash', (req, res) => {
 router.get('/dash', verifyAdmin,async function (req, res, next) {
   const DashDetails=await adminHelpers.getDashDetails()
   const SalesReport=await adminHelpers.getSalesReport()
-  
+  const products   =await productHelpers.getAllProductsLookUP()
+  // const TopSelling =await productHelpers.topSelling()
 
-  res.render('admin/dash', { layout: 'admin-layout',DashDetails,SalesReport });
+
+  res.render('admin/dash', { layout: 'admin-layout',DashDetails,SalesReport,products });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -256,31 +258,10 @@ router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
 
 router.post('/changeDeliveryStatus',verifyAdmin,(req,res)=>{
   adminHelpers.changeDeliveryStatus(req.body).then((response)=>{
-    res.json(response)
+    res.json({status:true})
     
   })
-
 })
-
-
-
-
-
-
-
-
-//products section ends here>>>>>>>>>
-
-
-
-
-
-
-
-
-
-
-
 
 // view Profile
 router.get('/profile', verifyAdmin, (req, res, next) => {

@@ -197,7 +197,6 @@ module.exports = {
     },
     adminLogin: (adminID) => {
         return new Promise(async (resolve, reject) => {
-
             let response = {}
             let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: adminID.UserName })
             if (user) {

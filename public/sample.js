@@ -276,3 +276,81 @@ let PAYPAL = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
 ])
 console.log('COD', COD, 'ONLINE', ONLINE, 'PAYPAL', PAYPAL);
 
+
+
+
+
+
+
+db.order.aggregate([
+    {
+        $match: {
+            $nor: [{ status: "Pending" },]
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            cartDetails: 1
+        }
+    },
+    {
+        $unwind: '$cartDetails'
+    },
+    {
+        $project: {
+            quantity: '$cartDetails.quantity',
+            salesTotal: '$cartDetails.productTotal',
+            item: "$cartDetails.product.title",
+            actualPrice: '$cartDetails.product.actualPrice',
+
+            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        }
+    },
+    {
+        $addFields:{
+            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        }
+    },
+    {
+        $group: {
+            _id: '$item',
+            SalesQty: { $sum: '$quantity' },
+            Revenue: { $sum: '$salesTotal' },
+            profit:{$sum:'$profit'}
+        }
+    }
+])
+
+
+db.order.aggregate([
+    {
+        $match: {
+            $nor: [{ status: "Pending" },]
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            cartDetails: 1
+        }
+    },
+    {
+        $unwind: '$cartDetails'
+    },
+    {
+        $project: {
+            image1:'$cartDetails.product.image1',
+            quantity: '$cartDetails.quantity',
+            salesTotal: '$cartDetails.productTotal',
+            item: "$cartDetails.product.title",
+            actualPrice: '$cartDetails.product.actualPrice',
+            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        }
+    },
+    {
+        $addFields:{
+            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        }
+    }
+])
