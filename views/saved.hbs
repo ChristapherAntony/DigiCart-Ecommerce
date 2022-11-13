@@ -52,52 +52,59 @@
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade " id="orders" role="tabpanel">
-                                    <div class="cart-main-area pt-0 pb-0">
-                                        <div class="container">
-                                            <h3 class="cart-page-title">Your cart items</h3>
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                                                    <form>
-                                                        <div class="table-content table-responsive cart-table-content">
-                                                            <table class="text-left">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Date</th>
-                                                                        <th>Address</th>
-                                                                        <th>Bill Amount</th>
-                                                                        <th>Action</th>
+                                    <div class="myaccount-content">
+                                        <h3>Orders</h3>
+                                        <div class="myaccount-table table-responsive ">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Order</th>
+                                                        <th>Date</th>
+                                                        <th>Address</th>
+                                                        <th>Total</th>
+                                                        <th>Payment</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{#each orders}}
+                                                    <tr>
+                                                        <td>{{@index}}</td>
+                                                        <td>{{this.date}}</td>
+                                                        <td>
+                                                            {{this.deliveryDetails.Name}} <br>
+                                                            {{this.deliveryDetails.Street}} <br>
+                                                            {{this.deliveryDetails.TownCity}}-{{this.deliveryDetails.State}}
+                                                            <br>
+                                                            {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
+                                                        </td>
+                                                        <td>Rs.{{this.totalAmount}}</td>
+                                                        <td>{{this.payment_method}}</td>
+                                                        <td>{{this.status}}</td>
 
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {{#each orders}}
-                                                                    <tr>
-                                                                        <td class="product-name "><a href="#">
-                                                                                {{@index}}</a></td>
-                                                                        <td class="product-name text-left"><a href="#">
-                                                                                {{this.orderDate}}</a></td>
-                                                                        <td class="product-price-cart text-left"><span>
-                                                                                {{this.deliveryDetails.Name}} <br>
-                                                                                {{this.deliveryDetails.TownCity}}-{{this.deliveryDetails.State}}
-                                                                                <br>
-                                                                                {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
-                                                                            </span></td>
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <button class="btn  btn-sm dropdown-toggle"
+                                                                    type="button" id="dropdownMenuButton"
+                                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                    View
+                                                                </button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item"
+                                                                        href="/orderDetails/{{this._id}}">View
+                                                                        Details</a>
+                                                                    <a class="dropdown-item" href="#">Cancel</a>
 
-                                                                        <td class="product-subtotal ">
-                                                                            Rs.{{this.totalAmount}}</td>
-                                                                        <td class="product-wishlist-cart ">
-                                                                            <a href="/orderDetails/{{this._id}}">View Order</a>
-                                                                            
-                                                                        </td>
-                                                                    </tr>
-                                                                    {{/each }}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {{/each }}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -158,8 +165,7 @@
                                         <div id="{{this.Address.addressId}}">
                                             <address>
                                                 <p><strong>{{this.Address.Name}}</strong></p>
-                                                <p>{{this.Address.HouseNo}} , {{this.Address.Street}}
-                                                    ,{{this.Address.TownCity}} <br>
+                                                <p>{{this.Address.HouseNo}} , {{this.Address.Street}} ,{{this.Address.TownCity}} <br>
                                                     {{this.Address.State}} , {{this.Address.Country}} ,
                                                     Pin-{{this.Address.PostCode}}</p>
                                                 <p>Mobile: {{this.Address.Mobile}}</p>
@@ -167,8 +173,7 @@
                                             <a href="/editAddress/{{@index}}" class="check-btn sqr-btn "><i
                                                     class="fa fa-edit"></i> Edit
                                                 Address</a>
-                                            <button style="border: none;"
-                                                onclick="removeAddress('{{this.Address.addressId}}')"
+                                            <button style="border: none;" onclick="removeAddress('{{this.Address.addressId}}')"
                                                 class="check-btn sqr-btn "><i class="bi bi-trash3"></i> Delete</button>
                                         </div>
                                         <br>

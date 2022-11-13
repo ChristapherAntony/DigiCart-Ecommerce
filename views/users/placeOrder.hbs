@@ -325,17 +325,12 @@
 
 <script>
     $('#checkout-form').submit((e) => {
-         console.log("inside ajax")
         e.preventDefault()
         $.ajax({
-            
             url: '/placeOrder',
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
-                console.log("inside the success stage")
-                console.log(response)
-
                 if (response.codSuccess) {
                     location.href = '/orderSuccess'
                 }

@@ -380,7 +380,7 @@
                     <th>Net Amount</th>
                     <th>Payment</th>
 
-                    <th>Status</th>
+                    
                     <th>View Order</th>
                 </tr>
             </thead>
@@ -397,50 +397,7 @@
                     <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
                     <td>{{this.payment_method}}</td>
 
-                    <td>
-                        {{!-- <select name="category" class="form-select" id="floatingSelect" aria-label="State">
 
-                            <option value="{{this.status}}">{{this.status}}</option>
-                            <option value="Shipped">Shipped</option>
-                            <option value="Shipped">On the Way</option>
-                            <option value="Shipped">Delivered</option>
-                            <option value="Shipped">Cancelled</option>
-                        </select> --}}
-                        <select  onchange="changeStatus('{{this._id}}')" name="orderstatus"
-                            id="{{this._id}}" class="form-select" id="floatingSelect">
-                            <option id="selected" selected value="{{this.status}}">{{this.status}}</option>
-
-
-
-                            {{#isEqual this.status 'Placed'}}
-                            <option id="shipped" value="Shipped">Shipped</option>
-                            <option id="OnTheWay" value="On the Way">On the Way</option>
-                            <option id="Delivered" value="Delivered">Delivered</option>
-                            <option id="Cancelled" value="Cancelled">Cancelled</option>
-                            {{/isEqual}}
-                            {{#isEqual this.status 'Shipped'}}
-                            <option id="OnTheWay" value="On the Way">On the Way</option>
-                            <option id="Delivered" value="Delivered">Delivered</option>
-                            <option id="Cancelled" value="Cancelled">Cancelled</option>
-                            {{/isEqual}}
-                            {{#isEqual this.status 'On the Way'}}
-                            <option id="Delivered" value="Delivered">Delivered</option>
-                            <option id="Cancelled" value="Cancelled">Cancelled</option>
-                            {{/isEqual}}
-                            {{#isEqual this.status 'Delivered'}}
-                            {{/isEqual}}
-                            {{#isEqual this.status 'Cancelled'}}
-                            {{/isEqual}}
-
-
-
-                            {{!-- <option id="shipped" value="Shipped">Shipped</option>
-                            <option id="OnTheWay" value="On the Way">On the Way</option>
-                            <option id="Delivered" value="Delivered">Delivered</option>
-                            <option id="Cancelled" value="Cancelled">Cancelled</option> --}}
-                        </select>
-
-                    </td>
                     {{!-- <td>{{this.status}}</td> --}}
                     <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
                             data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>

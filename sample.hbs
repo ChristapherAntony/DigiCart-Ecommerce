@@ -1,0 +1,156 @@
+<div class="breadcrumb-area bg-gray menuBarTop">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/account">Account</a>
+                </li>
+
+                <li class="/active">Your Order </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="cart-main-area pt-10 pb-120">
+
+    <div class="container">
+        <h3 class="cart-page-title">Order Details</h3>
+        <h4 class="">Order Id: {{orderDetails._id}}</h4>
+        <div class="text-right">
+
+            <h4 id="OrderStatus" class="font-weight-bold">Order {{orderDetails.status}}</h4>
+            
+        </div>
+
+        <hr style="border-top: 5px solid #000000">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Shipped to : {{orderDetails.deliveryDetails.Name}}</h4><br>
+                <h4>Delivery Address:</h4>
+                <div>
+                    {{orderDetails.deliveryDetails.Street}} <br>
+                    {{orderDetails.deliveryDetails.TownCity}}-{{orderDetails.deliveryDetails.State}}
+                    {{orderDetails.deliveryDetails.Country}}-{{orderDetails.deliveryDetails.PostCode}}
+
+                </div>
+
+            </div>
+            <div class="col-md-6 text-right">
+                <h4 class="  ">Invoice Date:{{orderDetails.orderDate}}</h4><br>
+                {{#if orderDetails.status}}
+                <button id="cancelBtn" onclick="cancelOrder('{{orderDetails._id}}')" class="btn btn-danger">Order Cancel</button>
+                {{/if}}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Until Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each oldProductDetails}}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="/images/product-img/{{this.cartDetails.product.image1}}" width="80"
+                                            alt="">
+                                        {{!-- <a href="#"><img src="" alt=""></a> --}}
+                                    </td>
+                                    <td class="product-name"><a href="#">{{this.cartDetails.product.title}}</a></td>
+                                    <td class="product-price-cart"><span
+                                            class="amount">Rs.{{this.cartDetails.product.offerPrice}}</span></td>
+                                    <td class="product-quantity pro-details-quality"> {{this.cartDetails.quantity}}
+                                    </td>
+                                    <td class="product-subtotal">{{this.cartDetails.productTotal}}</td>
+
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                            {{!-- <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="product-subtotal">{{orderDetails.totalAmount}}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot> --}}
+                        </table>
+                        <hr style="border-top: 5px solid #000000">
+                        <div class="text-right " style="margin-right: 3rem ;">
+                            <h4>Sub Total: Rs. {{orderDetails.totalAmount}}</h4>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    function cancelOrder(OrderId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let orderId = OrderId
+                $.ajax({
+                    url: '/cancelTheOrder/' + orderId,
+                    method: 'get',
+
+                    success(response) {
+                        Swal.fire(
+                            'Order Canceled!',
+                            'Your order is cancelled Successfully.',
+                            'success'
+                        )
+                        document.getElementById('OrderStatus').style.color = 'red';
+                        document.getElementById('OrderStatus').innerHTML = 'Cancelled';
+                        document.getElementById('cancelBtn').innerHTML = 'Cancelled';
+                        document.getElementById('cancelBtn').disabled = true;
+                        
+                        //location.reload()
+
+                    }
+                })
+
+            }
+        })
+
+
+
+
+    }
+</script>

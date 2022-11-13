@@ -4,7 +4,7 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -41,7 +41,7 @@
    * Sidebar toggle
    */
   if (select('.toggle-sidebar-btn')) {
-    on('click', '.toggle-sidebar-btn', function(e) {
+    on('click', '.toggle-sidebar-btn', function (e) {
       select('body').classList.toggle('toggle-sidebar')
     })
   }
@@ -50,7 +50,7 @@
    * Search bar toggle
    */
   if (select('.search-bar-toggle')) {
-    on('click', '.search-bar-toggle', function(e) {
+    on('click', '.search-bar-toggle', function (e) {
       select('.search-bar').classList.toggle('search-bar-show')
     })
   }
@@ -111,7 +111,7 @@
    * Initiate tooltips
    */
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
@@ -141,31 +141,31 @@
           }],
           ["bold", "italic", "underline", "strike"],
           [{
-              color: []
-            },
-            {
-              background: []
-            }
+            color: []
+          },
+          {
+            background: []
+          }
           ],
           [{
-              script: "super"
-            },
-            {
-              script: "sub"
-            }
+            script: "super"
+          },
+          {
+            script: "sub"
+          }
           ],
           [{
-              list: "ordered"
-            },
-            {
-              list: "bullet"
-            },
-            {
-              indent: "-1"
-            },
-            {
-              indent: "+1"
-            }
+            list: "ordered"
+          },
+          {
+            list: "bullet"
+          },
+          {
+            indent: "-1"
+          },
+          {
+            indent: "+1"
+          }
           ],
           ["direction", {
             align: []
@@ -199,31 +199,31 @@
     autosave_retention: '2m',
     image_advtab: true,
     link_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_class_list: [{
-        title: 'None',
-        value: ''
-      },
-      {
-        title: 'Some class',
-        value: 'class-name'
-      }
+      title: 'None',
+      value: ''
+    },
+    {
+      title: 'Some class',
+      value: 'class-name'
+    }
     ],
     importcss_append: true,
     file_picker_callback: (callback, value, meta) => {
@@ -250,20 +250,20 @@
       }
     },
     templates: [{
-        title: 'New Table',
-        description: 'creates a new table',
-        content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
-      },
-      {
-        title: 'Starting my story',
-        description: 'A cure for writers block',
-        content: 'Once upon a time...'
-      },
-      {
-        title: 'New list with dates',
-        description: 'New List with dates',
-        content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
-      }
+      title: 'New Table',
+      description: 'creates a new table',
+      content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+    },
+    {
+      title: 'Starting my story',
+      description: 'A cure for writers block',
+      content: 'Once upon a time...'
+    },
+    {
+      title: 'New list with dates',
+      description: 'New List with dates',
+      content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+    }
     ],
     template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
     template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
@@ -284,8 +284,8 @@
   var needsValidation = document.querySelectorAll('.needs-validation')
 
   Array.prototype.slice.call(needsValidation)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
@@ -309,7 +309,7 @@
   const mainContainer = select('#main');
   if (mainContainer) {
     setTimeout(() => {
-      new ResizeObserver(function() {
+      new ResizeObserver(function () {
         select('.echart', true).forEach(getEchart => {
           echarts.getInstanceByDom(getEchart).resize();
         })
@@ -322,27 +322,49 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////
-function changeStatus(orderId) {
-  let variableOne = document.getElementById(orderId)
+function changeStatus(proId, orderId) {
+  console.log(proId, orderId);
+  let variableOne = document.getElementById(proId)
   let variableTwo = variableOne.options[variableOne.selectedIndex].text
   $.ajax({
-      url: "/admin/changeDeliveryStatus",
-      data: {
-          cartId: orderId,
-          status: variableTwo
-      },
-      method: 'post',
-      success: (response) => {
-          location.reload()
-      }
+    url: "/admin/changeDeliveryStatus",
+    data: {
+      proId: proId,
+      orderId:orderId,
+      status: variableTwo
+    },
+    method: 'post',
+    success: (response) => {
+      location.reload()
+    }
   })
+
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
-  
-  function OTPInput() {
-const inputs = document.querySelectorAll('#otp > *[id]');
-for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function(event) { if (event.key==="Backspace" ) { inputs[i].value='' ; if (i !==0) inputs[i - 1].focus(); } else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { return true; } else if (event.keyCode> 47 && event.keyCode < 58) { inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode> 64 && event.keyCode < 91) { inputs[i].value=String.fromCharCode(event.keyCode); if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); } } OTPInput();
+document.addEventListener("DOMContentLoaded", function (event) {
 
-    
+  function OTPInput() {
+    const inputs = document.querySelectorAll('#otp > *[id]');
+    for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function (event) { if (event.key === "Backspace") { inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus(); } else { if (i === inputs.length - 1 && inputs[i].value !== '') { return true; } else if (event.keyCode > 47 && event.keyCode < 58) { inputs[i].value = event.key; if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode > 64 && event.keyCode < 91) { inputs[i].value = String.fromCharCode(event.keyCode); if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); }
+  } OTPInput();
+
+
 });
+
+
+/*
+
+let variableOne = document.getElementById(proId)
+let variableTwo = variableOne.options[variableOne.selectedIndex].text
+$.ajax({
+  url: "/admin/changeDeliveryStatus",
+  data: {
+    proId: proId,
+    status: variableTwo
+  },
+  method: 'post',
+  success: (response) => {
+    location.reload()
+  }
+})
+*/

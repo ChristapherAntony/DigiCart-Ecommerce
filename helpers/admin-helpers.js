@@ -12,6 +12,9 @@ module.exports = {
             let orderHistory = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([
                     {
+                        $sort:{orderDate:-1}
+                    },
+                    {
                         $lookup: {
                             from: 'user',
                             localField: 'userId',
@@ -118,7 +121,12 @@ module.exports = {
     changeDeliveryStatus: (changes) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION)
-                .updateOne({ _id: objectId(changes.cartId) }, { $set: { status: changes.status } }).then((response) => {
+                .update(
+                    { _id: objectId(changes.orderId), 'cartDetails.item': objectId(changes.proId) },
+                    {
+                        $set: { 'cartDetails.$.status':changes.status }
+                    })
+                .then((response) => {
                     resolve()
                 })
         })
@@ -221,7 +229,7 @@ module.exports = {
     //                 }
 
     //             ])
-     
+
     //         resolve()
 
     //     })

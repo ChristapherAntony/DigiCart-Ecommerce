@@ -304,12 +304,12 @@ db.order.aggregate([
             item: "$cartDetails.product.title",
             actualPrice: '$cartDetails.product.actualPrice',
 
-            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
     },
     {
-        $addFields:{
-            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        $addFields: {
+            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
     },
     {
@@ -317,7 +317,7 @@ db.order.aggregate([
             _id: '$item',
             SalesQty: { $sum: '$quantity' },
             Revenue: { $sum: '$salesTotal' },
-            profit:{$sum:'$profit'}
+            profit: { $sum: '$profit' }
         }
     }
 ])
@@ -340,17 +340,31 @@ db.order.aggregate([
     },
     {
         $project: {
-            image1:'$cartDetails.product.image1',
+            image1: '$cartDetails.product.image1',
             quantity: '$cartDetails.quantity',
             salesTotal: '$cartDetails.productTotal',
             item: "$cartDetails.product.title",
             actualPrice: '$cartDetails.product.actualPrice',
-            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
     },
     {
-        $addFields:{
-            profit:{$subtract:["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }]}
+        $addFields: {
+            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
     }
 ])
+
+ObjectId("635a9ff46da75fcc6558646d")--//pro
+ObjectId("636fb01d9f50adc401f32050")--//order
+
+db.order.updateOne(
+    { _id: ObjectId("636fb01d9f50adc401f32050"), 'cartDetails.item': ObjectId("635a9ff46da75fcc6558646d") },
+    {
+        $set: { 'cartDetails.$.status': 'q' }
+    })
+
+db.students.updateOne(
+    { _id: 1, grades: 80 },
+    { $set: { "grades.$": 82 } }
+)

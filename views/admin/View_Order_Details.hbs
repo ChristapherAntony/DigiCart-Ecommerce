@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="width: 50%;" class="text-left"> <b>Order ID:</b> {{orderDetails._id}}
+                            <td style="width: 50%;" class="text-left"> <b>Order ID: #</b> {{orderDetails._id}}
                                 <br>
                                 <b>Date Added:</b> 20/06/2016
                             </td>
@@ -37,17 +37,16 @@
                                 {{orderDetails.payment_method}}
                                 <br>
                                 <b>Shipping Method:</b> Free Delivery <br>
-                                <b>Status :</b>{{orderDetails.status}}
-                                
-                                
+
+
                                 {{#isEqual orderDetails.status 'Cancelled'}}
                                 <h1>Cancelled</h1>
                                 {{/isEqual}}
                                 {{#isEqual orderDetails.status 'Shipped'}}
                                 <h1>Shipped</h1>
                                 {{/isEqual}}
-                               
-                               
+
+
                             </td>
                         </tr>
                     </tbody>
@@ -82,9 +81,10 @@
                                 <td class="text-left "><b>Product Name</b> </td>
                                 <td class="text-left "><b>Image</b> </td>
                                 <td class="text-left "><b>Brand </b> </td>
-                                <td class="text-left "><b>Product Code</b> </td>
+                                {{!-- <td class="text-left "><b>Product Code</b> </td> --}}
                                 <td class="text-left "><b>Color</b> </td>
-                                <td class="text-right "><b> Quantity</b></td>
+                                <td class="text-right "><b> Qty</b></td>
+                                <td class="text-right "><b>Status</b></td>
                                 <td class="text-right "><b>Price</b> </td>
                                 <td class="text-right "><b>Total</b> </td>
 
@@ -98,9 +98,48 @@
                                 <td class="text-left "><img height="50"
                                         src="/images/product-img/{{this.cartDetails.product.image1}} "></td>
                                 <td class="text-left">{{this.cartDetails.product.brand}} </td>
-                                <td class="text-left">{{this.cartDetails.product._id}} </td>
+                                {{!-- 7 --}}
                                 <td class="text-left ">{{this.cartDetails.product.color}}</td>
                                 <td class="text-right">{{this.cartDetails.quantity}}</td>
+                                <td 
+                                class="text-right">
+
+                                <select onchange="changeStatus('{{this.cartDetails.item}}','{{this.orderId}}')" name="orderstatus" id="{{this.cartDetails.item}}"
+                                    class="form-select" id="floatingSelect">
+                                    <option id="selected" selected value="{{this.cartDetails.status}}">
+                                        {{this.cartDetails.status}}</option>
+
+
+
+                                    {{#isEqual this.cartDetails.status 'Placed'}}
+                                    <option id="shipped" value="Shipped">Shipped</option>
+                                    <option id="OnTheWay" value="On the Way">On the Way</option>
+                                    <option id="Delivered" value="Delivered">Delivered</option>
+                                    <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                    {{/isEqual}}
+                                    {{#isEqual this.cartDetails.status 'Shipped'}}
+                                    <option id="OnTheWay" value="On the Way">On the Way</option>
+                                    <option id="Delivered" value="Delivered">Delivered</option>
+                                    <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                    {{/isEqual}}
+                                    {{#isEqual this.cartDetails.status 'On the Way'}}
+                                    <option id="Delivered" value="Delivered">Delivered</option>
+                                    <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                    {{/isEqual}}
+                                    {{#isEqual this.cartDetails.status 'Delivered'}}
+                                    {{/isEqual}}
+                                    {{#isEqual this.cartDetails.status 'Cancelled'}}
+                                    {{/isEqual}}
+
+
+
+                              
+                                </select>
+
+
+                                </td>
+
+
                                 <td class="text-right">{{this.cartDetails.product.offerPrice}}</td>
                                 <td class="text-right">{{this.cartDetails.productTotal}}</td>
 

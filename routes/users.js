@@ -257,33 +257,33 @@ router.post('/postAddress', verifyUser, async (req, res, next) => {
   res.redirect('/account')
 });
 router.get('/editAddress/:position', verifyUser, async (req, res, next) => {
-  let position=req.params.position
+  let position = req.params.position
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  const getOneAddress= await userHelpers.getOneAddress(req.session.user._id,position)
-  res.render('users/editAddress', { userName, cartCount, account: true, headerDetails,getOneAddress,position });
+  const getOneAddress = await userHelpers.getOneAddress(req.session.user._id, position)
+  res.render('users/editAddress', { userName, cartCount, account: true, headerDetails, getOneAddress, position });
 });
 router.get('/getAddress', verifyUser, async (req, res, next) => {
 
-  let addressId=req.query.addressId
-  if(addressId!="Select"){
-    let getOneAddress= await userHelpers.getOneAddressById(req.session.user._id,addressId)
+  let addressId = req.query.addressId
+  if (addressId != "Select") {
+    let getOneAddress = await userHelpers.getOneAddressById(req.session.user._id, addressId)
     console.log(getOneAddress);
-    let response=getOneAddress.Address
-    response.status=true
+    let response = getOneAddress.Address
+    response.status = true
     res.json(response)
-  }else{
-    res.json({status:false})
+  } else {
+    res.json({ status: false })
   }
 });
 
 router.post('/updateAddress', verifyUser, async (req, res, next) => {
   console.log(req.body);
-  
+
   const update = await userHelpers.updateAddress(req.body, req.session.user._id,)
   res.redirect('/account')
 });
 router.get('/deleteAddress', verifyUser, async (req, res, next) => {
-  const deleteAddress =await userHelpers.deleteAddress(req.session.user._id,req.query.addressId)
+  const deleteAddress = await userHelpers.deleteAddress(req.session.user._id, req.query.addressId)
   res.json(response)
 });
 
@@ -357,15 +357,15 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
   console.log(products);
-  res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails,address })
+  res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails, address })
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
-  let cartDetails= await userHelpers.getCartProducts(req.body.userId)
+  let cartDetails = await userHelpers.getCartProducts(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  console.log(products,req.body);
-  userHelpers.placeOrder(req.body, products,cartDetails ,totalPrice).then((orderId) => {
+  console.log(products, req.body);
+  userHelpers.placeOrder(req.body, products, cartDetails, totalPrice).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0
       res.json({ codSuccess: true })
@@ -460,9 +460,10 @@ router.get('/orderSuccess', verifyUser, async (req, res) => {
   res.render('users/orderSuccess', { userName, cartCount })
 })
 router.get('/viewOrders', verifyUser, async (req, res) => {
-  let orders = await userHelpers.getUserOrders(req.session.user._id)
-  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  res.render('users/viewOrders', { userName, cartCount, orders, headerDetails })
+  // let orders = await userHelpers.getUserOrders(req.session.user._id)
+  // const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  // res.render('users/viewOrders', { userName, cartCount, orders, headerDetails })
+  res.redirect('/account')
 })
 
 router.get('/orderDetails/:id', verifyUser, async (req, res) => {
@@ -470,14 +471,18 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   //let productDetails = await userHelpers.orderProductDetails(req.params.id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   let orderDetails = await userHelpers.getOrderDetails(req.params.id)
-  let oldProductDetails=await userHelpers.oldProductDetails(req.params.id)
-  
-  console.log("++++++++++++++++++++++++++++++++++++");
-  
-  res.render('users/orderDetails', { userName, cartCount, orderDetails,oldProductDetails, headerDetails })
+  let oldProductDetails = await userHelpers.oldProductDetails(req.params.id)
+  oldProductDetails.forEach(cartDetails => {
+    cartDetails.orderId = orderDetails._id
+  })//added order id in to  the 'oldProductDetails' for accessing while on button click
+  res.render('users/orderDetails', { userName, cartCount, orderDetails, oldProductDetails, headerDetails })
 })
-router.get('/cancelTheOrder/:Id', verifyUser, (req, res) => {
-  userHelpers.cancelOrder(req.params.Id).then(() => {
+router.get('/cancelTheOrder', verifyUser, (req, res) => {
+  let Id = {}
+  Id.proId = req.query.proId,
+  Id.orderId = req.query.orderId
+
+  userHelpers.cancelOrder(Id).then(() => {
     res.json(response)
   })
 })

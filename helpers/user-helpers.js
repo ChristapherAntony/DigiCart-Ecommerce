@@ -507,8 +507,10 @@ module.exports = {
     placeOrder: (order, products, cartDetails, total) => {
         return new Promise((resolve, reject) => {
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
-            console.log("status changed to pending because of paypal");
-            console.log(order);
+
+            cartDetails.forEach(cartDetails => {
+                cartDetails.status = status
+            })
 
             let orderObj = {
                 orderDate: new Date(),
@@ -560,9 +562,12 @@ module.exports = {
             let orders = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([{ $match: { userId: objectId(userId) } },
                 {
+                    $sort:{orderDate:-1}
+                },
+                {
                     $project: {
                         _id: 1,
-                        orderDate: { $dateToString: { format: "%d-%m-%Y  %H:%M", date: "$orderDate" } },
+                        orderDate: { $dateToString: { format: "%d-%m-%Y", date: "$orderDate" } },
                         deliveryDetails: 1,
                         userId: 1,
                         payment_method: 1,
@@ -640,7 +645,7 @@ module.exports = {
             let products = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([
                     {
-                        $match: { _id:objectId(orderId)}
+                        $match: { _id: objectId(orderId) }
 
                     },
                     {
@@ -650,7 +655,7 @@ module.exports = {
                         $unwind: '$cartDetails'
                     }
                 ]).toArray()
-                console.log("++++++++++++++++++++++++++++++++++++");
+            console.log("++++++++++++++++++++++++++++++++++++");
             //  console.log(products[0]);
             resolve(products)
 
@@ -709,19 +714,14 @@ module.exports = {
             });
         });
     },
-    cancelOrder: ((orderID) => {
-        console.log("hello iside the helper");
-        console.log(orderID);
+    cancelOrder: ((Id) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.ORDER_COLLECTION)
-                .updateOne({ _id: objectId(orderID) },
-                    {
-                        $set: {
-                            status: 'Cancelled'
-                        }
-                    })
-                .then((response) => {
-                    console.log(response);
+            db.get().collection(collection.ORDER_COLLECTION).update(
+                { _id: objectId(Id.orderId), 'cartDetails.item': objectId(Id.proId) },
+                {
+                    $set: { 'cartDetails.$.status': 'Cancelled' }
+                })
+                .then(() => {
                     resolve()
                 })
         })
