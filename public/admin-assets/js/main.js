@@ -351,20 +351,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
-
-/*
-
-let variableOne = document.getElementById(proId)
-let variableTwo = variableOne.options[variableOne.selectedIndex].text
-$.ajax({
-  url: "/admin/changeDeliveryStatus",
-  data: {
-    proId: proId,
-    status: variableTwo
-  },
-  method: 'post',
-  success: (response) => {
-    location.reload()
-  }
-})
-*/
+// data table
+$(document).ready(function () {
+  $('#myTable').DataTable();
+});

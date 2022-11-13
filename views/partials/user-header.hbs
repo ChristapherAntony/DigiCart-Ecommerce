@@ -46,17 +46,18 @@
                             {{#if userName}}
                             <div
                                 class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
-                               {{#if headerDetails.cartProducts}}
+                                {{#if headerDetails.cartProducts}}
                                 <a class="cart-active" href="#">
-                               {{else}}
-                               <a  href="/cart">
-                               {{/if}}
-                                {{!-- <a class="cart-active" href="#"> --}}
-                               
-                                    <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
-                                        id="cart-count">{{cartCount}}</span>
-                                    <span class="cart-amount white"><i class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
-                                </a>
+                                    {{else}}
+                                    <a href="/cart">
+                                        {{/if}}
+                                        {{!-- <a class="cart-active" href="#"> --}}
+
+                                            <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
+                                                id="cart-count">{{cartCount}}</span>
+                                            <span class="cart-amount white"><i
+                                                    class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
+                                        </a>
                             </div>
 
                             {{else}}
@@ -87,13 +88,9 @@
                             class="main-menu main-menu-white main-menu-font-size-14 main-menu-padding-3 main-menu-lh-5 main-menu-hover-black">
                             <nav>
                                 <ul>
-                                    <li><a href="/">HOME </a>
-                                        {{!-- <ul class="sub-menu-style">
-                                            <li><a href="#">menu 1</a></li>
-                                        </ul> --}}
-                                    </li>
+                                    <li><a href="/">HOME </a></li>
 
-                                    <li><a href="/viewAll">SHOP <i class="bi bi-chevron-down"></i> </a>
+                                    <li><a href="/viewAll">SHOP All <i class="bi bi-chevron-down"></i> </a>
                                         <ul class="sub-menu-style">
                                             <li>
                                                 <a class="dropdown-title text-bold font-weight-bold"
@@ -104,10 +101,12 @@
                                             {{/each}}
                                         </ul>
                                     </li>
-                                    <li><a href="/viewAll">All Products </a>
-                                    </li>
-                                    <li><a href="/viewOrders">View All Orders</a>
-                                    </li>
+
+                                    {{#each category}}
+                                    <li><a href="/viewAll/{{this._id}}">{{this.category}} </a></li>
+                                    
+                                    {{/each}}
+
                                     <li class="float-right">
                                         {{#if userName}}
                                         <a onclick="confirmLogOut()">Log out </a>
@@ -234,7 +233,7 @@
                         <span> {{this.quantity}} × {{this.product.offerPrice}} </span>
                     </div>
                     <div class="cart-delete">
-                        <a class="btn" onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')" >×</a>
+                        <a class="btn" onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')">×</a>
                     </div>
                 </li>
                 {{/each}}
@@ -287,27 +286,27 @@
     }
 
 
- 
+
 
     function removeCartProduct(cartId, proId) {
-    $.ajax({
-        url: '/removeProduct',
-        data: {
-            cart: cartId,
-            product: proId
-        },
-        method: 'post',
-        success(response) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )
-            location.reload()
-        }
+        $.ajax({
+            url: '/removeProduct',
+            data: {
+                cart: cartId,
+                product: proId
+            },
+            method: 'post',
+            success(response) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                location.reload()
+            }
 
-    })
+        })
 
-}
+    }
 
 </script>
