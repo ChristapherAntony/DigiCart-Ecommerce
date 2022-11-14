@@ -13,7 +13,7 @@ module.exports = {
             let orderHistory = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([
                     {
-                        $sort:{orderDate:-1}
+                        $sort: { orderDate: -1 }
                     },
                     {
                         $lookup: {
@@ -125,7 +125,7 @@ module.exports = {
                 .update(
                     { _id: objectId(changes.orderId), 'cartDetails.item': objectId(changes.proId) },
                     {
-                        $set: { 'cartDetails.$.status':changes.status }
+                        $set: { 'cartDetails.$.status': changes.status }
                     })
                 .then((response) => {
                     resolve()
@@ -170,11 +170,6 @@ module.exports = {
             const salesReport = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([
                     {
-                        $match: {
-                            $nor: [{ status: "Pending" },]
-                        }
-                    },
-                    {
                         $project: {
                             _id: 0,
                             cartDetails: 1
@@ -211,7 +206,71 @@ module.exports = {
 
         })
 
+    },
+    getSalesReportByDate: (DateRange) => {
+        return new Promise(async (resolve, reject) => {
+            const salesReport = await db.get().collection(collection.ORDER_COLLECTION)
+                .aggregate([
+                    {
+                        $match: {
+                            orderDate: { $gte: new Date(DateRange.fromDate), $lte: new Date(DateRange.toDate) }
+
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            cartDetails: 1
+                        }
+                    },
+                    {
+                        $unwind: '$cartDetails'
+                    },
+                    {
+                        $project: {
+                            quantity: '$cartDetails.quantity',
+                            salesTotal: '$cartDetails.productTotal',
+                            item: "$cartDetails.product.title",
+                            actualPrice: '$cartDetails.product.actualPrice',
+
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: '$item',
+                            SalesQty: { $sum: '$quantity' },
+                            Revenue: { $sum: '$salesTotal' },
+                            profit: { $sum: '$profit' }
+                        }
+                    }
+                ]).toArray()
+
+            resolve(salesReport)
+
+        })
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ,
     // topSelling: () => {
     //     return new Promise(async (resolve, reject) => {

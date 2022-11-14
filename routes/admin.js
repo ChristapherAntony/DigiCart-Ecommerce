@@ -45,8 +45,8 @@ const verifyAdmin = (req, res, next) => {
 }
 /* GET users listing. */
 
-router.get('/', verifyAdmin,async function (req, res, next) {
-  
+router.get('/', verifyAdmin, async function (req, res, next) {
+
   res.redirect('/admin/dash');
 });
 
@@ -64,14 +64,12 @@ router.post('/dash', (req, res) => {
   })
 })
 
-router.get('/dash', verifyAdmin,async function (req, res, next) {
-  const DashDetails=await adminHelpers.getDashDetails()
-  const SalesReport=await adminHelpers.getSalesReport()
-  const products   =await productHelpers.getAllProductsLookUP()
+router.get('/dash', verifyAdmin, async function (req, res, next) {
+  const DashDetails = await adminHelpers.getDashDetails()
+  const SalesReport = await adminHelpers.getSalesReport()
+  const products = await productHelpers.getAllProductsLookUP()
   // const TopSelling =await productHelpers.topSelling()
-
-
-  res.render('admin/dash', { layout: 'admin-layout',DashDetails,SalesReport,products });
+  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -95,7 +93,7 @@ router.get('/unBlock/:id', verifyAdmin, function (req, res) {
 
 router.get('/signOut', verifyAdmin, (req, res, next) => {
   req.session.destroy()
-  res.redirect('/admin') 
+  res.redirect('/admin')
 })
 
 // product section starts here
@@ -117,9 +115,9 @@ router.get('/add-category', verifyAdmin, (req, res, next) => {
 router.post('/addNewCategory', uploadSingleFile, (req, res, next) => {
   req.body.image = req.files.image[0].filename
   categoryHelpers.addCategory(req.body)
-  res.redirect("/admin/product-category")                 
+  res.redirect("/admin/product-category")
 
-}) 
+})
 
 router.get('/edit-category/:id', async (req, res) => {
   let categoryId = req.params.id
@@ -251,7 +249,7 @@ router.get('/viewOrders', verifyAdmin, (req, res, next) => {
 router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
   let orderDetails = await adminHelpers.getOrderDetails(req.params.id)
   //let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id) // old method chnaged to static
-  let orderProductsDetails= await userHelpers.oldProductDetails(req.params.id)
+  let orderProductsDetails = await userHelpers.oldProductDetails(req.params.id)
   console.log(orderProductsDetails);
   console.log('hello');
   console.log(orderDetails);
@@ -261,15 +259,35 @@ router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
     cartDetails.orderId = orderDetails._id
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
   console.log(orderProductsDetails);
-  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails,orderProductsDetails })
+  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails, orderProductsDetails })
 })
 
-router.post('/changeDeliveryStatus',verifyAdmin,(req,res)=>{
-  adminHelpers.changeDeliveryStatus(req.body).then((response)=>{
-    res.json({status:true})
-    
+router.post('/changeDeliveryStatus', verifyAdmin, (req, res) => {
+  adminHelpers.changeDeliveryStatus(req.body).then((response) => {
+    res.json({ status: true })
+
   })
 })
+
+router.get('/view_Sales_Report', verifyAdmin, async (req, res, next) => {
+
+  const SalesReport = await adminHelpers.getSalesReport()
+  res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
+  
+})
+router.post('/searchByDate', verifyAdmin, async (req, res, next) => {
+  let dateRange={}
+  if(req.body.fromDate==="" ||req.body.toDate===""){
+    res.redirect('/admin/view_Sales_Report')
+  }else{
+    dateRange.fromDate=req.body.fromDate
+    dateRange.toDate=req.body.toDate
+  }
+  const SalesReport = await adminHelpers.getSalesReportByDate(dateRange)
+  res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
+
+})
+
 
 // view Profile
 router.get('/profile', verifyAdmin, (req, res, next) => {

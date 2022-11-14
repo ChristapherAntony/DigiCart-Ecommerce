@@ -531,7 +531,6 @@ module.exports = {
                 products: products,
                 cartDetails: cartDetails,
                 totalAmount: total,
-                status: status
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 //db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })

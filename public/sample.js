@@ -365,3 +365,15 @@ db.order.updateOne(
     })
 
 db.order.find({'cartDetails.$[].status':"Pending"})
+
+
+
+db.order.aggregate([
+    {
+        $match: {
+            orderDate:{$gte:ISODate("2020-11-02"),$lte:ISODate("2023-11-13")}
+        }
+    }
+])
+
+db.order.find({orderDate:{$gte:ISODate("2020-11-02"),$lte:ISODate("2023-11-13")}}).count()
