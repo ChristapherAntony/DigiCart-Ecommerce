@@ -93,13 +93,14 @@
                                     <div class="billing-select mb-20">
                                         <label>Choose Your Address <abbr class="required"
                                                 title="required">*</abbr></label>
-                                        <select onchange="getAddress()"placeholder="Please" id="address" >
-                                            <option  >Select</option>
+                                        <select onchange="getAddress()" placeholder="Please" id="address">
+                                            <option>Select</option>
                                             {{#each address}}
-                                            
-                                            <option value="{{this.Address.addressId}}">{{this.Address.Name}}, {{this.Address.Street}}, Pin-{{this.Address.PostCode}} </option>
+
+                                            <option value="{{this.Address.addressId}}">{{this.Address.Name}},
+                                                {{this.Address.Street}}, Pin-{{this.Address.PostCode}} </option>
                                             {{/each}}
-                                            
+
                                         </select>
                                     </div>
                                     <h4>Delivery Address</h4>
@@ -109,38 +110,42 @@
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input type="text" name="Name" class="form-control" id="Name" 
-                                            placeholder=".">
+                                        <input type="text" name="Name" class="form-control" id="Name" placeholder=".">
                                         <label for="Name">Your Name </label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-20 form-floating">
 
-                                        <input name="HouseNo" placeholder="." type="text" class="form-control" id="HouseNo" required>
+                                        <input name="HouseNo" placeholder="." type="text" class="form-control"
+                                            id="HouseNo" required>
                                         <label for="HouseNo">House number and street name.</label>
                                     </div>
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Street" placeholder="." type="text" class="form-control" id="Street" required>
+                                        <input name="Street" placeholder="." type="text" class="form-control"
+                                            id="Street" required>
                                         <label for="Street">Street Address.</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="TownCity" placeholder="." type="text" class="form-control" id="TownCity" required>
+                                        <input name="TownCity" placeholder="." type="text" class="form-control"
+                                            id="TownCity" required>
                                         <label for="TownCity">Town / City</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="State" placeholder="." type="text" class="form-control" id="State" required>
+                                        <input name="State" placeholder="." type="text" class="form-control" id="State"
+                                            required>
                                         <label for="State">State</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Country" placeholder="." type="text" class="form-control" id="Country" required>
+                                        <input name="Country" placeholder="." type="text" class="form-control"
+                                            id="Country" required>
                                         <label for="Country">Country</label>
                                     </div>
                                 </div>
@@ -153,7 +158,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
-                                        <input name="Mobile" placeholder="." type="number" class="form-control" id="Mobile" required>
+                                        <input name="Mobile" placeholder="." type="number" class="form-control"
+                                            id="Mobile" required>
                                         <label for="Mobile">Mobile</label>
                                     </div>
                                 </div>
@@ -185,19 +191,18 @@
                                         </ul>
                                     </div>
 
-                                    <div class="your-order-info order-subtotal">
-
+                                    {{!-- <div class="your-order-info order-subtotal">
                                         <ul>
                                             <li>Subtotal <span>Rs.{{total}} </span>
                                             </li>
                                         </ul>
-                                    </div>
-                                    <div class="your-order-info order-shipping">
+                                    </div> --}}
+                                    {{!-- <div class="your-order-info order-shipping">
                                         <ul>
                                             <li>Shipping <p>Enter your full address </p>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                     <div class="your-order-info order-total">
                                         <ul>
                                             <li>Total <span>Rs.{{total}} </span></li>
@@ -215,8 +220,8 @@
                                         </div>
                                     </div>
                                     <div class="pay-top sin-payment">
-                                        <input id="payment_method_1" class="input-radio" type="radio"
-                                            value="ONLINE" name="payment_method">
+                                        <input id="payment_method_1" class="input-radio" type="radio" value="ONLINE"
+                                            name="payment_method">
                                         <label for="payment_method_1"> Online Payment</label>
                                         <div class="payment-box payment_method_bacs">
                                             <p>Make your payment directly into our bank account. Please use your Order
@@ -240,8 +245,7 @@
                             </div>
                             <div class="Place-order">
                                 {{!-- <a href="/viewAll">Place Order</a> --}}
-                                <button type="submit">Place Order</button>
-
+                                <button class="btn btn-outline-danger " type="submit">Place Order</button>
                             </div>
                         </div>
                     </div>
@@ -254,72 +258,6 @@
 
 
 
-{{!-- <script>
-    $('#checkout-form').submit((e) => {
-        e.preventDefault()
-        $.ajax({
-            url: '/placeOrder',
-            method: 'post',
-            data: $('#checkout-form').serialize(),
-            success: (response) => {
-                console.log("hello")
-                console.log(response)
-                if (response.codSuccess) {
-                    location.href = '/orderSuccess'
-                } else {
-                    console.log("out side  the rs function ", response)
-                    razorpayPayment(response)
-                }
-            }
-        })
-    })
-
-    function razorpayPayment(order) {
-        console.log("inside the rs function ", order)
-        var options = {
-            "key": "rzp_test_bZDcL6JRT4zjki", // Enter the Key ID generated from the Dashboard
-            "amount": 12000000, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "DigiCart",
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-            "handler": function (response) {
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature);
-                verifyPayment(response, order)
-
-            },
-            "prefill": {
-                "name": "Gaurav Kumar",
-                "email": "gaurav.kumar@example.com",
-                "contact": "9999999999"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-
-    }
-    function verifyPayment(payment, order) {
-        $.ajax({
-            url: '/verify-payment',
-            data: {
-                payment,
-                order
-            },
-            method: 'post'
-
-        })
-    }
-</script> --}}
 
 
 
@@ -331,13 +269,16 @@
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
+                console.log(response)
                 if (response.codSuccess) {
-                    location.href = '/orderSuccess'
+                    location.href = '/orderSuccess/'+response.orderId
                 }
-                else if(response.razor) {
+                else if (response.razor) {
+
                     razorpayPayment(response)
+
                 }
-                else if(response.payPal){
+                else if (response.payPal) {
 
                     location.replace(response.linkto)
                 }
@@ -345,10 +286,11 @@
         })
     })
 
+
     function razorpayPayment(order) {
         var options = {
             "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
-            "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "DigiCart",
             "description": "Test Transaction",
@@ -369,7 +311,7 @@
                 "color": "#3399cc"
             }
         };
-    
+
         var rzp1 = new Razorpay(options);
         rzp1.open();
     }
@@ -382,10 +324,12 @@
                 order
             },
             method: 'post',
-            success:(response)=>{
-                if(response.status){
-                    location.href = '/orderSuccess'
-                }else{
+            success: (response) => {
+                if (response.status) {
+                    console.log("inside sucess last before function call")
+                    console.log(response)
+                    location.href = '/orderSuccess/'+response.orderId
+                } else {
                     alert('Payment Failed')
                 }
             }

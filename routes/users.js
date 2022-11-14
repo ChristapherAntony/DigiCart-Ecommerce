@@ -347,9 +347,6 @@ router.post('/removeProduct', (req, res, next) => {
   })
 })
 
-
-
-
 router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   let user = req.session.user
   let total = await userHelpers.getTotalAmount(req.session.user._id)
@@ -364,11 +361,12 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
   let cartDetails = await userHelpers.getCartProducts(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  console.log(products, req.body);
   userHelpers.placeOrder(req.body, products, cartDetails, totalPrice).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0
-      res.json({ codSuccess: true })
+      response.orderId = orderId
+      response.codSuccess = true
+      res.json(response)
 
     } else if (req.body['payment_method'] === 'ONLINE') {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
@@ -424,7 +422,6 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
   })
 })
 
-
 router.get('/paymentFailed', verifyUser, async (req, res) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
@@ -434,18 +431,14 @@ router.get('/paymentFailed', verifyUser, async (req, res) => {
 router.post('/verify-payment', (req, res) => {
   console.log(req.body);
   userHelpers.verifyPayment(req.body).then(() => {
-    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
-      console.log('payment Status ');
-      res.json({ status: true })
-    })
+    response.orderId = req.body['order[receipt]']
+    response.status = true
+    res.json(response)
   }).catch((err) => {
     console.log(err);
     res.json({ status: false })
   })
 })
-
-
-
 
 router.get('/clearCart', verifyUser, (req, res) => {
   userHelpers.clearCart(req.session.user._id).then(() => {
@@ -454,11 +447,14 @@ router.get('/clearCart', verifyUser, (req, res) => {
   })
 })
 
-router.get('/orderSuccess', verifyUser, async (req, res) => {
+router.get('/orderSuccess/:orderId', verifyUser, async (req, res) => {
+  console.log("inside the order sucess11111111111111111");
+  const changeStatus = await userHelpers.changePaymentStatus(req.params.orderId,req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
+  console.log("inside the order sucess22222 afterchangePaymentStatus 22222222222@@@@@@@@@@@@");
   res.render('users/orderSuccess', { userName, cartCount })
 })
+
 router.get('/viewOrders', verifyUser, async (req, res) => {
   // let orders = await userHelpers.getUserOrders(req.session.user._id)
   // const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
@@ -477,11 +473,15 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
   res.render('users/orderDetails', { userName, cartCount, orderDetails, oldProductDetails, headerDetails })
 })
+
+
+
+
+
 router.get('/cancelTheOrder', verifyUser, (req, res) => {
   let Id = {}
   Id.proId = req.query.proId,
-  Id.orderId = req.query.orderId
-
+    Id.orderId = req.query.orderId
   userHelpers.cancelOrder(Id).then(() => {
     res.json(response)
   })

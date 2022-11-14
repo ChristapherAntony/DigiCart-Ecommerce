@@ -265,7 +265,6 @@ router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
 })
 
 router.post('/changeDeliveryStatus',verifyAdmin,(req,res)=>{
-  
   adminHelpers.changeDeliveryStatus(req.body).then((response)=>{
     res.json({status:true})
     

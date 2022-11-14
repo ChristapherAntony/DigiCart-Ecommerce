@@ -506,6 +506,7 @@ module.exports = {
     },
     placeOrder: (order, products, cartDetails, total) => {
         return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" })
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
 
             cartDetails.forEach(cartDetails => {
@@ -532,11 +533,11 @@ module.exports = {
                 totalAmount: total,
                 status: status
             }
-            console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
-                db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
+                //db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
                 resolve(response.insertedId)
             })
+
 
         })
     },
@@ -562,7 +563,7 @@ module.exports = {
             let orders = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([{ $match: { userId: objectId(userId) } },
                 {
-                    $sort:{orderDate:-1}
+                    $sort: { orderDate: -1 }
                 },
                 {
                     $project: {
@@ -669,7 +670,6 @@ module.exports = {
                 receipt: '' + orderID  //to get receipt from razorpay we concatenate string to get it as a string
             };
             instance.orders.create(options, function (err, order) {
-
                 resolve(order)
             });
 
@@ -683,22 +683,25 @@ module.exports = {
             hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]'])
             hmac = hmac.digest('hex') //convert to 
             if (hmac == details['payment[razorpay_signature]']) {
+
                 resolve()
             } else {
+                ;
                 reject()
             }
         })
     },
-    changePaymentStatus: ((orderID) => {
+    changePaymentStatus: ((orderID, userId) => {
         return new Promise((resolve, reject) => {
+            db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(userId) })
             db.get().collection(collection.ORDER_COLLECTION)
-                .updateOne({ _id: objectId(orderID) },
+                .update(
+                    { _id: objectId(orderID) },
                     {
-                        $set: {
-                            status: 'Placed'
-                        }
+                        $set: { 'cartDetails.$[].status': 'Placed' }
                     })
                 .then(() => {
+                    console.log("inside resolve 2222222222222222@@@@@@@@@@@@");
                     resolve()
                 })
         })
@@ -725,7 +728,8 @@ module.exports = {
                     resolve()
                 })
         })
-    }),
+    })
+
 }
 
 
