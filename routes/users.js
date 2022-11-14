@@ -381,8 +381,8 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url": "http://localhost:3000/orderSuccess",
-          "cancel_url": "http://localhost:3000/paymentFailed"
+          "return_url": "http://localhost:3000/orderSuccess/" + orderId,
+          "cancel_url": "http://localhost:3000/paymentFailed/" + orderId
         },
         "transactions": [{
           "amount": {
@@ -405,10 +405,12 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
             transaction.linkto = links[counter].href
             transaction.orderId = orderId
             //return res.redirect(links[counter].href)
-            userHelpers.changePaymentStatus(orderId).then(() => {
-              console.log(transaction);
-              res.json(transaction)
-            })
+            // userHelpers.changePaymentStatus(orderId).then(() => {
+            //   console.log(transaction);
+            //   res.json(transaction)
+            // })
+            res.json(transaction)
+
           }
         }
       })
@@ -422,7 +424,8 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
   })
 })
 
-router.get('/paymentFailed', verifyUser, async (req, res) => {
+router.get('/paymentFailed/:orderId', verifyUser, async (req, res) => {
+  const deletePendingOrder = await userHelpers.deletePendingOrder(req.params.orderId)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
   res.render('users/paymentFailed', { userName, cartCount })
@@ -448,10 +451,8 @@ router.get('/clearCart', verifyUser, (req, res) => {
 })
 
 router.get('/orderSuccess/:orderId', verifyUser, async (req, res) => {
-  console.log("inside the order sucess11111111111111111");
-  const changeStatus = await userHelpers.changePaymentStatus(req.params.orderId,req.session.user._id)
+  const changeStatus = await userHelpers.changePaymentStatus(req.params.orderId, req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  console.log("inside the order sucess22222 afterchangePaymentStatus 22222222222@@@@@@@@@@@@");
   res.render('users/orderSuccess', { userName, cartCount })
 })
 

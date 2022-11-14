@@ -269,17 +269,14 @@
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
-                console.log(response)
                 if (response.codSuccess) {
                     location.href = '/orderSuccess/'+response.orderId
                 }
                 else if (response.razor) {
-
                     razorpayPayment(response)
-
                 }
                 else if (response.payPal) {
-
+                    console.log(response)
                     location.replace(response.linkto)
                 }
             }

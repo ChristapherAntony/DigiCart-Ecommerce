@@ -9,7 +9,7 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
     getOrderHistory: () => {
         return new Promise(async (resolve, reject) => {
-            db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" }) // no need to store pending orders
+            //db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" }) // no need to store pending orders
             let orderHistory = await db.get().collection(collection.ORDER_COLLECTION)
                 .aggregate([
                     {

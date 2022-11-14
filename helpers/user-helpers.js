@@ -541,6 +541,12 @@ module.exports = {
 
         })
     },
+    deletePendingOrder:(orderId)=>{
+        return new Promise((resolve, reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: objectId(orderId) })
+            resolve()
+        })
+    },
     removeProduct: (details) => {  // we need cart id and product id to delete
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CART_COLLECTION)
