@@ -99,14 +99,14 @@
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input onchange="getTotalDiscount()" name="MRP" value="{{product.MRP}}" type="number" class="form-control"
+                                    <input onkeyup="getTotalDiscount()" name="MRP" value="{{product.MRP}}" type="number" class="form-control"
                                         id="MRP" placeholder="City">
                                     <label for="MRP"><i class="bi bi-currency-rupee"></i> MRP</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input onchange="getTotalDiscount()" name="productDiscount" value="{{product.productDiscount}}" type="number"
+                                    <input onkeyup="getTotalDiscount()" name="productDiscount" value="{{product.productDiscount}}" type="number"
                                         class="form-control" id="productDiscount" placeholder="City">
                                     <label for="productDiscount"><i class="bi bi-percent"></i> Discount</label>
                                 </div>

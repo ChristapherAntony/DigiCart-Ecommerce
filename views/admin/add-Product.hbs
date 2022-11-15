@@ -93,7 +93,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="MRP" onchange="getTotalDiscount()" type="number" class="form-control" id="MRP"
+                                    <input name="MRP" onkeyup="getTotalDiscount()" type="number" class="form-control" id="MRP"
                                         placeholder="City" >
                                     <label for="MRP"><i class="bi bi-currency-rupee"></i>MRP
                                     </label>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input onchange="getTotalDiscount(this)" type="number" name="productDiscount"
+                                    <input onkeyup="getTotalDiscount(this)" type="number" name="productDiscount"
                                         class="form-control" id="productDiscount" placeholder="City" >
                                     <label for="ProductDiscount"><i class="bi bi-percent"></i>Product</label>
                                 </div>
