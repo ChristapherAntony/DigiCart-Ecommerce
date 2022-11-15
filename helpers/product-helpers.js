@@ -70,7 +70,7 @@ module.exports = {
         })
     },
     updateProduct: (productId, productDetails) => {
-        parseInt()
+        console.log(productDetails);
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
                 .updateOne({ _id: objectId(productId) }, {
@@ -80,13 +80,13 @@ module.exports = {
                         category: objectId(productDetails.category),
                         brand: productDetails.brand,
                         color: productDetails.color,
-                        costPrice:parseInt(productDetails.costPrice) ,
-                        MRP:parseInt(productDetails.MRP) ,
-                        categoryDiscount:parseInt(productDetails.categoryDiscount),
-                        productDiscount:parseInt(productDetails.productDiscount),
-                        totalDiscount:parseInt(productDetails.totalDiscount) ,
-                        offerPrice:parseInt( productDetails.offerPrice),
-                        stock:parseInt( productDetails.stock),
+                        costPrice: parseInt(productDetails.costPrice),
+                        MRP: parseInt(productDetails.MRP),
+                        categoryDiscount: parseInt(productDetails.categoryDiscount),
+                        productDiscount: parseInt(productDetails.productDiscount),
+                        totalDiscount: parseInt(productDetails.totalDiscount),
+                        offerPrice: parseInt(productDetails.offerPrice),
+                        stock: parseInt(productDetails.stock),
                         productDescription: productDetails.productDescription,
                         image1: productDetails.image1,
                         image2: productDetails.image2,
@@ -98,6 +98,33 @@ module.exports = {
                     resolve()
                 })
         })
+    },
+    changeValues: (categoryId, categoryDiscount) => {
+        categoryDiscount = parseInt(categoryDiscount)
+        // here change product db with effect of new category discount change
+        return new Promise(async (resolve, reject) => {
+            //step 1 for change the categoryDiscount in the DB
+            let step1 = await db.get().collection(collections.PRODUCT_COLLECTION)
+                .updateMany(
+                    { category: objectId(categoryId) },
+                    { $set: { categoryDiscount: categoryDiscount } }
+                )
+            // step 2 for update total field of the totalDiscount in db
+            let step2 = await db.get().collection(collections.PRODUCT_COLLECTION)
+                .updateMany(
+                    { category: objectId(categoryId) },
+                    [{ $set: { totalDiscount: { $add: ['$categoryDiscount', '$productDiscount'] } } }]
+                )
+            // step 3 for update offerPrice field of the totalDiscount in db with the latest change
+            let step3 = await db.get().collection(collections.PRODUCT_COLLECTION)
+                .updateMany(
+                    { category: objectId(categoryId) },
+                    [{ $set: { offerPrice: { $subtract: ['$MRP', { $multiply: ['$MRP', { $divide: ['$totalDiscount', 100] }] }] } } }]
+                )
+            resolve()
+
+        })
+
     },
     fetchImage1: (proID) => {
         return new Promise(async (resolve, reject) => {

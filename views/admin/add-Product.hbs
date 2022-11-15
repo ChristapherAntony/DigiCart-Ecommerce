@@ -52,8 +52,8 @@
                             <div class="col-md-2">
                                 <div class="form-floating">
 
-                                    <input  value="0" name="categoryDiscount" type="number" class="form-control"
-                                        id="categoryDiscount" placeholder="" >
+                                    <input   name="categoryDiscount" value="0"  type="number" class="form-control"
+                                        id="categoryDiscount" placeholder="" readonly>
 
                                     <label for="categoryDiscount"><i class="bi bi-percent"></i>Category </label>
                                 </div>
@@ -84,7 +84,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="costPrice" type="number" class="form-control" id="floatingCity"
+                                    <input name="costPrice" type="number"  class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Cost Price </label>
                                 </div>
@@ -93,17 +93,17 @@
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="MRP" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>MRP
+                                    <input name="MRP" onchange="getTotalDiscount()" type="number" class="form-control" id="MRP"
+                                        placeholder="City" >
+                                    <label for="MRP"><i class="bi bi-currency-rupee"></i>MRP
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input type="number" name="productDiscount" class="form-control" id="floatingCity"
-                                        placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-percent"></i> Discount</label>
+                                    <input onchange="getTotalDiscount(this)" type="number" name="productDiscount"
+                                        class="form-control" id="productDiscount" placeholder="City" >
+                                    <label for="ProductDiscount"><i class="bi bi-percent"></i>Product</label>
                                 </div>
                             </div>
 
@@ -116,16 +116,16 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating">
-                                    <input name="offerPrice" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City" >
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Offer Price</label>
+                                    <input name="offerPrice" type="number" class="form-control" id="offerPrice"
+                                        placeholder="City"  value="0" readonly>
+                                    <label for="offerPrice"><i class="bi bi-currency-rupee"></i> Offer Price</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="totalDiscount" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City" >
-                                    <label for="floatingCity"><i class="bi bi-percent"></i>Total Discount</label>
+                                    <input name="totalDiscount" type="number" class="form-control" id="totalDiscount"
+                                        placeholder="City"  value="0" readonly>
+                                    <label for="floatingCity"><i class="bi bi-percent"></i>Total</label>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -194,13 +194,22 @@
                 method: 'get',
                 success: (response) => {
                     document.getElementById('categoryDiscount').value = response
-
                 }
             })
-
         }
-
-
-
     }
+
+
+    function getTotalDiscount() {
+        let proDis=parseInt(document.getElementById('productDiscount').value)
+        let catDis=parseInt(document.getElementById('categoryDiscount').value)
+        let MRP=parseInt(document.getElementById('MRP').value)
+
+        document.getElementById('totalDiscount').value=proDis+catDis
+            
+           let Dis=(proDis+catDis)/100
+        document.getElementById('offerPrice').value= MRP-(MRP*Dis)
+    }
+   
+
 </script>

@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
+                                    <select onchange="getCategoryDiscount()" name="category" class="form-select" id="floatingCategory" aria-label="State">
 
                                         {{!-- <option selected value="{{product._id}}">{{productCategoryName}}</option>
                                         {{#each category}}
@@ -59,8 +59,8 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input value="{{product.categoryDiscount}}" name="categoryDiscount" type="number" class="form-control" id="categoryDiscount"
-                                        placeholder="" >
+                                    <input value="{{product.categoryDiscount}}" name="categoryDiscount" type="number"
+                                        class="form-control" id="categoryDiscount" placeholder="" readonly>
                                     <label for="categoryDiscount"><i class="bi bi-percent"></i>Category </label>
                                 </div>
                             </div>
@@ -99,16 +99,16 @@
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="MRP" value="{{product.MRP}}" type="number" class="form-control"
-                                        id="floatingCity" placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> MRP</label>
+                                    <input onchange="getTotalDiscount()" name="MRP" value="{{product.MRP}}" type="number" class="form-control"
+                                        id="MRP" placeholder="City">
+                                    <label for="MRP"><i class="bi bi-currency-rupee"></i> MRP</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="productDiscount" value="{{product.productDiscount}}" type="number"
-                                        class="form-control" id="floatingCity" placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-percent"></i> Discount</label>
+                                    <input onchange="getTotalDiscount()" name="productDiscount" value="{{product.productDiscount}}" type="number"
+                                        class="form-control" id="productDiscount" placeholder="City">
+                                    <label for="productDiscount"><i class="bi bi-percent"></i> Discount</label>
                                 </div>
                             </div>
 
@@ -122,15 +122,15 @@
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <input name="offerPrice" value="{{product.offerPrice}}" type="number"
-                                        class="form-control" id="floatingCity" placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Offer Price</label>
+                                        class="form-control" id="offerPrice" placeholder="City" readonly>
+                                    <label for="offerPrice"><i class="bi bi-currency-rupee"></i> Offer Price</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="totalDiscount" type="number" value="{{product.totalDiscount}}" class="form-control" id="floatingCity"
-                                        placeholder="City" >
-                                    <label for="floatingCity"><i class="bi bi-percent"></i>Total Discount</label>
+                                    <input name="totalDiscount" type="number" value="{{product.totalDiscount}}"
+                                        class="form-control" id="totalDiscount" placeholder="City" readonly>
+                                    <label for="totalDiscount"><i class="bi bi-percent"></i>Total Discount</label>
                                 </div>
                             </div>
 
@@ -192,3 +192,36 @@
     </section>
 
 </main><!-- End #main -->
+
+<script>
+    function getCategoryDiscount() {
+        let variableOne = document.getElementById('floatingCategory')
+        let variableTwo = variableOne.options[variableOne.selectedIndex].text
+        if (variableTwo === "Select Any") {
+            document.getElementById('categoryDiscount').value = "0"
+        } else {
+            $.ajax({
+                url: "/admin/getCategoryDiscount",
+                data: {
+                    categoryName: variableTwo
+                },
+                method: 'get',
+                success: (response) => {
+                    document.getElementById('categoryDiscount').value = response
+                }
+            })
+        }
+    }
+
+    function getTotalDiscount() {
+        let proDis = parseInt(document.getElementById('productDiscount').value)
+        let catDis = parseInt(document.getElementById('categoryDiscount').value)
+        let MRP = parseInt(document.getElementById('MRP').value)
+
+        document.getElementById('totalDiscount').value = proDis + catDis
+
+        let Dis = (proDis + catDis) / 100
+        document.getElementById('offerPrice').value = MRP - (MRP * Dis)
+    }
+
+</script>

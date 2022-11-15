@@ -348,7 +348,7 @@ db.order.aggregate([
             profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
     },
-    { 
+    {
         $group: {
             _id: '$item',
             SalesQty: { $sum: '$quantity' },
@@ -365,24 +365,24 @@ db.order.aggregate([
         }
     },
     {
-        $unwind:'$product'
+        $unwind: '$product'
 
     },
     {
-        $project:{
+        $project: {
             _id: 1,
             SalesQty: 1,
             Revenue: 1,
             profit: 1,
-            image1:'$product.image1'
+            image1: '$product.image1'
 
         }
     },
     {
-        $sort:{SalesQty:-1}
+        $sort: { SalesQty: -1 }
     },
     {
-        $limit : 5 
+        $limit: 5
     }
 
 ])
@@ -391,21 +391,53 @@ ObjectId("635a9ff46da75fcc6558646d")--//pro
 ObjectId("636fb01d9f50adc401f32050")--//order
 
 db.order.updateOne(
-    { _id: ObjectId("636fb01d9f50adc401f32050")},
+    { _id: ObjectId("636fb01d9f50adc401f32050") },
     {
         $set: { 'cartDetails.$[].status': 'Done' }
     })
 
-db.order.find({'cartDetails.$[].status':"Pending"})
+db.order.find({ 'cartDetails.$[].status': "Pending" })
 
 
 
 db.order.aggregate([
     {
         $match: {
-            orderDate:{$gte:ISODate("2020-11-02"),$lte:ISODate("2023-11-13")}
+            orderDate: { $gte: ISODate("2020-11-02"), $lte: ISODate("2023-11-13") }
         }
     }
 ])
 
-db.order.find({orderDate:{$gte:ISODate("2020-11-02"),$lte:ISODate("2023-11-13")}}).count()
+db.order.find({ orderDate: { $gte: ISODate("2020-11-02"), $lte: ISODate("2023-11-13") } }).count()
+
+
+
+
+//
+'6358e5d0421c3c872a21c471'  6
+"6358e7a5421c3c872a21c476"  6
+
+db.product.updateMany(
+    {
+        category: ObjectId("6358e72f421c3c872a21c474")
+    },
+    {
+        $set: { categoryDiscount: 7 }
+    }
+)
+
+db.product.updateMany(
+    {
+        category: ObjectId("6358e72f421c3c872a21c474")
+    },
+    [{ $set: { totalDiscount: { $add: ['$categoryDiscount', '$productDiscount'] } } }]
+)
+///////////////////
+
+
+db.product.updateMany(
+    {
+        category: ObjectId("6358e72f421c3c872a21c474")
+    },
+    [{ $set: { offerPrice: { $subtract: [ '$MRP', { $multiply: ['$MRP',{ $divide: ['$totalDiscount' , 100 ] }] } ] } } }]
+) 

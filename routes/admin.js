@@ -20,6 +20,9 @@ const multerStorage = multer.diskStorage({
 })
 const upload = multer({ storage: multerStorage });
 const uploadMultiple = upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
+
+
+
 /************************multer  */
 const multerStorageCategory = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -135,7 +138,9 @@ router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
     Image1 = req.files.image[0].filename
   }
   req.body.image = Image1
-  categoryHelpers.updateCategory(req.params.id, req.body).then(() => {
+
+  categoryHelpers.updateCategory(req.params.id, req.body).then( async() => {
+    let changeValues =await productHelpers.changeValues(req.params.id,req.body.categoryDiscount)
     res.redirect('/admin/product-category')
 
 
