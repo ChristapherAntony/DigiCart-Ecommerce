@@ -21,6 +21,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Image</th>
                 <th scope="col">Description</th>
+                <th scope="col">Category Offer</th>
                 <th scope="col">Action</th>
 
 
@@ -34,6 +35,7 @@
                 <td scope="row">{{this.category}}</td>
                 <td scope="row"><img src="/images/category-img/{{this.image}}" style="width: 100px" alt=""></td>
                 <td scope="row">{{this.Description}}</td>
+                <td scope="row">{{this.categoryDiscount}} %</td>
                 <td><a href="/admin/edit-category/{{this._id}}" class="btn btn-warning btn-sm "> <i
                             class="bi bi-pencil-square"></i></a>
                     <a href="/admin/delete-category/{{this._id}}" class="btn btn-danger btn-sm"> <i

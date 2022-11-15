@@ -21,7 +21,6 @@ paypal.configure({
 //session verifying
 
 const verifyUser = (req, res, next) => {
-  console.log(req.url);
   req.session.returnTo = req.url
   if (req.session.user) {
     next();

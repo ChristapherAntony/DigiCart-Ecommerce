@@ -8,7 +8,7 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addCategory: (categoryDetails) => {
-
+        categoryDetails.categoryDiscount = parseInt(categoryDetails.categoryDiscount)
         db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryDetails)
     },
     getAllCategory: () => {
@@ -39,7 +39,8 @@ module.exports = {
                 $set: {
                     category: categoryDetails.category,
                     Description: categoryDetails.Description,
-                    image:categoryDetails.image
+                    image:categoryDetails.image,
+                    categoryDiscount:parseInt(categoryDetails.categoryDiscount)
                 }
             }).then((response) => {
                 resolve()
