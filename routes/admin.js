@@ -60,7 +60,7 @@ router.post('/dash', (req, res) => {
       res.redirect('/admin/dash')
     } else {
       res.redirect('/admin/dash')
-    }
+    }     
   })
 })
 
@@ -68,8 +68,11 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const DashDetails = await adminHelpers.getDashDetails()
   const SalesReport = await adminHelpers.getSalesReport()
   const products = await productHelpers.getAllProductsLookUP()
-  // const TopSelling =await productHelpers.topSelling()
-  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products });
+  const TopSelling =await adminHelpers.topSelling()
+  const OrderHistory=await adminHelpers.getRecentOrderHistory()
+  console.log('this is a order Histry');
+  console.log(OrderHistory);
+  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products,TopSelling,OrderHistory });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {

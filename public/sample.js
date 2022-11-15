@@ -325,11 +325,6 @@ db.order.aggregate([
 
 db.order.aggregate([
     {
-        $match: {
-            $nor: [{ status: "Pending" },]
-        }
-    },
-    {
         $project: {
             _id: 0,
             cartDetails: 1
@@ -352,7 +347,44 @@ db.order.aggregate([
         $addFields: {
             profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
         }
+    },
+    { 
+        $group: {
+            _id: '$item',
+            SalesQty: { $sum: '$quantity' },
+            Revenue: { $sum: '$salesTotal' },
+            profit: { $sum: '$profit' }
+        }
+    },
+    {
+        $lookup: {
+            from: 'product',
+            localField: '_id',
+            foreignField: 'title',
+            as: 'product'
+        }
+    },
+    {
+        $unwind:'$product'
+
+    },
+    {
+        $project:{
+            _id: 1,
+            SalesQty: 1,
+            Revenue: 1,
+            profit: 1,
+            image1:'$product.image1'
+
+        }
+    },
+    {
+        $sort:{SalesQty:-1}
+    },
+    {
+        $limit : 5 
     }
+
 ])
 
 ObjectId("635a9ff46da75fcc6558646d")--//pro

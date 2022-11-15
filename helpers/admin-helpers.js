@@ -37,10 +37,49 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-
+                
             resolve(orderHistory)
         })
     },
+    getRecentOrderHistory: () => {
+        return new Promise(async (resolve, reject) => {
+            //db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" }) // no need to store pending orders
+            let orderHistory = await db.get().collection(collection.ORDER_COLLECTION)
+                .aggregate([
+                    {
+                        $sort: { orderDate: -1 }
+                    },
+                    {
+                        $lookup: {
+                            from: 'user',
+                            localField: 'userId',
+                            foreignField: '_id',
+                            as: 'userDetails'
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            orderDate: { $dateToString: { format: "%d-%m-%Y", date: "$orderDate" } },
+                            deliveryDetails: 1,
+                            payment_method: 1,
+                            totalAmount: 1,
+                            status: 1,
+                            deliveryDetails: 1,
+                            userDetails: 1,
+                            userDetails: { $arrayElemAt: ['$userDetails', 0] }
+                        }
+                    },
+                    {
+                        $limit : 5 
+                    }
+                ]).toArray()
+            resolve(orderHistory)
+        })
+    },
+
+
+
     getOrderDetails: (orderId) => {
         return new Promise(async (resolve, reject) => {
             let orderDetails = await db.get().collection(collection.ORDER_COLLECTION)
@@ -255,45 +294,74 @@ module.exports = {
 
         })
 
+    },
+    topSelling: () => {
+        return new Promise(async (resolve, reject) => {
+            const top5 = await db.get().collection(collection.ORDER_COLLECTION)
+            .aggregate([
+                {
+                    $project: {
+                        _id: 0,
+                        cartDetails: 1
+                    }
+                },
+                {
+                    $unwind: '$cartDetails'
+                },
+                {
+                    $project: {
+                        image1: '$cartDetails.product.image1',
+                        quantity: '$cartDetails.quantity',
+                        salesTotal: '$cartDetails.productTotal',
+                        item: "$cartDetails.product.title",
+                        actualPrice: '$cartDetails.product.actualPrice',
+                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                    }
+                },
+                {
+                    $addFields: {
+                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                    }
+                },
+                { 
+                    $group: {
+                        _id: '$item',
+                        SalesQty: { $sum: '$quantity' },
+                        Revenue: { $sum: '$salesTotal' },
+                        profit: { $sum: '$profit' }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'product',
+                        localField: '_id',
+                        foreignField: 'title',
+                        as: 'product'
+                    }
+                },
+                {
+                    $unwind:'$product'
+            
+                },
+                {
+                    $project:{
+                        _id: 1,
+                        SalesQty: 1,
+                        Revenue: 1,
+                        profit: 1,
+                        image1:'$product.image1'
+            
+                    }
+                },
+                {
+                    $sort:{SalesQty:-1}
+                },
+                {
+                    $limit : 5 
+                }
+            
+            ]).toArray()
+            resolve(top5)
+        })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ,
-    // topSelling: () => {
-    //     return new Promise(async (resolve, reject) => {
-    //         const salesReport = await db.get().collection(collection.ORDER_COLLECTION)
-    //             .aggregate([
-    //                 {
-    //                     $match: {
-    //                         $nor: [{ status: "Pending" },]
-    //                     }
-    //                 },
-    //                 {
-    //                     $project: {
-    //                         _id: 0,
-    //                         cartDetails: 1
-    //                     }
-    //                 }
-
-    //             ])
-
-    //         resolve()
-
-    //     })
-
-
-    // }
 }

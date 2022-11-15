@@ -127,6 +127,7 @@
                                 <table class="table table-borderless" id="myTable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col">Product</th>
                                             <th scope="col">Sold Qty</th>
                                             <th scope="col">Revenue</th>
@@ -136,7 +137,7 @@
                                     <tbody>
                                         {{#each SalesReport}}
                                         <tr>
-
+                                            <td class="create_index"></td>
                                             <td><a href="#" class="text-primary fw-bold">{{this._id}}</a></td>
                                             <td>{{this.SalesQty}}</td>
                                             <td class="fw-bold"> <i class="bi bi-currency-rupee"></i> {{this.Revenue}}
