@@ -25,8 +25,8 @@
                             enctype="multipart/form-data">
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input name="titleMain" value="{{product.titleMain}}" type="text" class="form-control"
-                                        id="floatingName" placeholder="State">
+                                    <input name="titleMain" value="{{product.titleMain}}" type="text"
+                                        class="form-control" id="floatingName" placeholder="State">
                                     <label for="floatingName">Title Main</label>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                     <label for="floatingName">Title</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select name="category" class="form-select" id="floatingSelect" aria-label="State">
 
@@ -57,6 +57,13 @@
                                     <label for="floatingSelect">Category</label>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input value="{{product.categoryDiscount}}" name="categoryDiscount" type="number" class="form-control" id="categoryDiscount"
+                                        placeholder="" >
+                                    <label for="categoryDiscount"><i class="bi bi-percent"></i>Category </label>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select name="brand" class="form-select" id="floatingSelect" aria-label="State">
@@ -74,7 +81,7 @@
                                     <label for="floatingSelect">Brand</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating">
                                     <input name="color" value="{{product.color}}" type="text" class="form-control"
                                         id="floatingCity" placeholder="City">
@@ -83,28 +90,36 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="actualPrice" value="{{product.actualPrice}}" type="number"
+                                    <input name="costPrice" value="{{product.costPrice}}" type="number"
                                         class="form-control" id="floatingCity" placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Actual Price</label>
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Cost Price</label>
                                 </div>
                             </div>
 
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="sellingPrice" value="{{product.sellingPrice}}" type="number"
-                                        class="form-control" id="floatingCity" placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Selling Price</label>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-floating">
-                                    <input name="discount" value="{{product.discount}}" type="number" class="form-control"
+                                    <input name="MRP" value="{{product.MRP}}" type="number" class="form-control"
                                         id="floatingCity" placeholder="City">
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> MRP</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input name="productDiscount" value="{{product.productDiscount}}" type="number"
+                                        class="form-control" id="floatingCity" placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-percent"></i> Discount</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input name="stock" value="{{product.stock}}" type="number" class="form-control"
+                                        id="floatingCity" placeholder="City">
+                                    <label for="floatingCity">Stock</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-floating">
                                     <input name="offerPrice" value="{{product.offerPrice}}" type="number"
                                         class="form-control" id="floatingCity" placeholder="City">
@@ -113,12 +128,11 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="stock" value="{{product.stock}}" type="number" class="form-control"
-                                        id="floatingCity" placeholder="City">
-                                    <label for="floatingCity">Stock</label>
+                                    <input name="totalDiscount" type="number" value="{{product.totalDiscount}}" class="form-control" id="floatingCity"
+                                        placeholder="City" >
+                                    <label for="floatingCity"><i class="bi bi-percent"></i>Total Discount</label>
                                 </div>
                             </div>
-
 
                             <div class="col-12 pb-5">
                                 <div class="form-floating">

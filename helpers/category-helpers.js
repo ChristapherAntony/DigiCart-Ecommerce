@@ -33,6 +33,14 @@ module.exports = {
 
         })
     },
+    getCategoryDiscount:(categoryName)=>{
+        console.log(categoryName,"hello");
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CATEGORY_COLLECTION).findOne({category:categoryName}).then((response)=>{
+                resolve(response.categoryDiscount)
+            })   
+        })
+    },
     updateCategory: (categoryId, categoryDetails) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collections.CATEGORY_COLLECTION).updateOne({ _id: objectId(categoryId) }, {

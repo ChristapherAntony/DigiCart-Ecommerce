@@ -39,20 +39,23 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select name="category" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option selected></option>
+                                    <select onchange="getCategoryDiscount()" name="category" class="form-select"
+                                        id="floatingCategory" aria-label="State">
+                                        <option selected>Select Any</option>
                                         {{#each category}}
                                         <option value="{{this._id}}">{{this.category}}</option>
                                         {{/each}}
                                     </select>
-                                    <label for="floatingSelect">Category</label>
+                                    <label for="floatingCategory">Category</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="discount" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-percent"></i> CategoryDiscount</label>
+
+                                    <input  value="0" name="categoryDiscount" type="number" class="form-control"
+                                        id="categoryDiscount" placeholder="" >
+
+                                    <label for="categoryDiscount"><i class="bi bi-percent"></i>Category </label>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -72,7 +75,7 @@
                                     <label for="floatingSelect">Brand</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating">
                                     <input name="color" value="{{product.actualPrice}}" type="text" class="form-control"
                                         id="floatingCity" placeholder="City">
@@ -81,40 +84,48 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="actualPrice" type="number" class="form-control" id="floatingCity"
+                                    <input name="costPrice" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Actual Price </label>
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Cost Price </label>
                                 </div>
                             </div>
 
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="sellingPrice" type="number" class="form-control" id="floatingCity"
+                                    <input name="MRP" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Selling Price
+                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>MRP
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="discount" type="number" class="form-control" id="floatingCity"
+                                    <input type="number" name="productDiscount" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-percent"></i> Discount</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input name="stock" type="number" class="form-control" id="floatingCity"
+                                        placeholder="City">
+                                    <label for="floatingCity">Stock</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-floating">
                                     <input name="offerPrice" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City">
+                                        placeholder="City" >
                                     <label for="floatingCity"><i class="bi bi-currency-rupee"></i> Offer Price</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="stock" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City">
-                                    <label for="floatingCity">Stock</label>
+                                    <input name="totalDiscount" type="number" class="form-control" id="floatingCity"
+                                        placeholder="City" >
+                                    <label for="floatingCity"><i class="bi bi-percent"></i>Total Discount</label>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -167,3 +178,29 @@
     </section>
 
 </main><!-- End #main -->
+
+<script>
+    function getCategoryDiscount() {
+        let variableOne = document.getElementById('floatingCategory')
+        let variableTwo = variableOne.options[variableOne.selectedIndex].text
+        if (variableTwo === "Select Any") {
+            document.getElementById('categoryDiscount').value = "0"
+        } else {
+            $.ajax({
+                url: "/admin/getCategoryDiscount",
+                data: {
+                    categoryName: variableTwo
+                },
+                method: 'get',
+                success: (response) => {
+                    document.getElementById('categoryDiscount').value = response
+
+                }
+            })
+
+        }
+
+
+
+    }
+</script>

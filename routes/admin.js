@@ -38,9 +38,9 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-    //next();
+    next();
 
-    res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+    //res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 /* GET users listing. */
@@ -60,7 +60,7 @@ router.post('/dash', (req, res) => {
       res.redirect('/admin/dash')
     } else {
       res.redirect('/admin/dash')
-    }     
+    }
   })
 })
 
@@ -68,11 +68,11 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const DashDetails = await adminHelpers.getDashDetails()
   const SalesReport = await adminHelpers.getSalesReport()
   const products = await productHelpers.getAllProductsLookUP()
-  const TopSelling =await adminHelpers.topSelling()
-  const OrderHistory=await adminHelpers.getRecentOrderHistory()
+  const TopSelling = await adminHelpers.topSelling()
+  const OrderHistory = await adminHelpers.getRecentOrderHistory()
   console.log('this is a order Histry');
   console.log(OrderHistory);
-  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products,TopSelling,OrderHistory });
+  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -170,7 +170,14 @@ router.get('/add-product', verifyAdmin, (req, res, next) => {
   categoryHelpers.getAllCategory().then((category) => {
     res.render('admin/add-product', { layout: 'admin-layout', category })
   })
-
+})
+router.get('/getCategoryDiscount', verifyAdmin, (req, res, next) => {
+  console.log(req.query.categoryName);
+  console.log("api call");
+  categoryHelpers.getCategoryDiscount(req.query.categoryName).then((response) => {
+    console.log(req.query.categoryName, "===", response);
+    res.json(response)
+  })
 })
 
 
@@ -180,9 +187,11 @@ router.post('/add-products', uploadMultiple, (req, res) => {
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
 
-  req.body.actualPrice = parseInt(req.body.actualPrice),
-    req.body.sellingPrice = parseInt(req.body.sellingPrice),
-    req.body.discount = parseInt(req.body.discount),
+  req.body.costPrice = parseInt(req.body.costPrice),
+    req.body.MRP = parseInt(req.body.MRP),
+    req.body.categoryDiscount = parseInt(req.body.categoryDiscount),
+    req.body.productDiscount = parseInt(req.body.productDiscount),
+    req.body.totalDiscount = parseInt(req.body.totalDiscount),
     req.body.offerPrice = parseInt(req.body.offerPrice),
     req.body.stock = parseInt(req.body.stock)
 
@@ -276,15 +285,15 @@ router.get('/view_Sales_Report', verifyAdmin, async (req, res, next) => {
 
   const SalesReport = await adminHelpers.getSalesReport()
   res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
-  
+
 })
 router.post('/searchByDate', verifyAdmin, async (req, res, next) => {
-  let dateRange={}
-  if(req.body.fromDate==="" ||req.body.toDate===""){
+  let dateRange = {}
+  if (req.body.fromDate === "" || req.body.toDate === "") {
     res.redirect('/admin/view_Sales_Report')
-  }else{
-    dateRange.fromDate=req.body.fromDate
-    dateRange.toDate=req.body.toDate
+  } else {
+    dateRange.fromDate = req.body.fromDate
+    dateRange.toDate = req.body.toDate
   }
   const SalesReport = await adminHelpers.getSalesReportByDate(dateRange)
   res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
