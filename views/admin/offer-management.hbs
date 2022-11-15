@@ -1,0 +1,118 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Category Offers</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    {{#each category}}
+                    <!-- Sales Card -->
+                    <div class="col-md-3">
+                        <div class="card info-card sales-card">
+                            {{!-- <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div> --}}
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.category}} </h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <img src="/images/category-img/{{this.image}}" alt="" style="width: inherit;">
+                                    </div>
+                                    <div class="ps-3 ">
+                                        <h6>{{this.categoryDiscount}} %</h6>
+                                        <span class="text-success small pt-1 fw-bold">Offer</span>
+                                        <a href="/admin/edit-category/{{this._id}}"
+                                            class="btn btn-outline-danger btn-sm ">Edit</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Sales Card -->
+                    {{/each }}
+
+
+
+
+                </div>
+            </div><!-- End Left side columns -->
+
+
+
+        </div>
+    </section>
+    <hr>
+
+    <div class="pagetitle">
+        <h1>Product Offers</h1>
+
+    </div>
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+
+
+
+
+
+            <div class="col-lg-12">
+                <div class="row">
+                    {{#each products}}
+                    <!-- Sales Card -->
+                    <div class="col-md-4">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.title}} </h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <img src="/images/product-img/{{this.image1}}" alt="" style="width: inherit;">
+                                    </div>
+                                    <div class="ps-3 ">
+                                        <h6>{{this.productDiscount}} </h6>
+                                        <span class="text-success small pt-1 fw-bold">Offer</span>
+                                        <a href="/admin/edit-product/{{this._id}}"
+                                            class="btn btn-outline-danger btn-sm ">Edit</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Sales Card -->
+                    {{/each }}
+                </div>
+            </div><!-- End Left side columns -->
+
+
+
+
+
+
+
+        </div>
+    </section>
+
+
+
+</main><!-- End #main -->
