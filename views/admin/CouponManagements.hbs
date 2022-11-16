@@ -1,0 +1,352 @@
+<style>
+    body {
+        background: #eee;
+    }
+
+    .card {
+        width: 350px;
+        padding: 10px;
+        border-radius: 20px;
+        background: orange;
+        border: none;
+        color: #fff;
+        height: ;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        height: 100vh;
+    }
+
+    .card h1 {
+        font-size: 48px;
+        margin-bottom: 0px;
+    }
+
+    .card span {
+        font-size: 28px;
+    }
+
+    .image {
+        position: absolute;
+        opacity: .1;
+        left: 0;
+        top: 0;
+    }
+
+    .image2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        opacity: .1;
+    }
+</style>
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Active Coupons</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard ">
+        <div class="mt-1 mb-4">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success rounded-pill" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop1">
+                Add New
+            </button>
+            {{#if couponError}}
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                {{couponError}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/if}}
+
+        </div>
+
+        <!-- Left side columns -->
+
+        <div class="row col-lg-12  ">
+            {{#each activeCoupons}}
+            <div class="m-1 col-md-4 card text-center">
+                <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                <h1>{{this.couponDiscount}}% OFF</h1><span class="d-block">{{this.couponDescription}}</span><span
+                    class="d-block">Up to :{{this.maxAmount}}</span>
+                <div class="mt-1">Coupon Code : {{this.couponCode}}<br>
+                    <small>Expiry : {{this.expiryDate}}</small>
+                </div>
+                <div>
+                    <button type="button" class="btn " data-bs-toggle="modal"
+                        data-bs-target="#staticBackdropActiveEdit{{this.expiredCoupons.couponCode}}">
+                        <i class="bi bi-pencil-square ">Edit</i>
+                    </button>
+
+                    <button onclick="deleteCoupon('{{this._id}}')" type="button" class="btn ">
+                        <i class="bi bi-trash3 float-right">Delete</i>
+                    </button>
+                </div>
+
+
+            </div>
+            {{/each}}
+        </div>
+        <!-- End Left side columns -->
+
+
+        <div class="pagetitle pt-5">
+            <h1>Expired Coupons</h1>
+            <hr>
+        </div><!-- End Page Title -->
+        <div class="">
+            <div class="row col-lg-12  ">
+                {{#each expiredCoupons}}
+                <div class="m-1 col-md-4 card text-center" style="opacity:.4 ;">
+                    <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                    <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                    <h1>{{this.couponDiscount}}% OFF</h1><span class="d-block">{{this.couponDescription}}</span><span
+                        class="d-block">Up to :{{this.maxAmount}}</span>
+                    <div class="mt-4">Coupon Code : {{this.couponCode}}<br>
+                        <small>Expiry : {{this.expiryDate}}</small>
+                    </div>
+                    <div>
+
+                        <button type="button" class="btn " data-bs-toggle="modal"
+                            data-bs-target="#staticBackdropEdit{{this.expiredCoupons.couponCode}}">
+                            <i class="bi bi-pencil-square ">Edit</i>
+                        </button>
+
+                        {{!-- <button onclick="deleteCoupon('{{this._id}}')" type="button" class="btn ">
+                            <i class="bi bi-trash3 float-right">Delete</i>
+                        </button> --}}
+                    </div>
+
+
+                </div>
+                {{/each}}
+            </div>
+        </div><!-- End Left side columns -->
+
+
+    </section>
+
+
+
+
+    <!-- Modal  add new coupons -->
+    <div class="modal fade" id="staticBackdrop1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content w-75">
+                <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel1">Add new Coupon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form action="/admin/addCoupon" method="post">
+                        <!-- Coupon Code input -->
+                        <div class="form-outline mb-2">
+                            <input value="" name="couponCode" type="text" id="couponCode" class="form-control"
+                                required />
+                            <label class="form-label" for="couponCode">Coupon Code</label>
+                        </div>
+
+                        <!-- Coupon Description input -->
+                        <div class="form-outline mb-2">
+                            <input value="" name="couponDescription" type="text" id="couponDescription"
+                                class="form-control" required />
+                            <label class="form-label" for="couponDescription">Coupon Description</label>
+                        </div>
+
+                        <!-- Coupon  input -->
+                        <div class="form-outline mb-2">
+                            <input value="" name="couponDiscount" type="number" id="couponDiscount" class="form-control"
+                                required />
+                            <label class="form-label" for="couponDiscount">Offer %</label>
+                        </div>
+                        <!-- up to  input -->
+                        <div class="form-outline mb-2">
+                            <input value="" name="maxAmount" type="number" id="maxAmount" class="form-control"
+                                required />
+                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                        </div>
+                        <!-- Date  input -->
+                        <div class="form-outline mb-2">
+                            <input type="date" name="expiryDate" id="expiryDate" class="form-control" required />
+                            <label class="form-label" for="expiryDate">Expiry Date</label>
+                        </div>
+                        <!-- Submit button -->
+                        <button style="background-color:rgb(163, 106, 2) ;" type="submit"
+                            class="btn btn-primary btn-block">Add </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <!-- Modal active expired coupons   -->
+    {{#each activeCoupons }}
+    <div class="modal fade" id="staticBackdropActiveEdit{{this.activeCoupons.couponCode}}" tabindex="-1"
+        aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content w-75">
+                <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel1">Add new Coupon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form action="/admin/updateCoupon" method="post">
+                        <!-- Coupon Code input -->
+                        <input type="text" name="id" value="{{this._id}}" hidden>
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponCode}}" name="couponCode" type="text" id="couponCode"
+                                class="form-control" required />
+                            <label class="form-label" for="couponCode">Coupon Code</label>
+                        </div>
+
+                        <!-- Coupon Description input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponDescription}}" name="couponDescription" type="text"
+                                id="couponDescription" class="form-control" required />
+                            <label class="form-label" for="couponDescription">Coupon Description</label>
+                        </div>
+
+                        <!-- Coupon  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponDiscount}}" name="couponDiscount" type="number"
+                                id="couponDiscount" class="form-control" required />
+                            <label class="form-label" for="couponDiscount">Offer %</label>
+                        </div>
+                        <!-- up to  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.maxAmount}}" name="maxAmount" type="number" id="maxAmount"
+                                class="form-control" required />
+                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                        </div>
+                        <!-- Date  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
+                                class="form-control" />
+                            <label class="form-label" for="expiryDate">Expiry Date</label>
+                        </div>
+                        <!-- Submit button -->
+                        <button style="background-color:rgb(163, 106, 2) ;" type="submit"
+                            class="btn btn-primary btn-block">Update </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <!-- Modal -->
+
+    <!-- Modal edit Active coupons   -->
+    {{#each expiredCoupons }}
+    <div class="modal fade" id="staticBackdropEdit{{this.activeCoupons.couponCode}}" tabindex="-1"
+        aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content w-75">
+                <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel1">Add new Coupon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form action="/admin/updateCoupon" method="post">
+                        <input type="text" name="id" value="{{this._id}}" hidden>
+                        <!-- Coupon Code input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponCode}}" name="couponCode" type="text" id="couponCode"
+                                class="form-control" required />
+                            <label class="form-label" for="couponCode">Coupon Code</label>
+                        </div>
+
+                        <!-- Coupon Description input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponDescription}}" name="couponDescription" type="text"
+                                id="couponDescription" class="form-control" required />
+                            <label class="form-label" for="couponDescription">Coupon Description</label>
+                        </div>
+
+                        <!-- Coupon  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.couponDiscount}}" name="couponDiscount" type="number"
+                                id="couponDiscount" class="form-control" required />
+                            <label class="form-label" for="couponDiscount">Offer %</label>
+                        </div>
+                        <!-- up to  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.maxAmount}}" name="maxAmount" type="number" id="maxAmount"
+                                class="form-control" required />
+                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                        </div>
+                        <!-- Date  input -->
+                        <div class="form-outline mb-2">
+                            <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
+                                class="form-control" />
+                            <label class="form-label" for="expiryDate">Expiry Date</label>
+                        </div>
+                        <!-- Submit button -->
+                        <button style="background-color:rgb(163, 106, 2) ;" type="submit"
+                            class="btn btn-primary btn-block">Update </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <!-- Modal -->
+
+
+
+
+
+
+
+</main><!-- End #main -->
+
+
+<script>
+    function deleteCoupon(id) {
+        console.log(id)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/deleteCoupon',
+                    data: {
+                        offerId: id
+                    },
+                    method: 'post',
+                    success(response) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your Offer has been deleted.',
+                            'success'
+                        )
+                        location.reload()
+                    }
+                })
+
+            }
+        })
+
+    }
+</script>

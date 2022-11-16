@@ -1,4 +1,4 @@
-<div class="breadcrumb-area bg-gray menuBarTop"  >
+<div class="breadcrumb-area bg-gray menuBarTop">
     <div class="container">
         <div class="breadcrumb-content text-center">
             <ul>
@@ -94,8 +94,10 @@
                                                 <span>{{this.offerPrice}}</span>
                                             </div>
                                             <div class="pro-add-to-cart">
-                                               {{!-- <a href="/add-to-cart/{{this._id}}"><button  title="Add to Cart">Add To Cart</button></a>  --}}
-                                               <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart</button>
+                                                {{!-- <a href="/add-to-cart/{{this._id}}"><button
+                                                        title="Add to Cart">Add To Cart</button></a> --}}
+                                                <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To
+                                                    Cart</button>
                                             </div>
                                         </div>
                                     </div>
@@ -146,16 +148,17 @@
                                                 <li>Free Delivery</li>
                                                 <li>Specifications :</li>
                                             </ul>
-                                            
+
                                             {{!-- <p>{{this.productDescription}}</p> --}}
                                             <div class="product-list-action">
-                                                <button onclick="addToCart('{{this._id}}')" title="Add To Cart"><i class="bi bi-cart2"></i></button>
+                                                <button onclick="addToCart('{{this._id}}')" title="Add To Cart"><i
+                                                        class="bi bi-cart2"></i></button>
                                                 <button title="Wishlist"><i class="bi bi-heart fa-sm"></i></button>
                                                 <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             {{/each}}
@@ -449,12 +452,13 @@
     </div>
 </div>
 
-{{!-- <script>
-    function addToCart(proId){
+{{!--
+<script>
+    function addToCart(proId) {
         $.ajax({
-            url:'/add-to-cart/'+proId,
-            method:'get',
-            success:(Response)=>{
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (Response) => {
                 alert(Response)
             }
         })

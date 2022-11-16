@@ -25,7 +25,6 @@ const verifyUser = (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
-    //next();
     cartCount = 0
     userName = null
     res.render('users/login-signUp');
@@ -321,7 +320,6 @@ router.get('/add-to-cart/:id', verifyUser, async (req, res, next) => {
   } else {
     userHelpers.addToCart(req.params.id, req.session.user._id).then(async () => {
       const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
       userHelpers.getCartCount(req.session.user._id).then((response) => {
         cartCount = response
         res.json({ status: true })

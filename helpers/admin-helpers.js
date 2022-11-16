@@ -1,6 +1,7 @@
 
 const db = require('../config/connection')
 const collection = require('../config/collections')
+
 var bcrypt = require('bcrypt')
 var objectId = require('mongodb').ObjectId
 
@@ -37,7 +38,7 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-                
+
             resolve(orderHistory)
         })
     },
@@ -71,7 +72,7 @@ module.exports = {
                         }
                     },
                     {
-                        $limit : 5 
+                        $limit: 5
                     }
                 ]).toArray()
             resolve(orderHistory)
@@ -298,70 +299,173 @@ module.exports = {
     topSelling: () => {
         return new Promise(async (resolve, reject) => {
             const top5 = await db.get().collection(collection.ORDER_COLLECTION)
-            .aggregate([
-                {
-                    $project: {
-                        _id: 0,
-                        cartDetails: 1
+                .aggregate([
+                    {
+                        $project: {
+                            _id: 0,
+                            cartDetails: 1
+                        }
+                    },
+                    {
+                        $unwind: '$cartDetails'
+                    },
+                    {
+                        $project: {
+                            image1: '$cartDetails.product.image1',
+                            quantity: '$cartDetails.quantity',
+                            salesTotal: '$cartDetails.productTotal',
+                            item: "$cartDetails.product.title",
+                            actualPrice: '$cartDetails.product.actualPrice',
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: '$item',
+                            SalesQty: { $sum: '$quantity' },
+                            Revenue: { $sum: '$salesTotal' },
+                            profit: { $sum: '$profit' }
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'product',
+                            localField: '_id',
+                            foreignField: 'title',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $unwind: '$product'
+
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            SalesQty: 1,
+                            Revenue: 1,
+                            profit: 1,
+                            image1: '$product.image1'
+
+                        }
+                    },
+                    {
+                        $sort: { SalesQty: -1 }
+                    },
+                    {
+                        $limit: 5
                     }
-                },
-                {
-                    $unwind: '$cartDetails'
-                },
-                {
-                    $project: {
-                        image1: '$cartDetails.product.image1',
-                        quantity: '$cartDetails.quantity',
-                        salesTotal: '$cartDetails.productTotal',
-                        item: "$cartDetails.product.title",
-                        actualPrice: '$cartDetails.product.actualPrice',
-                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
-                    }
-                },
-                {
-                    $addFields: {
-                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
-                    }
-                },
-                { 
-                    $group: {
-                        _id: '$item',
-                        SalesQty: { $sum: '$quantity' },
-                        Revenue: { $sum: '$salesTotal' },
-                        profit: { $sum: '$profit' }
-                    }
-                },
-                {
-                    $lookup: {
-                        from: 'product',
-                        localField: '_id',
-                        foreignField: 'title',
-                        as: 'product'
-                    }
-                },
-                {
-                    $unwind:'$product'
-            
-                },
-                {
-                    $project:{
-                        _id: 1,
-                        SalesQty: 1,
-                        Revenue: 1,
-                        profit: 1,
-                        image1:'$product.image1'
-            
-                    }
-                },
-                {
-                    $sort:{SalesQty:-1}
-                },
-                {
-                    $limit : 5 
-                }
-            
-            ]).toArray()
+
+                ]).toArray()
             resolve(top5)
+        })
+    },
+    addNewCoupon: (CouponDetails) => {
+        CouponDetails.couponDiscount = parseInt(CouponDetails.couponDiscount)
+        CouponDetails.maxAmount = parseInt(CouponDetails.maxAmount)
+        CouponDetails.expiryDate = new Date(CouponDetails.expiryDate)
+        return new Promise(async (resolve, reject) => {
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: CouponDetails.couponCode })
+            if (coupon) {
+                resolve({ status: false })
+            } else {
+                let add = await db.get().collection(collection.COUPON_COLLECTION).insertOne(CouponDetails)
+                resolve({ status: true })
+            }
+
+
+        })
+    },
+    updateCoupon: (CouponDetails) => {
+        console.log("inside the helper");
+        console.log(CouponDetails);
+
+        return new Promise(async (resolve, reject) => {
+
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: CouponDetails.couponCode })
+            if(coupon){
+                resolve({ status: false })
+            }else{
+                let update = await db.get().collection(collection.COUPON_COLLECTION)
+                .updateOne(
+                    { _id: objectId(CouponDetails.id) },
+                    {
+                        $set: {
+                            couponCode: CouponDetails.couponCode,
+                            couponDescription: CouponDetails.couponDescription,
+                            couponDiscount: parseInt(CouponDetails.couponDiscount),
+                            maxAmount: parseInt(CouponDetails.maxAmount),
+                            expiryDate: new Date(CouponDetails.expiryDate)
+                        }
+                    }
+                )
+            resolve({ status: true })
+            }
+        })
+    },
+    deleteCoupon: (couponId) => {
+        console.log("insoide the helper", couponId.offerId);
+        return new Promise(async (resolve, reject) => {
+            let deleteCoupon = await db.get().collection(collection.COUPON_COLLECTION).deleteOne({ _id: objectId(couponId.offerId) })
+            resolve()
+        })
+
+    },
+    getActiveCoupons: () => {
+        return new Promise(async (resolve, reject) => {
+            let activeCoupons = await db.get().collection(collection.COUPON_COLLECTION)
+                .aggregate([
+                    {
+                        $match: {
+                            expiryDate: { $gte: new Date() }
+
+                        }
+                    },
+                    {
+                        $project:
+                        {
+
+                            expiryDate: { $dateToString: { format: "%d-%m-%Y ", date: "$expiryDate" } },
+                            couponCode: 1,
+                            maxAmount: 1,
+                            couponDescription: 1,
+                            couponDiscount: 1
+
+                        }
+                    }
+                ]).toArray()
+            resolve(activeCoupons)
+        })
+    },
+    getExpiredCoupons: () => {
+        return new Promise(async (resolve, reject) => {
+            let activeCoupons = await db.get().collection(collection.COUPON_COLLECTION)
+                .aggregate([
+                    {
+                        $match: {
+                            expiryDate: { $lt: new Date() }
+
+                        }
+                    },
+                    {
+                        $project:
+                        {
+
+                            expiryDate: { $dateToString: { format: "%Y-%m-%d ", date: "$expiryDate" } },
+                            couponCode: 1,
+                            maxAmount: 1,
+                            couponDescription: 1,
+                            couponDiscount: 1
+
+                        }
+                    }
+                ]).toArray()
+            resolve(activeCoupons)
         })
     }
 }

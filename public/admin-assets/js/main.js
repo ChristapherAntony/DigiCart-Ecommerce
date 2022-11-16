@@ -355,3 +355,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 $(document).ready(function () {
   $('#myTable').DataTable();
 });
+
+
+// for hide a san after 5 seconds
+$.fn.delayedHide = function (delay) {
+  var that = this;
+  window.setTimeout(function () {
+      that.hide();
+  }, delay || 4000);
+  return that;
+}
+
+//(".disappear").delayedHide(); 
+$(".disappear1").delayedHide();

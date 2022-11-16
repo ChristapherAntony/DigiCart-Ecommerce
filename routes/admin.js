@@ -109,7 +109,7 @@ router.get('/signOut', verifyAdmin, (req, res, next) => {
 
 router.get('/product-category', verifyAdmin, (req, res, next) => {
   categoryHelpers.getAllCategory().then((category) => {
-    req.session.offer=false
+    req.session.offer = false
     res.render('admin/product-category', { layout: 'admin-layout', category })
   })
 })
@@ -140,11 +140,11 @@ router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
   }
   req.body.image = Image1
 
-  categoryHelpers.updateCategory(req.params.id, req.body).then( async() => {
-    let changeValues =await productHelpers.changeValues(req.params.id,req.body.categoryDiscount)
-    if(req.session.offer){
+  categoryHelpers.updateCategory(req.params.id, req.body).then(async () => {
+    let changeValues = await productHelpers.changeValues(req.params.id, req.body.categoryDiscount)
+    if (req.session.offer) {
       res.redirect('/admin/offerManagement')
-    }else{
+    } else {
       res.redirect('/admin/product-category')
     }
   })
@@ -163,7 +163,7 @@ router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
 //products----starts here<<<<<<<<<
 router.get('/view-products', verifyAdmin, (req, res, next) => {
   productHelpers.getAllProductsLookUP().then((products) => {
-    req.session.offer=false
+    req.session.offer = false
     res.render('admin/view-products', { layout: 'admin-layout', products })
   })
 })
@@ -248,12 +248,12 @@ router.post('/update-product/:id', uploadMultiple, async (req, res) => {
   req.body.image4 = Image4
 
   productHelpers.updateProduct(req.params.id, req.body).then(() => {
-    if(req.session.offer){
+    if (req.session.offer) {
       res.redirect('/admin/offerManagement')
-    }else{
+    } else {
       res.redirect('/admin/view-products')
     }
-    
+
   })
 })
 
@@ -319,13 +319,49 @@ router.get('/profile', verifyAdmin, (req, res, next) => {
   res.render('admin/profile', { layout: 'admin-layout' })
 })
 
-router.get('/offerManagement', verifyAdmin, async(req, res, next) => {
-  let category=await categoryHelpers.getAllCategory()
-  let products=await productHelpers.getAllProductsLookUP()
-  req.session.offer=true
+router.get('/offerManagement', verifyAdmin, async (req, res, next) => {
+  let category = await categoryHelpers.getAllCategory()
+  let products = await productHelpers.getAllProductsLookUP()
+  req.session.offer = true
   console.log(products);
-  res.render('admin/offer-management', { layout: 'admin-layout' ,category,products})
+  res.render('admin/offer-management', { layout: 'admin-layout', category, products })
 })
+
+router.get('/CouponManagements', verifyAdmin, async (req, res, next) => {
+  let activeCoupons = await adminHelpers.getActiveCoupons()
+  let expiredCoupons = await adminHelpers.getExpiredCoupons()
+  
+  res.render('admin/CouponManagements', { layout: 'admin-layout',activeCoupons,expiredCoupons,couponError:req.session.couponError })
+  req.session.couponError=null
+})
+router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
+
+  req.body.couponDiscount = parseInt(req.body.couponDiscount)
+  req.body.maxAmount = parseInt(req.body.maxAmount)
+  let addCoupon = await adminHelpers.addNewCoupon(req.body)
+  if(addCoupon.status===false){
+    req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
+  }else{
+    req.session.couponError=null
+  }
+  res.redirect('/admin/CouponManagements')
+})
+router.post('/updateCoupon', verifyAdmin, async (req, res, next) => {
+  console.log(req.body);
+  let updateCoupon = await adminHelpers.updateCoupon(req.body)
+  if(updateCoupon.status===false){
+    req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
+  }else{
+    req.session.couponError=null
+  }
+  res.redirect('/admin/CouponManagements')
+})
+router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
+  let deleteCoupon = await adminHelpers.deleteCoupon(req.body)
+  console.log(deleteCoupon);
+  res.json(response)
+})
+
 
 
 module.exports = router;
