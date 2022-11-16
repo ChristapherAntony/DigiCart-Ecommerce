@@ -338,6 +338,7 @@ router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
 
   req.body.couponDiscount = parseInt(req.body.couponDiscount)
   req.body.maxAmount = parseInt(req.body.maxAmount)
+  req.body.minSpend = parseInt(req.body.minSpend)
   let addCoupon = await adminHelpers.addNewCoupon(req.body)
   if(addCoupon.status===false){
     req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
@@ -349,17 +350,17 @@ router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
 router.post('/updateCoupon', verifyAdmin, async (req, res, next) => {
   console.log(req.body);
   let updateCoupon = await adminHelpers.updateCoupon(req.body)
-  // if(updateCoupon.status===false){
-  //   req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
-  // }else{
-  //   req.session.couponError=null
-  // }
   res.redirect('/admin/CouponManagements')
 })
 router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
   let deleteCoupon = await adminHelpers.deleteCoupon(req.body)
   console.log(deleteCoupon);
   res.json(response)
+})
+router.post('/getCouponDiscount/:couponCode', verifyAdmin, async (req, res, next) => {
+  let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
+  
+  res.json(getCouponDiscount)
 })
 
 

@@ -85,7 +85,8 @@
                 <h1>{{this.couponDiscount}}% OFF</h1><span class="d-block">{{this.couponDescription}}</span><span
                     class="d-block">Up to :{{this.maxAmount}}</span>
                 <div class="mt-1">Coupon Code : {{this.couponCode}}<br>
-                    <small>Expiry : {{this.expiryDate}}</small>
+                    Min Spend:{{this.minSpend}} <br>
+                    Expiry : {{this.expiryDate}}
                 </div>
                 <div>
                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -118,6 +119,7 @@
                     <h1>{{this.couponDiscount}}% OFF</h1><span class="d-block">{{this.couponDescription}}</span><span
                         class="d-block">Up to :{{this.maxAmount}}</span>
                     <div class="mt-4">Coupon Code : {{this.couponCode}}<br>
+                        Min Spend:{{this.minSpend}} <br>
                         <small>Expiry : {{this.expiryDate}}</small>
                     </div>
                     <div>
@@ -180,6 +182,11 @@
                                 required />
                             <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
                         </div>
+                        <!-- min spend  input -->
+                        <div class="form-outline mb-2">
+                            <input value="0" name="minSpend" type="number" id="minSpend" class="form-control" required />
+                            <label class="form-label" for="maxAmount">Min Spend</label>
+                        </div>
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
                             <input type="date" name="expiryDate" id="expiryDate" class="form-control" required />
@@ -197,8 +204,8 @@
 
     <!-- Modal active expired coupons   -->
     {{#each activeCoupons }}
-    <div class="modal fade" id="staticBackdropActiveEdit{{this._id}}" tabindex="-1"
-        aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal fade" id="staticBackdropActiveEdit{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
         <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
                 <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
@@ -234,10 +241,16 @@
                                 class="form-control" required />
                             <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
                         </div>
+                        {{!-- min spend --}}
+                        <div class="form-outline mb-2">
+                            <input value="{{this.minSpend}}" name="minSpend" type="number" id="minSpend"
+                                class="form-control" required />
+                            <label class="form-label" for="maxAmount">Min Spend</label>
+                        </div>
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
                             <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
-                                class="form-control" required/>
+                                class="form-control" required />
                             <label class="form-label" for="expiryDate">Expiry Date</label>
                         </div>
                         <!-- Submit button -->
@@ -253,8 +266,8 @@
 
     <!-- Modal edit Active coupons   -->
     {{#each expiredCoupons }}
-    <div class="modal fade" id="staticBackdropEdit{{this._id}}" tabindex="-1"
-        aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal fade" id="staticBackdropEdit{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
         <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
                 <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
@@ -267,7 +280,7 @@
                         <!-- Coupon Code input -->
                         <div class="form-outline mb-2">
                             <input value="{{this.couponCode}}" name="couponCode" type="text" id="couponCode"
-                                class="form-control" readonly  />
+                                class="form-control" readonly />
                             <label class="form-label" for="couponCode">Coupon Code</label>
                         </div>
 
@@ -289,6 +302,12 @@
                             <input value="{{this.maxAmount}}" name="maxAmount" type="number" id="maxAmount"
                                 class="form-control" required />
                             <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                        </div>
+                        {{!-- min spend --}}
+                        <div class="form-outline mb-2">
+                            <input value="{{this.minSpend}}" name="minSpend" type="number" id="minSpend"
+                                class="form-control" required />
+                            <label class="form-label" for="maxAmount">Min Spend</label>
                         </div>
                         <!-- Date  input -->
                         <div class="form-outline mb-2">

@@ -1307,6 +1307,29 @@ function getAddress() {
     })
 }
 
+//coupons apply
+function applyCoupon() {
+        
+    let couponCode = document.getElementById('couponDiscount').value
+    console.log(couponCode)
+    $.ajax({
+        url: "/admin/getCouponDiscount/"+couponCode ,
+        method: 'post',
+        success: (response) => {
+            if(response.status){
+                console.log("true")
+                console.log(response.coupon);
+                // need to manage and calculate the discount
+            }else{
+                document.getElementById('error').innerHTML=response.err
+
+            }
+        }
+    })
+
+
+}
+
 
 
 

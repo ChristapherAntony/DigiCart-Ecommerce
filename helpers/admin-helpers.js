@@ -368,6 +368,7 @@ module.exports = {
     addNewCoupon: (CouponDetails) => {
         CouponDetails.couponDiscount = parseInt(CouponDetails.couponDiscount)
         CouponDetails.maxAmount = parseInt(CouponDetails.maxAmount)
+        CouponDetails.minSpend = parseInt(CouponDetails.minSpend)
         CouponDetails.expiryDate = new Date(CouponDetails.expiryDate)
         return new Promise(async (resolve, reject) => {
             let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: CouponDetails.couponCode })
@@ -395,6 +396,7 @@ module.exports = {
                             couponDescription: CouponDetails.couponDescription,
                             couponDiscount: parseInt(CouponDetails.couponDiscount),
                             maxAmount: parseInt(CouponDetails.maxAmount),
+                            minSpend: parseInt(CouponDetails.minSpend),
                             expiryDate: new Date(CouponDetails.expiryDate)
                         }
                     }
@@ -428,6 +430,7 @@ module.exports = {
                             expiryDate: { $dateToString: { format: "%d-%m-%Y ", date: "$expiryDate" } },
                             couponCode: 1,
                             maxAmount: 1,
+                            minSpend: 1,
                             couponDescription: 1,
                             couponDiscount: 1
 
@@ -454,6 +457,7 @@ module.exports = {
                             expiryDate: { $dateToString: { format: "%Y-%m-%d ", date: "$expiryDate" } },
                             couponCode: 1,
                             maxAmount: 1,
+                            minSpend: 1,
                             couponDescription: 1,
                             couponDiscount: 1
 
@@ -461,6 +465,35 @@ module.exports = {
                     }
                 ]).toArray()
             resolve(activeCoupons)
+        })
+    },
+    getCouponDiscount: (couponCode) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(new Date());
+            let checkCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: couponCode })
+            console.log(checkCoupon);
+            if (checkCoupon === null) {
+                checkCoupon={}
+                checkCoupon.err = "Invalid Coupon Code"
+                checkCoupon.status=false
+                    resolve(checkCoupon)
+            } else {
+                console.log(new Date());
+                let checkDate = await db.get().collection(collection.COUPON_COLLECTION).findOne({ _id: checkCoupon._id, expiryDate: { $gte: new Date() } })
+                if (checkDate === null) {
+                    checkDate={}
+                    checkDate.err = "Coupon Expired"
+                    checkDate.status=false
+                    resolve(checkDate)
+                } else {
+                    response={}
+                    response.status=true
+                    response.coupon=checkDate
+                    resolve(response)
+                }
+
+            }
+
         })
     }
 }

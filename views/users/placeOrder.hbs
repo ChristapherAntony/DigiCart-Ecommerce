@@ -173,6 +173,21 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="your-order-area">
+                            <div>
+                                <div class="title-wrap">
+                                    <h3 class="cart-bottom-title section-bg-gray">Use Coupon Code</h3>
+                                </div>
+                                <div class="discount-code">
+                                    <p>Enter your coupon code if you have one. <span class="text-danger font-weight-bold" id="error"></span></p>
+                                    <form>
+                                        <input type="text" id="couponDiscount" name="couponCode">
+                                        <a onclick="applyCoupon()"
+                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-dark btn-sm ">Apply
+                                            Coupon</a>
+                                    </form>
+                                </div>
+                            </div>
+
                             <h3>Your order</h3>
                             <div class="your-order-wrap gray-bg-4">
                                 <div class="your-order-info-wrap">
@@ -191,18 +206,18 @@
                                         </ul>
                                     </div>
 
-                                    {{!-- <div class="your-order-info order-subtotal">
+                                    <div class="your-order-info order-subtotal">
                                         <ul>
                                             <li>Subtotal <span>Rs.{{total}} </span>
                                             </li>
                                         </ul>
-                                    </div> --}}
-                                    {{!-- <div class="your-order-info order-shipping">
+                                    </div>
+                                    <div class="your-order-info order-shipping">
                                         <ul>
-                                            <li>Shipping <p>Enter your full address </p>
+                                            <li>Apply Coupon <p>Enter your full address </p>
                                             </li>
                                         </ul>
-                                    </div> --}}
+                                    </div>
                                     <div class="your-order-info order-total">
                                         <ul>
                                             <li>Total <span>Rs.{{total}} </span></li>
@@ -261,6 +276,9 @@
 
 
 
+
+
+
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()
@@ -270,7 +288,7 @@
             data: $('#checkout-form').serialize(),
             success: (response) => {
                 if (response.codSuccess) {
-                    location.href = '/orderSuccess/'+response.orderId
+                    location.href = '/orderSuccess/' + response.orderId
                 }
                 else if (response.razor) {
                     razorpayPayment(response)
@@ -325,13 +343,14 @@
                 if (response.status) {
                     console.log("inside sucess last before function call")
                     console.log(response)
-                    location.href = '/orderSuccess/'+response.orderId
+                    location.href = '/orderSuccess/' + response.orderId
                 } else {
                     alert('Payment Failed')
                 }
             }
         })
     }
+
 
 
 
