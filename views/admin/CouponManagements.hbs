@@ -89,7 +89,7 @@
                 </div>
                 <div>
                     <button type="button" class="btn " data-bs-toggle="modal"
-                        data-bs-target="#staticBackdropActiveEdit{{this.expiredCoupons.couponCode}}">
+                        data-bs-target="#staticBackdropActiveEdit{{this._id}}">
                         <i class="bi bi-pencil-square ">Edit</i>
                     </button>
 
@@ -123,13 +123,13 @@
                     <div>
 
                         <button type="button" class="btn " data-bs-toggle="modal"
-                            data-bs-target="#staticBackdropEdit{{this.expiredCoupons.couponCode}}">
+                            data-bs-target="#staticBackdropEdit{{this._id}}">
                             <i class="bi bi-pencil-square ">Edit</i>
                         </button>
 
-                        {{!-- <button onclick="deleteCoupon('{{this._id}}')" type="button" class="btn ">
+                        <button onclick="deleteCoupon('{{this._id}}')" type="button" class="btn ">
                             <i class="bi bi-trash3 float-right">Delete</i>
-                        </button> --}}
+                        </button>
                     </div>
 
 
@@ -197,7 +197,7 @@
 
     <!-- Modal active expired coupons   -->
     {{#each activeCoupons }}
-    <div class="modal fade" id="staticBackdropActiveEdit{{this.activeCoupons.couponCode}}" tabindex="-1"
+    <div class="modal fade" id="staticBackdropActiveEdit{{this._id}}" tabindex="-1"
         aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
@@ -237,7 +237,7 @@
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
                             <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
-                                class="form-control" />
+                                class="form-control" required/>
                             <label class="form-label" for="expiryDate">Expiry Date</label>
                         </div>
                         <!-- Submit button -->
@@ -253,12 +253,12 @@
 
     <!-- Modal edit Active coupons   -->
     {{#each expiredCoupons }}
-    <div class="modal fade" id="staticBackdropEdit{{this.activeCoupons.couponCode}}" tabindex="-1"
+    <div class="modal fade" id="staticBackdropEdit{{this._id}}" tabindex="-1"
         aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
                 <div class="modal-header " style="background-color: rgb(163, 106, 2); color: white;">
-                    <h5 class="modal-title" id="exampleModalLabel1">Add new Coupon</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Update Coupon</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -267,7 +267,7 @@
                         <!-- Coupon Code input -->
                         <div class="form-outline mb-2">
                             <input value="{{this.couponCode}}" name="couponCode" type="text" id="couponCode"
-                                class="form-control" required />
+                                class="form-control" readonly  />
                             <label class="form-label" for="couponCode">Coupon Code</label>
                         </div>
 
@@ -293,7 +293,7 @@
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
                             <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
-                                class="form-control" />
+                                class="form-control" required />
                             <label class="form-label" for="expiryDate">Expiry Date</label>
                         </div>
                         <!-- Submit button -->

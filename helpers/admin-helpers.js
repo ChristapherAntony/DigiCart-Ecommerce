@@ -386,12 +386,7 @@ module.exports = {
         console.log(CouponDetails);
 
         return new Promise(async (resolve, reject) => {
-
-            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: CouponDetails.couponCode })
-            if(coupon){
-                resolve({ status: false })
-            }else{
-                let update = await db.get().collection(collection.COUPON_COLLECTION)
+            let update = await db.get().collection(collection.COUPON_COLLECTION)
                 .updateOne(
                     { _id: objectId(CouponDetails.id) },
                     {
@@ -405,7 +400,7 @@ module.exports = {
                     }
                 )
             resolve({ status: true })
-            }
+
         })
     },
     deleteCoupon: (couponId) => {

@@ -349,11 +349,11 @@ router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
 router.post('/updateCoupon', verifyAdmin, async (req, res, next) => {
   console.log(req.body);
   let updateCoupon = await adminHelpers.updateCoupon(req.body)
-  if(updateCoupon.status===false){
-    req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
-  }else{
-    req.session.couponError=null
-  }
+  // if(updateCoupon.status===false){
+  //   req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
+  // }else{
+  //   req.session.couponError=null
+  // }
   res.redirect('/admin/CouponManagements')
 })
 router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
