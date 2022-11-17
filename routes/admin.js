@@ -73,9 +73,11 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const products = await productHelpers.getAllProductsLookUP()
   const TopSelling = await adminHelpers.topSelling()
   const OrderHistory = await adminHelpers.getRecentOrderHistory()
-  console.log('this is a order Histry');
-  console.log(OrderHistory);
-  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory });
+  //const monthlygraph = await adminHelpers.getMonthlyGraph()
+  const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
+  // console.log(monthlygraph);
+  // console.log(monthlyR_P_S);
+  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory,monthlygraph });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {

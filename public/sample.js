@@ -439,5 +439,61 @@ db.product.updateMany(
     {
         category: ObjectId("6358e72f421c3c872a21c474")
     },
-    [{ $set: { offerPrice: { $subtract: [ '$MRP', { $multiply: ['$MRP',{ $divide: ['$totalDiscount' , 100 ] }] } ] } } }]
-) 
+    [{ $set: { offerPrice: { $subtract: ['$MRP', { $multiply: ['$MRP', { $divide: ['$totalDiscount', 100] }] }] } } }]
+)
+
+
+
+
+//////
+/// graph
+
+db.order.aggregate([
+    { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, totalAmount: { $sum: '$netAmountPaid' } } },
+    { $project: { _id: 0, year: '$_id.year', month: '$_id.month', totalAmount: '$netAmountPaid' } },
+    { $sort: { year: -1, month: -1 } },
+    { $limit: 12 }
+]).toArray()
+
+db.order.aggregate([
+    { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, totalAmount: { $sum: '$totalAmount' }, couponApplied: { $sum: '$couponApplied' }, netAmountPaid: { $sum: '$netAmountPaid' } } },
+    { $project: { _id: 0, year: '$_id.year', month: '$_id.month', totalAmount: 1, couponApplied: 1, netAmountPaid: 1 } },
+    { $sort: { year: -1, month: -1 } },
+    { $limit: 12 }
+]).toArray()
+
+
+
+
+    db.order.aggregate([
+        {
+            $project: {
+                _id: 0,
+                orderDate:1,
+                cartDetails: 1
+            }
+        },
+        {
+            $unwind: '$cartDetails'
+        },
+        {
+            $project: {
+                orderDate:1,
+                quantity: '$cartDetails.quantity',
+                salesTotal: '$cartDetails.productTotal',
+                item: "$cartDetails.product.title",
+                actualPrice: '$cartDetails.product.costPrice',
+
+                profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+            }
+        },
+        {
+            $addFields: {
+                profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+            }
+        },
+        { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, Revenue: { $sum: '$salesTotal' }, profit: { $sum: '$profit' },sales: { $sum: '$quantity' } } },
+        { $project: { _id: 0, year: '$_id.year', month: '$_id.month', Revenue: 1, profit: 1, sales: 1 } },
+        { $sort: { year: -1, month: -1 } },
+        { $limit: 12 }
+    ]).toArray()

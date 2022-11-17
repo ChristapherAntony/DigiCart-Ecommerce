@@ -356,10 +356,6 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProductsList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
   let cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice, req.body.couponApplied ) //passing for implementing the coupon discount product level
-  console.log("to check the out come of the cartDetailsWithOffer");
-  console.log(cartDetailsWithOffer);
-
-
   userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice,couponApplied).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0

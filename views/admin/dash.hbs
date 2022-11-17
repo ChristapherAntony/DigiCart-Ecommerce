@@ -126,6 +126,8 @@
 
           </div><!-- End Customers Card -->
 
+     
+
           <!-- Reports -->
           <div class="col-12">
             <div class="card">
@@ -133,34 +135,59 @@
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
+                  {{!-- <li class="dropdown-header text-start">
                     <h6>Filter</h6>
                   </li>
 
                   <li><a class="dropdown-item" href="#">Today</a></li>
                   <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li> --}}
                 </ul>
               </div>
 
               <div class="card-body">
-                <h5 class="card-title">Reports <span>/Today</span></h5>
+                <h5 class="card-title">Reports <span>/Monthly</span></h5>
 
                 <!-- Line Chart -->
                 <div id="reportsChart"></div>
 
+
                 <script>
+                                        //Seperating datas into seperate array of months and revenue//
+                  const month = []
+                  {{#each monthlygraph}}
+                  month.unshift('{{this.month}}')
+                  {{/each}}
+
+                  const monthlyRevenue = []
+                  {{#each monthlygraph}}
+                  monthlyRevenue.unshift('{{this.Revenue}}')
+                  {{/each}}
+
+                  const couponApplied = []
+                  {{#each monthlygraph}}
+                  couponApplied.unshift('{{this.profit}}')
+                  {{/each}} 
+
+                  const netAmountPaid = []
+                  {{#each monthlygraph}}
+                  netAmountPaid.unshift('{{this.sales}}')
+                  {{/each}} 
+
+                  //----------------------------------------------------------//
+
                   document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#reportsChart"), {
+
                       series: [{
-                        name: 'Sales',
-                        data: [0, 40, 28, 51, 42, 82, 56],
-                      }, {
                         name: 'Revenue',
-                        data: [11, 32, 45, 32, 34, 52, 41]
+                        data: monthlyRevenue,
                       }, {
-                        name: 'Customers',
-                        data: [5, 11, 32, 18, 9, 24, 11]
+                        name: 'profit',
+                        data: couponApplied
+                      }, {
+                        name: 'sales',
+                        data: netAmountPaid
                       }],
                       chart: {
                         height: 350,
@@ -190,14 +217,55 @@
                         width: 2
                       },
                       xaxis: {
-                        type: 'datetime',
-                        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                        type: 'month',
+                        categories: month
                       },
                       tooltip: {
                         x: {
                           format: 'dd/MM/yy HH:mm'
                         },
                       }
+                    }).render();
+                  });
+                  //--------------------------------------------------------//
+                  document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#reportsChart"), {
+
+                      series: [{
+                        name: 'sales',
+                        data: netAmountPaid,
+                      }],
+                      chart: {
+                        height: 350,
+                        type: 'area',
+                        toolbar: {
+                          show: false
+                        },
+                      },
+                      markers: {
+                        size: 4
+                      },
+                      colors: ['#ff771d'],
+                      fill: {
+                        type: "gradient",
+                        gradient: {
+                          shadeIntensity: 1,
+                          opacityFrom: 0.3,
+                          opacityTo: 0.4,
+                          stops: [0, 90, 100]
+                        }
+                      },
+                      dataLabels: {
+                        enabled: false
+                      },
+                      stroke: {
+                        curve: 'smooth',
+                        width: 2
+                      },
+                      xaxis: {
+                        type: 'month',
+                        categories: month
+                      },
                     }).render();
                   });
                 </script>
@@ -208,7 +276,9 @@
             </div>
           </div><!-- End Reports -->
 
-            {{!-- <!-- sales report -->
+
+          
+          {{!-- <!-- sales report -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
               <div class="filter">
@@ -225,7 +295,7 @@
 
               <div class="card-body pb-0">
                 <h5 class="card-title">Sales Report <span>| Today</span></h5>
-                
+
                 <table class="table table-borderless">
                   <thead>
                     <tr>
@@ -238,11 +308,11 @@
                   <tbody>
                     {{#each SalesReport}}
                     <tr>
-                
+
                       <td><a href="#" class="text-primary fw-bold">{{this._id}}</a></td>
                       <td>{{this.SalesQty}}</td>
-                      <td class="fw-bold">	<i class="bi bi-currency-rupee"></i> {{this.Revenue}}</td>
-                      <td>	<i class="bi bi-currency-rupee"></i> {{this.profit}}</td>
+                      <td class="fw-bold"> <i class="bi bi-currency-rupee"></i> {{this.Revenue}}</td>
+                      <td> <i class="bi bi-currency-rupee"></i> {{this.profit}}</td>
                     </tr>
                     {{/each}}
 
@@ -258,9 +328,9 @@
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
 
-          <div class="filter">
-            <a class="icon" href="/admin/viewOrders" data-bs-toggle="">View more</i></a>
-          </div>
+              <div class="filter">
+                <a class="icon" href="/admin/viewOrders" data-bs-toggle="">View more</i></a>
+              </div>
 
               <div class="card-body">
                 <h5 class="card-title">Recent Sales <span>5</span></h5>
@@ -277,19 +347,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
-                {{#each OrderHistory}}
-                <tr>
-                    <td class="create_index"></td>
-                    <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
-                    <td>{{this.deliveryDetails.State}} {{this.deliveryDetails.PostCode}}</td>
-                    <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
-                    <td>{{this.payment_method}}</td>
-                    {{!-- <td>{{this.status}}</td> --}}
-                    <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
-                            data-toggle="tooltip"><i class="bi bi-eye"></i></a></td>
-                </tr>
-                {{/each}}
+
+                    {{#each OrderHistory}}
+                    <tr>
+                      <td class="create_index"></td>
+                      <td><a href="/admin/view-users">{{this.userDetails.UserName}}</a></td>
+                      <td>{{this.deliveryDetails.State}} {{this.deliveryDetails.PostCode}}</td>
+                      <td><i class="bi bi-currency-rupee"></i>{{this.totalAmount}}</td>
+                      <td>{{this.payment_method}}</td>
+                      {{!-- <td>{{this.status}}</td> --}}
+                      <td><a href="/admin/viewOrdersDetails/{{this._id}}" class="view" title="View Details"
+                          data-toggle="tooltip"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                    {{/each}}
 
                   </tbody>
                 </table>
@@ -299,7 +369,8 @@
             </div>
           </div><!-- End Recent Sales -->
 
-          {{!-- <!-- Top Selling -->
+          {{!--
+          <!-- Top Selling -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
 
@@ -394,10 +465,10 @@
                 <img src="/images/product-img/{{this.image1}}" alt="">
                 <h4><a href="#">{{this._id}}</a></h4>
                 <span>Sales: {{this.SalesQty}}</span>
-                 <span>Revenue:{{this.Revenue}}</span> <br>
-                 <span>Profit: {{this.profit}}</span>
-                
-                
+                <span>Revenue:{{this.Revenue}}</span> <br>
+                <span>Profit: {{this.profit}}</span>
+
+
               </div>
               {{/each}}
 
@@ -465,7 +536,8 @@
         </div><!-- End Payment Traffic -->
 
 
-                {{!-- <!-- Recent Activity -->
+        {{!--
+        <!-- Recent Activity -->
         <div class="card">
           <div class="filter">
             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -618,6 +690,48 @@
 
     </div>
   </section>
+
+  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script>
+  
+                      //Seperating datas into seperate array of months and revenue//
+                  const month = []
+                  {{#each monthlygraph}}
+                  month.unshift('{{this.month}}')
+                  {{/each}}
+
+                  const monthlyRevenue = []
+                  {{#each monthlygraph}}
+                  monthlyRevenue.unshift('{{this.totalAmount}}')
+                  console.log(monthlyRevenue,'monnnnnnnnnnnnnnnnnnn')
+                  {{/each}} 
+
+                  //----------------------------------------------------------//
+
+
+    var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    var yValues = [30, 49, 44, 24, 15];
+    var barColors = ["red", "green", "blue", "orange", "brown","red", "green", "blue", "orange", "brown"];
+
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: month,
+        datasets: [{
+          backgroundColor: barColors,
+          data: monthlyRevenue
+        }]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: "World Wine Production 2018"
+        }
+      }
+    });
+  </script>
 
 
 
