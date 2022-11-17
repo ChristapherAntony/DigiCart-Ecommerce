@@ -162,7 +162,6 @@ router.get('/', async function (req, res, next) {
       res.render('users/user-home', { category })
     })
   }
-
 });
 /************************* VIEW ALL PRODUCTS ***************************************/
 router.get('/viewAll', async function (req, res, next) {
@@ -219,7 +218,6 @@ router.get('/details/:id', async (req, res, next) => {
 router.get('/detailsVerify/:id', verifyUser, async (req, res, next) => {
   let productId = req.params.id   //to get the clicked item id
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
   productHelpers.getProductDetails(productId).then((product) => {
     let category = product.category
     productHelpers.getProductCategory(category).then((categoryName) => {
@@ -354,10 +352,15 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
+  let couponApplied= parseInt(req.body.couponApplied)
   let products = await userHelpers.getCartProductsList(req.body.userId)
-  let cartDetails = await userHelpers.getCartProducts(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body, products, cartDetails, totalPrice).then((orderId) => {
+  let cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice, req.body.couponApplied ) //passing for implementing the coupon discount product level
+  console.log("to check the out come of the cartDetailsWithOffer");
+  console.log(cartDetailsWithOffer);
+
+
+  userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice,couponApplied).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0
       response.orderId = orderId
@@ -457,10 +460,10 @@ router.get('/viewOrders', verifyUser, async (req, res) => {
 })
 
 router.get('/orderDetails/:id', verifyUser, async (req, res) => {
-
   //let productDetails = await userHelpers.orderProductDetails(req.params.id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   let orderDetails = await userHelpers.getOrderDetails(req.params.id)
+  console.log(orderDetails);
   let oldProductDetails = await userHelpers.oldProductDetails(req.params.id)
   oldProductDetails.forEach(cartDetails => {
     cartDetails.orderId = orderDetails._id

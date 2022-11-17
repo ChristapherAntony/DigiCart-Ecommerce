@@ -372,6 +372,7 @@ module.exports = {
         })
     },
     getCartProducts: (userId) => {
+
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             let total = await db.get().collection(collection.CART_COLLECTION)
                 .aggregate([
@@ -407,6 +408,63 @@ module.exports = {
                             item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                         }
                     }
+
+                ]).toArray()
+            resolve(total)
+
+        })
+    },
+    getCartProductsWithOffer: (userId,total,couponApplied) => {
+        couponApplied=parseInt(couponApplied)
+        console.log("tottal cart amoutn",total);
+        console.log("couponApplied",couponApplied);
+        let cartTotal=parseInt(total)
+        return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
+            let total = await db.get().collection(collection.CART_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { user: objectId(userId) }
+
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            user: 1,
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'product',
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount:{$round:[{ $multiply: [{ $divide: ['$productTotal' , cartTotal ] },couponApplied ] }]}  
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: 1,productNetTotal:{ $subtract: ["$productTotal","$applicableCouponDiscount"] }
+                        }
+                    }
+                    
 
                 ]).toArray()
             resolve(total)
@@ -503,23 +561,13 @@ module.exports = {
         })
 
     },
-    placeOrder: (order, products, cartDetails, total) => {
+    placeOrder: (order, products, cartDetails, total,couponApplied) => {
         return new Promise((resolve, reject) => {
-
-
-
             db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" })
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
-            console.log("inside the place order");
-            console.log(cartDetails);
             cartDetails.forEach(cartDetails => {
                 cartDetails.status = status
             })
-
-            
-            console.log("*******************************************");
-            console.log(cartDetails);
-            console.log("*******************************************");
             let orderObj = {
                 orderDate: new Date(),
                 deliveryDetails: {
@@ -538,6 +586,8 @@ module.exports = {
                 products: products,
                 cartDetails: cartDetails,
                 totalAmount: total,
+                couponApplied:couponApplied,
+                netAmountPaid:(total-couponApplied)
             }
             console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
@@ -648,6 +698,9 @@ module.exports = {
                         payment_method: 1,
                         totalAmount: 1,
                         status: 1,
+                        netAmountPaid:1,
+                        couponApplied:1
+
                     }
                 }]).toArray()
 
@@ -669,10 +722,7 @@ module.exports = {
                         $unwind: '$cartDetails'
                     }
                 ]).toArray()
-            console.log("++++++++++++++++++++++++++++++++++++");
-            //  console.log(products[0]);
             resolve(products)
-
         })
     },
     generateRazorpay: (orderID, total) => {

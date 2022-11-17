@@ -106,10 +106,14 @@ module.exports = {
                             date: { $dateToString: { format: "%d-%m-%Y ", date: "$date" } },
                             deliveryDetails: 1,
                             userId: 1,
+
                             payment_method: 1,
                             totalAmount: 1,
+                            couponApplied: 1,
+                            netAmountPaid: 1,
                             status: 1,
-                            userDetails: 1
+                            userDetails: 1,
+
                         }
                     }
                 ]).toArray()
@@ -365,6 +369,43 @@ module.exports = {
             resolve(top5)
         })
     },
+    getMonthlyGraph: () => {
+        return new Promise(async (resolve, reject) => {
+            let monthlyGraph = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+
+                { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, totalAmount: { $sum: '$netAmountPaid' } } },
+
+                { $project: { _id: 0, year: '$_id.year', month: '$_id.month', totalAmount: '$netAmountPaid' } },
+
+                { $sort: { year: -1, month: -1 } },
+
+                { $limit: 12 }
+
+
+
+            ]).toArray()
+            console.log(monthlyGraph, 'chzaarttttttt')
+            //-----------converting month number to month name----------------//
+            monthlyGraph.forEach(element => {
+                function toMonthName(month) {
+                    const date = new Date();
+                    date.setMonth(month - 1);
+                    return date.toLocaleString('en-US', {
+                        month: 'long',
+                    });
+                }
+                element.month = toMonthName(element.month)
+            });
+            //-----------end converting month number to month name----------------//
+
+
+            console.log(monthlyGraph, 'newwwwwwwwwwwwwwww')
+
+
+
+            resolve(monthlyGraph)
+        })
+    },
     addNewCoupon: (CouponDetails) => {
         CouponDetails.couponDiscount = parseInt(CouponDetails.couponDiscount)
         CouponDetails.maxAmount = parseInt(CouponDetails.maxAmount)
@@ -471,22 +512,22 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let checkCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: couponCode })
             if (checkCoupon === null) {
-                checkCoupon={}
+                checkCoupon = {}
                 checkCoupon.err = "Invalid Coupon Code"
-                checkCoupon.status=false
-                    resolve(checkCoupon)
+                checkCoupon.status = false
+                resolve(checkCoupon)
             } else {
                 console.log(new Date());
                 let checkDate = await db.get().collection(collection.COUPON_COLLECTION).findOne({ _id: checkCoupon._id, expiryDate: { $gte: new Date() } })
                 if (checkDate === null) {
-                    checkDate={}
+                    checkDate = {}
                     checkDate.err = "Coupon Expired"
-                    checkDate.status=false
+                    checkDate.status = false
                     resolve(checkDate)
                 } else {
-                    response={}
-                    response.status=true
-                    response.coupon=checkDate
+                    response = {}
+                    response.status = true
+                    response.coupon = checkDate
                     resolve(response)
                 }
 
