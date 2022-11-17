@@ -169,6 +169,9 @@
                                 <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
                                     name="message"></textarea>
                             </div>
+                            <div>
+                                <input name="couponApplied" value="0" id="couponApplied" type="text"  hidden>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -178,12 +181,13 @@
                                     <h3 class="cart-bottom-title section-bg-gray">Use Coupon Code</h3>
                                 </div>
                                 <div class="discount-code">
-                                    <p>Enter your coupon code if you have one. <span class="text-danger font-weight-bold" id="error"></span></p>
+                                    <p>Enter your coupon code if you have one. <span
+                                            class="text-danger font-weight-bold" id="error"></span></p>
                                     <form>
-                                        <input type="text" id="couponDiscount" name="couponCode">
-                                        <a onclick="applyCoupon()"
-                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-dark btn-sm ">Apply
-                                            Coupon</a>
+                                        <input type="text" value="" id="couponDiscount" name="couponCode">
+                                        <button onclick="applyCoupon()"
+                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-secondary btn-sm ">Apply
+                                            Coupon</button>
                                     </form>
                                 </div>
                             </div>
@@ -208,19 +212,20 @@
 
                                     <div class="your-order-info order-subtotal">
                                         <ul>
-                                            <li>Subtotal <span>Rs.{{total}} </span>
+                                            <li>Subtotal <span id="subTotal">{{total}} </span>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="your-order-info order-shipping">
                                         <ul>
-                                            <li>Apply Coupon <p>Enter your full address </p>
+                                            <li>Apply Coupon <p class="text-success" id="discount">0 </p>
                                             </li>
+                                            <li class="text-success" id="offerDetail"></li>
                                         </ul>
                                     </div>
                                     <div class="your-order-info order-total">
                                         <ul>
-                                            <li>Total <span>Rs.{{total}} </span></li>
+                                            <li>Total <span id="total">{{total}} </span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -280,6 +285,12 @@
 
 
 <script>
+    setTimeout(fade_out, 8000);
+    function fade_out() {
+        $("#error").fadeOut().empty();
+    }
+
+    /////////////////////////////////////////place order
     $('#checkout-form').submit((e) => {
         e.preventDefault()
         $.ajax({
@@ -341,8 +352,6 @@
             method: 'post',
             success: (response) => {
                 if (response.status) {
-                    console.log("inside sucess last before function call")
-                    console.log(response)
                     location.href = '/orderSuccess/' + response.orderId
                 } else {
                     alert('Payment Failed')

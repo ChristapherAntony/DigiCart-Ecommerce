@@ -90,7 +90,6 @@ router.post('/enterOtp', (req, res, next) => {
 
 
 router.post('/verifyOtp', (req, res, next) => {
-  console.log(req.body);
   let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
   OTP = (number)
   otpHelpers.verifyOTP(OTP).then(async (response) => {
@@ -364,7 +363,6 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
       response.orderId = orderId
       response.codSuccess = true
       res.json(response)
-
     } else if (req.body['payment_method'] === 'ONLINE') {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
         response.razor = true
@@ -424,12 +422,10 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
 router.get('/paymentFailed/:orderId', verifyUser, async (req, res) => {
   const deletePendingOrder = await userHelpers.deletePendingOrder(req.params.orderId)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-
   res.render('users/paymentFailed', { userName, cartCount })
 })
 
 router.post('/verify-payment', (req, res) => {
-  console.log(req.body);
   userHelpers.verifyPayment(req.body).then(() => {
     response.orderId = req.body['order[receipt]']
     response.status = true

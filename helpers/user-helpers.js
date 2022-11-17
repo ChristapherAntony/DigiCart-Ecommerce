@@ -147,7 +147,6 @@ module.exports = {
                 resolve({ status: false })
             }
         })
-
     },
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -506,13 +505,21 @@ module.exports = {
     },
     placeOrder: (order, products, cartDetails, total) => {
         return new Promise((resolve, reject) => {
+
+
+
             db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" })
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
-
+            console.log("inside the place order");
+            console.log(cartDetails);
             cartDetails.forEach(cartDetails => {
                 cartDetails.status = status
             })
 
+            
+            console.log("*******************************************");
+            console.log(cartDetails);
+            console.log("*******************************************");
             let orderObj = {
                 orderDate: new Date(),
                 deliveryDetails: {
@@ -532,6 +539,7 @@ module.exports = {
                 cartDetails: cartDetails,
                 totalAmount: total,
             }
+            console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 //db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
                 resolve(response.insertedId)
@@ -677,7 +685,6 @@ module.exports = {
             instance.orders.create(options, function (err, order) {
                 resolve(order)
             });
-
         })
     },
     verifyPayment: (details) => {

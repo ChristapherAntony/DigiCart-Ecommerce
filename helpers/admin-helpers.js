@@ -469,9 +469,7 @@ module.exports = {
     },
     getCouponDiscount: (couponCode) => {
         return new Promise(async (resolve, reject) => {
-            console.log(new Date());
             let checkCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: couponCode })
-            console.log(checkCoupon);
             if (checkCoupon === null) {
                 checkCoupon={}
                 checkCoupon.err = "Invalid Coupon Code"

@@ -1309,20 +1309,50 @@ function getAddress() {
 
 //coupons apply
 function applyCoupon() {
-        
     let couponCode = document.getElementById('couponDiscount').value
-    console.log(couponCode)
     $.ajax({
-        url: "/admin/getCouponDiscount/"+couponCode ,
+        url: "/admin/getCouponDiscount/" + couponCode,
         method: 'post',
         success: (response) => {
-            if(response.status){
-                console.log("true")
-                console.log(response.coupon);
-                // need to manage and calculate the discount
-            }else{
-                document.getElementById('error').innerHTML=response.err
+            if (response.status) {
+                let discount
+                let total
+                let obj = response.coupon
+                let subtotal = parseInt(document.getElementById('subTotal').innerHTML)
+                if (subtotal >= obj.minSpend) {
+                    discount = subtotal * obj.couponDiscount / 100
+                    if ((subtotal + discount) > obj.maxAmount) {
+                        discount = obj.maxAmount
+                    }
+                    total = (subtotal - discount)
+                    Swal.fire({
+                        icon: 'success',
+                        title: obj.couponDescription,
+                        text: obj.couponDiscount + "% up to " + obj.maxAmount + " on min Spend " + obj.minSpend,
 
+                    })
+                    document.getElementById('error').innerHTML = obj.couponDescription  //change status
+                    document.getElementById('offerDetail').innerHTML = obj.couponDiscount + "% up to " + obj.maxAmount + " on min Spend " + obj.minSpend
+                    document.getElementById('discount').innerHTML = discount
+                    document.getElementById('couponApplied').value = discount
+                    document.getElementById('total').innerHTML = total
+
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "Coupon not applied",
+                        text:"You need to spend minimum "+ obj.minSpend +" to avail this offer",
+                    })
+
+                }
+
+
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: response.err,
+                })
+                document.getElementById('error').innerHTML = response.err
             }
         }
     })
