@@ -1336,12 +1336,14 @@ function applyCoupon() {
                     document.getElementById('discount').innerHTML = discount
                     document.getElementById('couponApplied').value = discount
                     document.getElementById('total').innerHTML = total
+                    document.getElementById('remove').style.display = "block"
+                    document.getElementById('add').style.display = "none"
 
                 } else {
                     Swal.fire({
                         icon: 'warning',
                         title: "Coupon not applied",
-                        text:"You need to spend minimum "+ obj.minSpend +" to avail this offer",
+                        text: "You need to spend minimum " + obj.minSpend + " to avail this offer",
                     })
 
                 }
@@ -1360,6 +1362,31 @@ function applyCoupon() {
 
 }
 
+function removeCoupon() {
+    Swal.fire({
+        icon: 'success',
+        title: "Removed  ",
+        text: "Coupon Removed Successfully ",
+        showConfirmButton: false,
+        timer: 1000
+    })
+    document.getElementById('couponDiscount').value = ""
+    document.getElementById('error').innerHTML = ""
+    document.getElementById('offerDetail').innerHTML = ""
+    document.getElementById('discount').innerHTML = "Coupon Removed"
+    document.getElementById('couponApplied').value = ""
+    document.getElementById('total').innerHTML = parseInt(document.getElementById('subTotal').innerHTML)
+    document.getElementById('remove').style.display = "none"
+    document.getElementById('add').style.display = "block"
+}
+
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
 
 
 

@@ -181,12 +181,17 @@
                                     <h3 class="cart-bottom-title section-bg-gray">Use Coupon Code</h3>
                                 </div>
                                 <div class="discount-code">
-                                    <p>Enter your coupon code if you have one. <span
-                                            class="text-danger font-weight-bold" id="error"></span></p>
+                                    <p>Enter your coupon code if you have one. 
+                                        <span class="text-danger font-weight-bold" id="error"></span>
+                                        <span class="text-success font-weight-bold" id="cname"></span>
+                                        </p>
                                     <form>
-                                        <input type="text" value="" id="couponDiscount" name="couponCode">
-                                        <button onclick="applyCoupon()"
-                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-secondary btn-sm ">Apply
+                                        <input type="text" class="border " value="" id="couponDiscount" name="couponCode">
+                                        <button onclick="applyCoupon()" id="add"
+                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-outline-success btn-sm ">Apply
+                                            Coupon</button>
+                                        <button onclick="removeCoupon()" id="remove" style="display:none ;"
+                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-outline-danger btn-sm ">Remove
                                             Coupon</button>
                                     </form>
                                 </div>

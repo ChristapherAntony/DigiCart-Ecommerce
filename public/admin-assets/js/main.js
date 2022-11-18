@@ -330,7 +330,7 @@ function changeStatus(proId, orderId) {
     url: "/admin/changeDeliveryStatus",
     data: {
       proId: proId,
-      orderId:orderId,
+      orderId: orderId,
       status: variableTwo
     },
     method: 'post',
@@ -361,10 +361,13 @@ $(document).ready(function () {
 $.fn.delayedHide = function (delay) {
   var that = this;
   window.setTimeout(function () {
-      that.hide();
+    that.hide();
   }, delay || 4000);
   return that;
 }
+
+
+
 
 //(".disappear").delayedHide(); 
 $(".disappear1").delayedHide();

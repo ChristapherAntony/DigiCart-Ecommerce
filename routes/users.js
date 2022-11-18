@@ -4,6 +4,7 @@ const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const otpHelpers = require("../helpers/otp-helpers")
+const {uid}=require('uid')
 const { response } = require('express');
 let cartCount = 0
 let userName = null
@@ -149,6 +150,9 @@ router.post('/logIn', (req, res) => {
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
+  let hello = uid()
+  console.log(hello,"UID ******************");
+
   let userData = req.session.user
   if (userData) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)

@@ -24,7 +24,7 @@
                                 <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
                                     Dashboard</a>
                                 <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
-                                <a href="#download" data-toggle="tab"><i class="fa fa-cloud-download"></i> Download</a>
+                                <a href="#wallet" data-toggle="tab"><i class="fa fa-wallet"></i> Wallet</a>
                                 <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
                                     Method</a>
                                 <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
@@ -43,10 +43,16 @@
                                         <div class="welcome">
                                             <p>Hello, <strong>{{userName}}</strong> </p>
                                         </div>
-
                                         <p class="mb-0">From your account dashboard. you can easily check & view your
                                             recent orders, manage your shipping and billing addresses and edit your
                                             password and account details.</p>
+                                    </div>
+                                    <div class="myaccount-content">
+                                        <h3>Referral Code</h3>
+                                        <div class="welcome">
+                                            <p>Share this code to a new user and get a 1000 as a referral bonus on their Sign Up</p>
+                                            <span class="border border-danger p-2"  id="p1">DHJKSAADSKFHL</span><button style="background-color: rgb(228,67,17); color: white;" class="btn btn-sm ml-2" onclick="copyToClipboard('#p1')">Copy</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
@@ -87,8 +93,9 @@
                                                                         <td class="product-subtotal ">
                                                                             Rs.{{this.totalAmount}}</td>
                                                                         <td class="product-wishlist-cart ">
-                                                                            <a href="/orderDetails/{{this._id}}">View Order</a>
-                                                                            
+                                                                            <a href="/orderDetails/{{this._id}}">View
+                                                                                Order</a>
+
                                                                         </td>
                                                                     </tr>
                                                                     {{/each }}
@@ -103,39 +110,37 @@
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="download" role="tabpanel">
+                                <div class="tab-pane fade" id="wallet" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Downloads</h3>
+                                        <div class="row">
+                                            <h3 class="col-md-9">Wallet</h3>
+                                            <h3 class="col-md-3 mr-auto">Balance:1500</h3>
+                                        </div>
+
+
                                         <div class="myaccount-table table-responsive text-center">
                                             <table class="table table-bordered">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th>Product</th>
-                                                        <th>Date</th>
-                                                        <th>Expire</th>
-                                                        <th>Download</th>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Transaction</th>
+                                                        <th scope="col">Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>Haven - Free Real Estate PSD Template</td>
-                                                        <td>Aug 22, 2018</td>
-                                                        <td>Yes</td>
-                                                        <td><a href="#" class="check-btn sqr-btn "><i
-                                                                    class="fa fa-cloud-download"></i> Download File</a>
-                                                        </td>
+                                                        <th scope="row">1</th>
+                                                        <td>23/11/2022</td>
+                                                        <td>Referral bonus credited </td>
+                                                        <td>500</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>HasTech - Profolio Business Template</td>
-                                                        <td>Sep 12, 2018</td>
-                                                        <td>Never</td>
-                                                        <td><a href="#" class="check-btn sqr-btn "><i
-                                                                    class="fa fa-cloud-download"></i> Download File</a>
-                                                        </td>
-                                                    </tr>
+
                                                 </tbody>
                                             </table>
+
                                         </div>
+
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
