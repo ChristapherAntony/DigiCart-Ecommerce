@@ -14,23 +14,12 @@
                         <h3 class="footer-title">Quick Shop</h3>
                         <div class="footer-info-list info-list-50-parcent">
                             <ul>
-                                <li><a href="shop.html">New In</a></li>
-                                <li><a href="shop.html">T-Shirts</a></li>
-                                <li><a href="shop.html">Best Seller</a></li>
-                                <li><a href="shop.html">Shirts</a></li>
-                                <li><a href="shop.html">Clothing</a></li>
-                                <li><a href="shop.html">Bags</a></li>
-                                <li><a href="shop.html">Men</a></li>
-                                <li><a href="shop.html">Dresses</a></li>
-                                <li><a href="shop.html">Women</a></li>
-                                <li><a href="shop.html">Jeans</a></li>
-                                <li><a href="shop.html">Baby Girl</a></li>
-                                <li><a href="shop.html">Shorts</a></li>
-                                <li><a href="shop.html">Baby Boys</a></li>
-                                <li><a href="shop.html">Blouses & Shirts</a></li>
-                                <li><a href="shop.html">Accessories</a></li>
-                                <li><a href="shop.html">Blazers</a></li>
-                                <li><a href="shop.html">Shoes</a></li>
+
+                                <li><a href="/viewAll">Shop All</a></li>
+                                {{#each category}}
+                                <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
+                                {{/each}}
+
                             </ul>
                         </div>
                     </div>
@@ -40,13 +29,15 @@
                         <h3 class="footer-title">useful links</h3>
                         <div class="footer-info-list">
                             <ul>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="wishlist.html">My Wishlish</a></li>
+                                <li><a href="/account">My Account</a></li>
+                                <li><a href="/wishlist">My Wishlish</a></li>
+                                <li><a href="/viewAll">Shop</a></li>
+                                <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="#">Term & Conditions</a></li>
                                 <li><a href="#">Privacy Policy</a></li>
                                 <li><a href="#">Track Order</a></li>
-                                <li><a href="shop.html">Shop</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
+                                
+                                
                                 <li><a href="#">Returns/Exchange</a></li>
                                 <li><a href="#">FAQs</a></li>
                             </ul>
@@ -59,7 +50,7 @@
                         <div class="contact-info-2">
                             <div class="single-contact-info-2">
                                 <div class="contact-info-2-icon">
-                                    <i class="icon-call-end"></i>
+                                    <i class="bi bi-telephone"></i>
                                 </div>
                                 <div class="contact-info-2-content">
                                     <p>Got a question? Call us 24/7</p>
@@ -68,7 +59,7 @@
                             </div>
                             <div class="single-contact-info-2">
                                 <div class="contact-info-2-icon">
-                                    <i class="icon-cursor icons"></i>
+                                    <i class="icon-mailbox icons"></i>
                                 </div>
                                 <div class="contact-info-2-content">
                                     <p>268 Orchard St, Mahattan, 12005, CA, United State</p>
@@ -76,7 +67,7 @@
                             </div>
                             <div class="single-contact-info-2">
                                 <div class="contact-info-2-icon">
-                                    <i class="icon-envelope-open "></i>
+                                    <i class="bi bi-envelope-open"></i>
                                 </div>
                                 <div class="contact-info-2-content">
                                     <p>contact@norda.com</p>
@@ -84,11 +75,12 @@
                             </div>
                         </div>
                         <div class="social-style-1 social-style-1-font-inc social-style-1-mrg-2">
-                            <a href="#"><i class="icon-social-twitter"></i></a>
-                            <a href="#"><i class="icon-social-facebook"></i></a>
-                            <a href="#"><i class="icon-social-instagram"></i></a>
-                            <a href="#"><i class="icon-social-youtube"></i></a>
-                            <a href="#"><i class="icon-social-pinterest"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-youtube"></i></a>
+                            <a href="#"><i class="bi bi-pinterest"></i></a>
+
                         </div>
                     </div>
                 </div>
