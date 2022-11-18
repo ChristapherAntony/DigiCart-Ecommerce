@@ -76,10 +76,10 @@ module.exports = {
                             walletTransaction: transactionReferredUser
                         }
                     })
-                    resolve({ response: true })
+                    resolve({ status: true })
                 }
             } else {
-                resolve({ response: false })
+                resolve({ status: false })
             }
         })
 

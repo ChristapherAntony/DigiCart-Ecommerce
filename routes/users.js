@@ -136,7 +136,7 @@ router.post('/verifyReferralID', async (req, res, next) => {
   console.log(req.body.referralId, "*************************************************************");
   let apply = await userHelpers.applyReferral(req.body.referralId, req.session.user._id)
   console.log(apply.status);
-  if(apply==true){
+  if(apply.status){
     console.log("###################### inside the apply");
     res.redirect('/');
   }else{
