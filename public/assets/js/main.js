@@ -1374,7 +1374,7 @@ function removeCoupon() {
     document.getElementById('error').innerHTML = ""
     document.getElementById('offerDetail').innerHTML = ""
     document.getElementById('discount').innerHTML = "Coupon Removed"
-    document.getElementById('couponApplied').value = ""
+    document.getElementById('couponApplied').value = 0
     document.getElementById('total').innerHTML = parseInt(document.getElementById('subTotal').innerHTML)
     document.getElementById('remove').style.display = "none"
     document.getElementById('add').style.display = "block"
