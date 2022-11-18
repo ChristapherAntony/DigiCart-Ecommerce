@@ -261,13 +261,12 @@ router.get('/wishlist', verifyUser, async (req, res, next) => {
 
 
 router.get('/account', verifyUser, async (req, res, next) => {
-
   const orders = await userHelpers.getUserOrders(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const userDetails = await userHelpers.getUserDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
-  console.log(headerDetails);
-  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address });
+  const wallet = await userHelpers.getWallet(req.session.user._id)
+  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address,wallet });
 });
 router.get('/addAddress', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)

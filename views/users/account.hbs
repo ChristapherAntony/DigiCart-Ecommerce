@@ -114,28 +114,31 @@
                                     <div class="myaccount-content">
                                         <div class="row">
                                             <h3 class="col-md-9">Wallet</h3>
-                                            <h3 class="col-md-3 mr-auto">Balance:1500</h3>
+                                            <h3 class="col-md-3 mr-auto">Balance:<i class="bi bi-currency-rupee"></i> {{wallet.walletBalance}}</h3>
                                         </div>
 
 
-                                        <div class="myaccount-table table-responsive text-center">
+                                        <div class="myaccount-table table-responsive ">
                                             <table class="table table-bordered">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col">Date</th>
+                                                        <th scope="col">Title</th>
                                                         <th scope="col">Transaction</th>
                                                         <th scope="col">Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {{#each wallet.walletTransaction}}
                                                     <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>23/11/2022</td>
-                                                        <td>Referral bonus credited </td>
-                                                        <td>500</td>
+                                                        <th scope="row" class="create_index"></th>
+                                                        <td>{{this.date}}</td>
+                                                        <td>{{this.title}}</td>
+                                                        <td>{{this.transaction}} ({{this.user}})</td>
+                                                        <td>{{this.amount}}</td>
                                                     </tr>
-
+                                                     {{/each }}
                                                 </tbody>
                                             </table>
 

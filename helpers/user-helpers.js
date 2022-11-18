@@ -51,17 +51,17 @@ module.exports = {
                 let newUser = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userID) })
                 const transactionNewUser = {
                     date: new Date(),
-                    title:"Referral Code",
+                    title: "Referral Code",
                     transaction: "Rs.500 credited through referral code",
                     amount: 500,
-                    referredBy: existingUser.UserName
+                    user: existingUser.UserName
                 }
                 const transactionReferredUser = {
                     date: new Date(),
-                    title:"Referral Code",
+                    title: "Referral Code",
                     transaction: "Rs.1000 credited by using your referral code",
                     amount: 1000,
-                    usedBy: newUser.UserName
+                    user: newUser.UserName
                 }
                 if (referralId == existingUser.referralId) {
                     let updateNewUser = await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, {
@@ -78,12 +78,28 @@ module.exports = {
                     })
                     resolve({ response: true })
                 }
-            }else{
-                console.log("###################### not matched");
+            } else {
                 resolve({ response: false })
             }
         })
 
+    },
+    getWallet: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            const user = await db.get().collection(collection.USER_COLLECTION)
+                .findOne({ _id: objectId(userId) })
+
+            let cartDetails = user.walletTransaction
+            cartDetails.forEach(cartDetails => {
+                cartDetails.date = new Date(cartDetails.date).toLocaleDateString()
+            })
+            const wallet = {
+                walletBalance: user.walletBalance,
+                walletTransaction: cartDetails
+            }
+            resolve(wallet)
+
+        })
     },
     addNewAddress: (address, userId) => {
         return new Promise((resolve, reject) => {
