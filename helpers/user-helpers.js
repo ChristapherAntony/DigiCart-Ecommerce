@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt')
 const { response } = require('express')
 var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
+const { uid } = require('uid')
 var instance = new Razorpay({
     key_id: 'rzp_test_IsLNHEQ2MGIHsd',
     key_secret: 'NesRoFC2sgBMN8toPYVxtWUa',
@@ -20,17 +21,69 @@ paypal.configure({
 module.exports = {
     doSignUP: (userData) => {
         return new Promise(async (resolve, reject) => {
-            console.log(userData);
+            userData.referralId = uid()
+            userData.walletBalance = 0
 
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.UserEmail }, { MobileNo: userData.MobileNo }] })
             if (user) resolve({ status: false })
             else {
                 userData.Password = await bcrypt.hash(userData.Password, 10)
-                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((data) => {
-                    resolve({ status: true })
+                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then(async (data) => {
+                    if (data.acknowledged) {
+                        let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: data.insertedId })
+                        response.user = user;
+                        response.status = true;
+                        resolve(response)
+                    } else {
+                        resolve({ status: false })
+                    }
+
+
                 })
             }
         })
+    },
+    applyReferral: (referralId, userID) => {
+        return new Promise(async (resolve, reject) => {
+            let existingUser = await db.get().collection(collection.USER_COLLECTION).findOne({ referralId: referralId })// check if any user have the referral id
+            if (existingUser) {
+                console.log("######################user matched");
+                let newUser = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userID) })
+                const transactionNewUser = {
+                    date: new Date(),
+                    title:"Referral Code",
+                    transaction: "Rs.500 credited through referral code",
+                    amount: 500,
+                    referredBy: existingUser.UserName
+                }
+                const transactionReferredUser = {
+                    date: new Date(),
+                    title:"Referral Code",
+                    transaction: "Rs.1000 credited by using your referral code",
+                    amount: 1000,
+                    usedBy: newUser.UserName
+                }
+                if (referralId == existingUser.referralId) {
+                    let updateNewUser = await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, {
+                        $inc: { walletBalance: 500 },
+                        $push: {
+                            walletTransaction: transactionNewUser
+                        }
+                    })
+                    let updateExistingUser = await db.get().collection(collection.USER_COLLECTION).updateOne({ referralId: referralId }, {
+                        $inc: { walletBalance: 1000 },
+                        $push: {
+                            walletTransaction: transactionReferredUser
+                        }
+                    })
+                    resolve({ response: true })
+                }
+            }else{
+                console.log("###################### not matched");
+                resolve({ response: false })
+            }
+        })
+
     },
     addNewAddress: (address, userId) => {
         return new Promise((resolve, reject) => {
@@ -414,11 +467,11 @@ module.exports = {
 
         })
     },
-    getCartProductsWithOffer: (userId,total,couponApplied) => {
-        couponApplied=parseInt(couponApplied)
-        console.log("tottal cart amoutn",total);
-        console.log("couponApplied",couponApplied);
-        let cartTotal=parseInt(total)
+    getCartProductsWithOffer: (userId, total, couponApplied) => {
+        couponApplied = parseInt(couponApplied)
+        console.log("tottal cart amoutn", total);
+        console.log("couponApplied", couponApplied);
+        let cartTotal = parseInt(total)
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             let total = await db.get().collection(collection.CART_COLLECTION)
                 .aggregate([
@@ -456,15 +509,15 @@ module.exports = {
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount:{$round:[{ $multiply: [{ $divide: ['$productTotal' , cartTotal ] },couponApplied ] }]}  
+                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: { $round: [{ $multiply: [{ $divide: ['$productTotal', cartTotal] }, couponApplied] }] }
                         }
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: 1,productNetTotal:{ $subtract: ["$productTotal","$applicableCouponDiscount"] }
+                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: 1, productNetTotal: { $subtract: ["$productTotal", "$applicableCouponDiscount"] }
                         }
                     }
-                    
+
 
                 ]).toArray()
             resolve(total)
@@ -561,7 +614,7 @@ module.exports = {
         })
 
     },
-    placeOrder: (order, products, cartDetails, total,couponApplied) => {
+    placeOrder: (order, products, cartDetails, total, couponApplied) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" })
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
@@ -586,8 +639,8 @@ module.exports = {
                 products: products,
                 cartDetails: cartDetails,
                 totalAmount: total,
-                couponApplied:couponApplied,
-                netAmountPaid:(total-couponApplied)
+                couponApplied: couponApplied,
+                netAmountPaid: (total - couponApplied)
             }
             console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
@@ -598,8 +651,8 @@ module.exports = {
 
         })
     },
-    deletePendingOrder:(orderId)=>{
-        return new Promise((resolve, reject)=>{
+    deletePendingOrder: (orderId) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: objectId(orderId) })
             resolve()
         })
@@ -698,8 +751,8 @@ module.exports = {
                         payment_method: 1,
                         totalAmount: 1,
                         status: 1,
-                        netAmountPaid:1,
-                        couponApplied:1
+                        netAmountPaid: 1,
+                        couponApplied: 1
 
                     }
                 }]).toArray()

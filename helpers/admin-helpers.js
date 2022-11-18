@@ -403,38 +403,38 @@ module.exports = {
     monthlyR_P_S: () => {
         return new Promise(async (resolve, reject) => {
             let monthlyGraph = await db.get().collection(collection.ORDER_COLLECTION)
-            .aggregate([
-                {
-                    $project: {
-                        _id: 0,
-                        orderDate:1,
-                        cartDetails: 1
-                    }
-                },
-                {
-                    $unwind: '$cartDetails'
-                },
-                {
-                    $project: {
-                        orderDate:1,
-                        quantity: '$cartDetails.quantity',
-                        salesTotal: '$cartDetails.productTotal',
-                        item: "$cartDetails.product.title",
-                        actualPrice: '$cartDetails.product.costPrice',
-        
-                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
-                    }
-                },
-                {
-                    $addFields: {
-                        profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
-                    }
-                },
-                { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, Revenue: { $sum: '$salesTotal' }, profit: { $sum: '$profit' },sales: { $sum: '$quantity' } } },
-                { $project: { _id: 0, year: '$_id.year', month: '$_id.month', Revenue: 1, profit: 1, sales: 1 } },
-                { $sort: { year: -1, month: -1 } },
-                { $limit: 12 }
-            ]).toArray()
+                .aggregate([
+                    {
+                        $project: {
+                            _id: 0,
+                            orderDate: 1,
+                            cartDetails: 1
+                        }
+                    },
+                    {
+                        $unwind: '$cartDetails'
+                    },
+                    {
+                        $project: {
+                            orderDate: 1,
+                            quantity: '$cartDetails.quantity',
+                            salesTotal: '$cartDetails.productTotal',
+                            item: "$cartDetails.product.title",
+                            actualPrice: '$cartDetails.product.costPrice',
+
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
+                        }
+                    },
+                    { $group: { _id: { 'month': { $month: '$orderDate' }, 'year': { $year: '$orderDate' } }, Revenue: { $sum: '$salesTotal' }, profit: { $sum: '$profit' }, sales: { $sum: '$quantity' } } },
+                    { $project: { _id: 0, year: '$_id.year', month: '$_id.month', Revenue: 1, profit: 1, sales: 1 } },
+                    { $sort: { year: -1, month: -1 } },
+                    { $limit: 12 }
+                ]).toArray()
 
             //-----------converting month number to month name----------------//
             monthlyGraph.forEach(element => {
@@ -568,8 +568,9 @@ module.exports = {
                 checkCoupon.status = false
                 resolve(checkCoupon)
             } else {
-                console.log(new Date());
-                let checkDate = await db.get().collection(collection.COUPON_COLLECTION).findOne({ _id: checkCoupon._id, expiryDate: { $gte: new Date() } })
+                let checkDate = await db.get().collection(collection.COUPON_COLLECTION)
+                    .findOne({ _id: checkCoupon._id, expiryDate: { $gte: new Date() } })
+                    
                 if (checkDate === null) {
                     checkDate = {}
                     checkDate.err = "Coupon Expired"

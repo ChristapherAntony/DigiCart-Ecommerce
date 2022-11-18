@@ -59,7 +59,6 @@ router.post('/dash', (req, res) => {
     if (response.status) {
       //req.session.loggedIn = true
       req.session.admin = response.user
-
       res.redirect('/admin/dash')
     } else {
       res.redirect('/admin/dash')
@@ -73,10 +72,8 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const products = await productHelpers.getAllProductsLookUP()
   const TopSelling = await adminHelpers.topSelling()
   const OrderHistory = await adminHelpers.getRecentOrderHistory()
-  //const monthlygraph = await adminHelpers.getMonthlyGraph()
   const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
-  // console.log(monthlygraph);
-  // console.log(monthlyR_P_S);
+
   res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory,monthlygraph });
 });
 

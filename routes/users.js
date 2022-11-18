@@ -4,7 +4,7 @@ const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const otpHelpers = require("../helpers/otp-helpers")
-const {uid}=require('uid')
+const { uid } = require('uid')
 const { response } = require('express');
 let cartCount = 0
 let userName = null
@@ -121,10 +121,31 @@ router.post('/signUp', (req, res) => {
     if (response.status == false) {
       res.render('users/signUp', { 'emailError': "Email / Mobile Number Already Exists" })
     } else {
-      res.redirect('/login-register')   // need to login with password agin to 
+      req.session.user = response.user
+      res.redirect('/enterCoupon')   // need to login with password agin to 
     }
   })
 })
+
+router.get('/enterCoupon', (req, res, next) => {
+  res.render('users/enterCoupon',{referralIdError:req.session.referralIdError})
+  req.session.referralIdError=null
+});
+
+router.post('/verifyReferralID', async (req, res, next) => {
+  console.log(req.body.referralId, "*************************************************************");
+  let apply = await userHelpers.applyReferral(req.body.referralId, req.session.user._id)
+  console.log(apply.status);
+  if(apply==true){
+    console.log("###################### inside the apply");
+    res.redirect('/');
+  }else{
+    console.log("###################### inside the apply else condition" );
+    req.session.referralIdError="The Entered referral code is Invalid"
+    res.redirect('/enterCoupon')
+  }
+});
+
 
 router.post('/logIn', (req, res) => {
 
@@ -151,7 +172,7 @@ router.post('/logIn', (req, res) => {
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   let hello = uid()
-  console.log(hello,"UID ******************");
+  console.log(hello, "UID ******************");
 
   let userData = req.session.user
   if (userData) {
@@ -240,10 +261,12 @@ router.get('/wishlist', verifyUser, async (req, res, next) => {
 
 
 router.get('/account', verifyUser, async (req, res, next) => {
+
   const orders = await userHelpers.getUserOrders(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const userDetails = await userHelpers.getUserDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
+  console.log(headerDetails);
   res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address });
 });
 router.get('/addAddress', verifyUser, async (req, res, next) => {
@@ -356,11 +379,11 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
 })
 
 router.post('/placeOrder', verifyUser, async (req, res) => {
-  let couponApplied= parseInt(req.body.couponApplied)
+  let couponApplied = parseInt(req.body.couponApplied)
   let products = await userHelpers.getCartProductsList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-  let cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice, req.body.couponApplied ) //passing for implementing the coupon discount product level
-  userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice,couponApplied).then((orderId) => {
+  let cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice, req.body.couponApplied) //passing for implementing the coupon discount product level
+  userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice, couponApplied).then((orderId) => {
     if (req.body['payment_method'] === 'COD') {
       cartCount = 0
       response.orderId = orderId

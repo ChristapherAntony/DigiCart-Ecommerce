@@ -1,0 +1,38 @@
+<div class="login-register-area pt-20 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a>
+                            <h4>  </h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="/verifyReferralID" method="post">
+                                        <label for="referralId"> <h3>Enter Referral Id If you have</h3></label>
+                                        <input type="text" name="referralId" placeholder="Enter Referral code">
+                                        <div class="button-box">
+                                            
+                                            <button type="submit">Continue</button>
+                                            <a href="/"  class="float-right btn btn-danger" type="submit">Skip</a>
+                                        </div>
+                                        <div>
+                                            {{#if referralIdError }}
+                                            <p class="text-danger">{{referralIdError}}</p>
+                                            {{/if }}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
