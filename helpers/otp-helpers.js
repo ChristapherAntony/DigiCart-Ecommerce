@@ -1,4 +1,4 @@
-//const { resolve } = require("promise");
+const { resolve } = require("promise");
 
 // var SID = 'ACb4522cd51eb3121c4c53c610e9bee305';
 // var TOKEN = 'a1a60434705ddbdfbb23167be91a34d4';
@@ -13,18 +13,13 @@
 // var serviceID="VA918ca3e6955f568ef6ce662237432b01"
 
 ///////////////////////////////////////////////////////
-// var SID = 'ACffff65f5f3ab28aaa2a7831ff8652ad0';
-// var TOKEN = 'b9d659ec44c5faffadd75919c8b722f8';
-// const client = require("twilio")(SID, TOKEN);
-// var serviceID="VAef87ebf177d535fc635fea4588db8d97"
-///////////////////////////////////////////////////////
-var SID = 'ACdffdb52e84f0d288c21fe2fb63b33dda';
-var TOKEN = '46ba9ac986975c839abf3aa486d01c96';
+var SID = 'ACffff65f5f3ab28aaa2a7831ff8652ad0';
+var TOKEN = 'b9d659ec44c5faffadd75919c8b722f8';
 const client = require("twilio")(SID, TOKEN);
-var serviceID="VA3fe400f02d61173f3a845d0c3d1c5e61"
+var serviceID="VAef87ebf177d535fc635fea4588db8d97"
 ///////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////
+
 
 
 

@@ -23,6 +23,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             userData.referralId = uid()
             userData.walletBalance = 0
+            userData.block=false
 
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.UserEmail }, { MobileNo: userData.MobileNo }] })
             if (user) resolve({ status: false })
@@ -37,12 +38,11 @@ module.exports = {
                     } else {
                         resolve({ status: false })
                     }
-
-
                 })
             }
         })
     },
+
     applyReferral: (referralId, userID) => {
         return new Promise(async (resolve, reject) => {
             let existingUser = await db.get().collection(collection.USER_COLLECTION).findOne({ referralId: referralId })// check if any user have the referral id
@@ -219,9 +219,12 @@ module.exports = {
     },
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
+            console.log(userData.userID);
+            
             let loginStatus = false;
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.userID }, { MobileNo: userData.userID }] })
+            console.log(user);
             if (user) {
                 if (user.block) resolve({ active: false })
                 bcrypt.compare(userData.Password, user.Password).then((status) => {    // if user true the check pw with bcrypt

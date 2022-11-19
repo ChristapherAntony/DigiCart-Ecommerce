@@ -148,8 +148,9 @@ router.post('/verifyReferralID', async (req, res, next) => {
 
 
 router.post('/logIn', (req, res) => {
-
+console.log("@#############################################",res.body);
   userHelpers.doLogin(req.body).then(async (response) => {
+    console.log("after dologin",response.status);
     if (response.status == false) {
       res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
     } else if (response.active == false) {
