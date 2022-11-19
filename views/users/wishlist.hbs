@@ -1,87 +1,150 @@
-        <div class="breadcrumb-area bg-gray menuBarTop">
-            <div class="container">
-                <div class="breadcrumb-content text-center">
-                    <ul>
-                        <li>
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="active">Wishlist </li>
-                    </ul>
-                </div>
-            </div>
+<div class="breadcrumb-area bg-gray menuBarTop">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">Wishlist </li>
+            </ul>
         </div>
-        <div class="cart-main-area pt-115 pb-120">
-            <div class="container">
-                <h3 class="cart-page-title">Your cart items</h3>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                        <form action="#">
-                            <div class="table-content table-responsive cart-table-content">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Product Name</th>
-                                            <th>Until Price</th>
-                                            <th>Qty</th>
-                                            <th>Subtotal</th>
-                                            <th>action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Simple Black T-Shirt</a></td>
-                                            <td class="product-price-cart"><span class="amount">$260.00</span></td>
-                                            <td class="product-quantity pro-details-quality">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">$110.00</td>
-                                            <td class="product-wishlist-cart">
-                                                <a href="#">add to cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Norda Simple Backpack</a></td>
-                                            <td class="product-price-cart"><span class="amount">$150.00</span></td>
-                                            <td class="product-quantity pro-details-quality">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">$150.00</td>
-                                            <td class="product-wishlist-cart">
-                                                <a href="#">add to cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Simple Black T-Shirt </a></td>
-                                            <td class="product-price-cart"><span class="amount">$170.00</span></td>
-                                            <td class="product-quantity pro-details-quality">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">$170.00</td>
-                                            <td class="product-wishlist-cart">
-                                                <a href="#">add to cart</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </form>
+    </div>
+</div>
+<div class="cart-main-area pt-50 pb-500">
+    <div class="container">
+        <h3 class="cart-page-title">Your Wishlist items</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                {{!-- table for laptops --}}
+                <div class="table-content table-responsive cart-table-content d-none d-md-block">
+                    <table>
+                        <thead>
+                            <tr class=" hidden-sm">
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Until Price</th>
+                                <th> </th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each productDetails}}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#"><img src="/images/product-img/{{products.image1}}" width="150"
+                                            alt=""></a>
+                                </td>
+                                <td class="product-name text-left"><a href="#">{{products.titleMain}} </a>
+                                    <p>MRP:{{products.MRP}} <br>Discount: {{products.totalDiscount}}%</p>
+                                </td>
+                                <td class="product-price-cart"><span class="amount">{{products.offerPrice}}</span></td>
+
+                                <td class="product-wishlist-cart">
+
+                                    <button onclick="removeWishlist('{{products._id}}','{{this._id}}') "
+                                        class="btn btn-dark btn-sm  ">Remove</button>
+                                </td>
+                                <td class="product-wishlist-cart">
+                                    <button onclick="addToCartWishlist('{{products._id}}','{{this._id}}')"
+                                        class="btn btn-dark btn-sm  ">add to cart</button>
+                                </td>
+                            </tr>
+                            {{/each }}
+                        </tbody>
+                    </table>
+                </div>
+
+                {{!-- table for mobile --}}
+                <div class="   d-block d-md-none">
+                    {{#each productDetails}}
+                    <div class="" style="height: 200px; ">
+                        <div class=" col-4 float-left">
+                            <a href="#"><img src="/images/product-img/{{products.image1}}" width="150" alt=""></a>
+                        </div>
+                        <div class="col-8 float-right">
+                            <a class="font-weight-bold" href="#">{{products.title}}
+                                <p>MRP:{{products.MRP}} {{products.totalDiscount}}% Off <br>Offer Price:
+                                    {{products.offerPrice}}</p>
+                                <div class="mt-3">
+                                    <button onclick="addToCartWishlist('{{products._id}}','{{this._id}}')"
+                                        class="btn btn-sm text-light " style="background-color:rgb(228,67,17) ;"
+                                        href="#"><i class="bi bi-cart3"></i> Add</button>
+                                    <button onclick="removeWishlist('{{products._id}}','{{this._id}}') "
+                                        class="btn btn-outline-secondary btn-sm ml-3"><i
+                                            class="bi bi-trash3"></i></button>
+
+                                </div>
+                        </div>
+
                     </div>
+                    {{/each }}
+
+
                 </div>
+
             </div>
         </div>
+    </div>
+</div>
+
+
+<script>
+    function removeWishlist(proId, WishlistId) {
+        $.ajax({
+            url: '/removeWishlist',
+            data: {
+                proId: proId,
+                wishlistId: WishlistId
+            },
+            method: 'post',
+            success(response) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                location.reload()
+            }
+        })
+    }
+    function addToCartWishlist(proId, wishlistId) {
+        console.log(proId, wishlistId)
+        $.ajax({
+            url: '/addToCartWishlist',
+            data: {
+                proId: proId,
+                wishlistId: wishlistId
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('#cart-count').html()
+                    count = parseInt(count) + 1
+                    $('#cart-count').html(count)
+                    Swal.fire({
+                        position: 'top-end',
+                        width: 300,
+                        height: 100,
+                        icon: 'success',
+                        text: "Item Added to Cart",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }),
+                    location.reload()
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        width: 300,
+                        height: 100,
+                        icon: 'success',
+                        text: "Item not Added to Cart",
+                        showConfirmButton: false,
+                        timer: 5000
+                    })
+                }
+
+            }
+        })
+    }
+
+</script>

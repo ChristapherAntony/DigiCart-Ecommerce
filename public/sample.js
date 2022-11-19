@@ -497,3 +497,28 @@ db.order.aggregate([
         { $sort: { year: -1, month: -1 } },
         { $limit: 12 }
     ]).toArray()
+
+
+    //////////////////////////////
+    
+    db.wishlist.aggregate([
+        {
+            $match:{user:ObjectId("636ca815ae1373bc4f89de1b")}
+        },
+        {
+            $unwind:"$products"
+        },
+        {
+            $lookup:{
+                from:"product",
+                localField:"products",
+                foreignField:"_id",
+                as:"products"
+            }
+        },
+        {
+            $project:{
+                products:{$arrayElemAt:['$products',0]}
+            }
+        }
+    ])

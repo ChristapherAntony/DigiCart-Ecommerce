@@ -55,7 +55,8 @@
                                                     style="height: inherit; width:;" alt="">
                                             </a>
                                             <div class="product-action-2 tooltip-style-2">
-                                                <button title="Wishlist"><i class="bi bi-heart fa-sm"></i></i></button>
+                                                <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i
+                                                        class="bi bi-heart fa-sm"></i></i></button>
                                                 <button title="Quick View" data-toggle="modal"
                                                     data-target="#exampleModal"><i
                                                         class="bi bi-arrows-fullscreen"></i></button>
@@ -153,7 +154,7 @@
                                             <div class="product-list-action">
                                                 <button onclick="addToCart('{{this._id}}')" title="Add To Cart"><i
                                                         class="bi bi-cart2"></i></button>
-                                                <button title="Wishlist"><i class="bi bi-heart fa-sm"></i></button>
+                                                <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i class="bi bi-heart fa-sm"></i></button>
                                                 <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
                                             </div>
                                         </div>
@@ -452,15 +453,45 @@
     </div>
 </div>
 
-{{!--
+
 <script>
-    function addToCart(proId) {
+
+    function addToWishList(proId) {
         $.ajax({
-            url: '/add-to-cart/' + proId,
+            url: '/add-to-wishlist/' + proId,
             method: 'get',
-            success: (Response) => {
-                alert(Response)
+            success: (response) => {
+                if (response.status) {
+                    let count = $('#wishList-count').html()
+                    console.log("old count",count)
+                    count = parseInt(count) + 1
+                    console.log("added count",count)
+                    $('#wishList-count').html(count)
+                    Swal.fire({
+                        position: 'top-end',
+                        width: 300,
+                        height: 100,
+                        text: "Item Added Wish List",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Please Login ',
+                        text: "Please Login to Add this Item Wish List",
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Continue with Login'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '/viewAllVerify'
+                        }
+                    })
+                }
+
             }
         })
     }
-</script> --}}
+</script>

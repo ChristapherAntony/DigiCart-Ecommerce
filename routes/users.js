@@ -4,6 +4,7 @@ const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const otpHelpers = require("../helpers/otp-helpers")
+const wishlistHelper = require("../helpers/wishList-helper")
 const { uid } = require('uid')
 const { response } = require('express');
 let cartCount = 0
@@ -128,29 +129,29 @@ router.post('/signUp', (req, res) => {
 })
 
 router.get('/enterCoupon', (req, res, next) => {
-  res.render('users/enterCoupon',{referralIdError:req.session.referralIdError})
-  req.session.referralIdError=null
+  res.render('users/enterCoupon', { referralIdError: req.session.referralIdError })
+  req.session.referralIdError = null
 });
 
 router.post('/verifyReferralID', async (req, res, next) => {
   console.log(req.body.referralId, "*************************************************************");
   let apply = await userHelpers.applyReferral(req.body.referralId, req.session.user._id)
   console.log(apply.status);
-  if(apply.status){
+  if (apply.status) {
     console.log("###################### inside the apply");
     res.redirect('/');
-  }else{
-    console.log("###################### inside the apply else condition" );
-    req.session.referralIdError="The Entered referral code is Invalid"
+  } else {
+    console.log("###################### inside the apply else condition");
+    req.session.referralIdError = "The Entered referral code is Invalid"
     res.redirect('/enterCoupon')
   }
 });
 
 
 router.post('/logIn', (req, res) => {
-console.log("@#############################################",res.body);
+  console.log("@#############################################", res.body);
   userHelpers.doLogin(req.body).then(async (response) => {
-    console.log("after dologin",response.status);
+    console.log("after dologin", response.status);
     if (response.status == false) {
       res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
     } else if (response.active == false) {
@@ -254,11 +255,7 @@ router.get('/detailsVerify/:id', verifyUser, async (req, res, next) => {
   })
 });
 /******************************************************************************************/
-router.get('/wishlist', verifyUser, async (req, res, next) => {
-  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
-  res.render('users/wishlist', { cartCount, userName, headerDetails });
-});
 
 
 router.get('/account', verifyUser, async (req, res, next) => {
@@ -267,7 +264,7 @@ router.get('/account', verifyUser, async (req, res, next) => {
   const userDetails = await userHelpers.getUserDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
   const wallet = await userHelpers.getWallet(req.session.user._id)
-  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address,wallet });
+  res.render('users/account', { orders, userName, cartCount, account: true, headerDetails, userDetails, address, wallet });
 });
 router.get('/addAddress', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
@@ -337,7 +334,6 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   })
 });
 
-
 router.get('/add-to-cart/:id', verifyUser, async (req, res, next) => {
   if (userName == null) {
     res.json({ status: false })
@@ -351,6 +347,57 @@ router.get('/add-to-cart/:id', verifyUser, async (req, res, next) => {
     })
   }
 })
+
+
+router.get('/wishlist', verifyUser, async (req, res, next) => {
+  const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+  let productDetails = await wishlistHelper.getWishList(req.session.user._id)
+  
+  res.render('users/wishlist', { cartCount, userName, headerDetails, productDetails });
+});
+
+router.get('/add-to-wishlist/:id', verifyUser, async (req, res, next) => {
+  if (userName == null) {
+    res.json({ status: false })
+  } else {
+    wishlistHelper.addToWishList(req.params.id, req.session.user._id).then(async () => {
+      res.json({ status: true })
+    })
+  }
+})
+router.post('/removeWishlist', verifyUser, async (req, res, next) => {
+  console.log(req.body);
+  if (userName == null) {
+    res.json({ status: false })
+  } else {
+    wishlistHelper.deleteWishList(req.body).then(async (response) => {
+     
+      res.json({ status: true })
+    })
+  }
+})
+router.post('/addToCartWishlist', verifyUser, async (req, res, next) => {
+  
+  let proId=req.body.proId
+  if (userName == null) {
+    res.json({ status: false })
+  } else {
+    userHelpers.addToCart(proId, req.session.user._id).then(async () => {
+      const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+      cartCount=await userHelpers.getCartCount(req.session.user._id)
+      console.log(cartCount,"#######################new Count");
+      wishlistHelper.deleteWishList(req.body).then(async (response) => {
+       
+        res.json({ status: true })
+      })  
+        
+      
+    })
+  }
+})
+
+
+
 
 router.post('/change-product-quantity', (req, res, next) => {
   userHelpers.changeProductQuantity(req.body).then(async (response) => {
@@ -425,11 +472,6 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
             transaction.payPal = true
             transaction.linkto = links[counter].href
             transaction.orderId = orderId
-            //return res.redirect(links[counter].href)
-            // userHelpers.changePaymentStatus(orderId).then(() => {
-            //   console.log(transaction);
-            //   res.json(transaction)
-            // })
             res.json(transaction)
 
           }

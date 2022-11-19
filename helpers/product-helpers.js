@@ -122,9 +122,7 @@ module.exports = {
                     [{ $set: { offerPrice: { $subtract: ['$MRP', { $multiply: ['$MRP', { $divide: ['$totalDiscount', 100] }] }] } } }]
                 )
             resolve()
-
         })
-
     },
     fetchImage1: (proID) => {
         return new Promise(async (resolve, reject) => {

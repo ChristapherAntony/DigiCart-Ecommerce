@@ -1154,9 +1154,6 @@ function addToCart(proId) {
                         location.href = '/viewAllVerify'
                     }
                 })
-
-
-
             }
 
         }

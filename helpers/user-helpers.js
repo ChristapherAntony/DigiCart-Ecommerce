@@ -23,7 +23,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             userData.referralId = uid()
             userData.walletBalance = 0
-            userData.block=false
+            userData.block = false
 
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.UserEmail }, { MobileNo: userData.MobileNo }] })
             if (user) resolve({ status: false })
@@ -220,7 +220,7 @@ module.exports = {
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
             console.log(userData.userID);
-            
+
             let loginStatus = false;
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ $or: [{ UserEmail: userData.userID }, { MobileNo: userData.userID }] })
@@ -428,10 +428,7 @@ module.exports = {
                             }).then((response) => {
                                 resolve()
                             })
-
                 }
-
-
             } else {
                 let cartObj = {
                     user: objectId(userId),
@@ -443,6 +440,7 @@ module.exports = {
             }
         })
     },
+ 
     getCartProducts: (userId) => {
 
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
