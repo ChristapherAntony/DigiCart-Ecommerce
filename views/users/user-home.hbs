@@ -41,7 +41,7 @@
         {{#each bannerTop_main}}
         <li data-target="#carouselExampleIndicators" data-slide-to={{@index}}></li>
         {{/each }}
-        <li data-target="#carouselExampleIndicators" data-slide-to="4" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="" class="active"></li>
     </ol>
     <div class="carousel-inner">
         {{#each bannerTop_main}}
@@ -78,12 +78,12 @@
     </a>
 </div>
 {{!-- for small devices --}}
-<div id="carouselExampleIndicators" class="carousel slide carousel-fade d-block d-md-none " data-ride="carousel">
+<div id="carouselExampleIndicatorsmob" class="carousel slide carousel-fade d-block d-md-none " data-ride="carousel">
     <ol class="carousel-indicators">
         {{#each bannerTop_main}}
-        <li data-target="#carouselExampleIndicators" data-slide-to={{@index}}></li>
+        <li data-target="#carouselExampleIndicatorsmob" data-slide-to={{@index}}></li>
         {{/each}}
-        <li data-target="#carouselExampleIndicators" data-slide-to="2" class="active"></li>
+        <li data-target="#carouselExampleIndicatorsmob" data-slide-to="" class="active"></li>
     </ol>
     <div class="carousel-inner">
         {{#each bannerTop_main}}
@@ -108,11 +108,11 @@
             </div>
         </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#carouselExampleIndicatorsmob" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#carouselExampleIndicatorsmob" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
