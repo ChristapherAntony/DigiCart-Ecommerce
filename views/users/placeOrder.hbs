@@ -170,7 +170,7 @@
                                     name="message"></textarea>
                             </div>
                             <div>
-                                <input name="couponApplied" value="0" id="couponApplied" type="text"  hidden>
+                                <input name="couponApplied" value="0" id="couponApplied" type="text" hidden>
                             </div>
                         </div>
                     </div>
@@ -181,12 +181,13 @@
                                     <h3 class="cart-bottom-title section-bg-gray">Use Coupon Code</h3>
                                 </div>
                                 <div class="discount-code">
-                                    <p>Enter your coupon code if you have one. 
+                                    <p>Enter your coupon code if you have one.
                                         <span class="text-danger font-weight-bold" id="error"></span>
                                         <span class="text-success font-weight-bold" id="cname"></span>
-                                        </p>
+                                    </p>
                                     <form>
-                                        <input type="text" class="border " value="" id="couponDiscount" name="couponCode">
+                                        <input type="text" class="border " value="" id="couponDiscount"
+                                            name="couponCode">
                                         <button onclick="applyCoupon()" id="add"
                                             class="cart-btn-2 float-right mt-2 mb-2 btn btn-outline-success btn-sm ">Apply
                                             Coupon</button>
@@ -319,6 +320,7 @@
 
 
     function razorpayPayment(order) {
+        console.log(order,"orderiddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
         var options = {
             "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
             "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -329,6 +331,11 @@
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
                 verifyPayment(response, order)          //aftergetting these ids and signature pass it to ajax with order 
+            },
+            "modal": {
+                "ondismiss": function () {
+                    window.location.replace("http://localhost:3000/ProceedToCheckOut/");
+                }
             },
             "prefill": {
                 "name": "Gaurav Kumar",

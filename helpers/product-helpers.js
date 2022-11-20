@@ -203,7 +203,14 @@ module.exports = {
                 resolve()
             })
         })
-    }
+    },
+    deleteTopBanner: (bannerId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.BANNER_COLLECTION).deleteOne({ _id: objectId(bannerId) }).then((response) => {
+                resolve({response:true})
+            })
+        })
+    },
 
 
 }

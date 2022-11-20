@@ -416,7 +416,6 @@ router.get('/ProceedToCheckOut', verifyUser, async (req, res) => {
   let products = await userHelpers.getCartProducts(req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const address = await userHelpers.getAllAddress(req.session.user._id)
-  console.log(products);
   res.render('users/placeOrder', { cartCount, total, user, userName, products, headerDetails, address })
 })
 
@@ -530,10 +529,6 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
   res.render('users/orderDetails', { userName, cartCount, orderDetails, oldProductDetails, headerDetails })
 })
-
-
-
-
 
 router.get('/cancelTheOrder', verifyUser, (req, res) => {
   let Id = {}

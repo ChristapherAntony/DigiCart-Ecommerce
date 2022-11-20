@@ -420,6 +420,18 @@ router.post('/update-TopBanner/:id', uploadTwoBanner, async (req, res) => {
   })
 })
 
+router.get('/delete-TopBanner/:id', verifyAdmin, (req, res, next) => {
+  productHelpers.deleteTopBanner(req.params.id).then((response) => {
+    res.json(response)
+  })
+})
+router.post('/removeProduct', (req, res, next) => {
+  userHelpers.removeProduct(req.body).then(async (response) => {
+    const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+    // response.total = await userHelpers.getTotalAmount(req.body.user)
+    res.json(response)
+  })
+})
 
 
 
