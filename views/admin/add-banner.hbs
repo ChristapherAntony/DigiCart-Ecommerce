@@ -1,0 +1,108 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Add Banner</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/topBanner">Banner Management</a></li>
+                <li class="breadcrumb-item active">Add new Banner</li> </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-10">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Floating labels Form</h5>
+
+                        <!-- Floating Labels Form -->
+                        <form class="row g-3" action="/admin/add-banner" method="post" enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input name="bannerTitle" type="text" class="form-control" id="floatingName"
+                                        placeholder="State">
+                                    <label for="floatingName">Banner Title</label>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea name="bannerDescription" class="form-control" placeholder="Address"
+                                        id="floatingTextarea" style="height: 100px;"></textarea>
+                                    <label for="floatingTextarea">Banner Description</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3 mt-5">
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Large Device</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="file" name="largeImg" id="formFile" required>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Small Device</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="file" name="smallImg" id="formFile" required>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button class="btn btn-primary">Back</button>
+                            </div>
+
+                        </form><!-- End floating Labels Form -->
+
+                                                {{!-- <form action="/admin/add-banner" method="post" >
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Category Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="category" class="form-control" id="inputText">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Category Discount %</label>
+                                <div class="col-sm-2">
+                                    <input type="number" name="categoryDiscount" class="form-control" id="inputText">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Description</label>
+                                <div class="col-sm-8">
+
+                                    <textarea name="Description" rows="5" class="form-control"
+                                        id="inputText"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-4 col-form-label">Image Upload</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" name="image" required>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form><!-- End Horizontal Form --> --}}
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </section>
+
+</main><!-- End #main -->

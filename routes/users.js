@@ -134,14 +134,11 @@ router.get('/enterCoupon', (req, res, next) => {
 });
 
 router.post('/verifyReferralID', async (req, res, next) => {
-  console.log(req.body.referralId, "*************************************************************");
   let apply = await userHelpers.applyReferral(req.body.referralId, req.session.user._id)
   console.log(apply.status);
   if (apply.status) {
-    console.log("###################### inside the apply");
     res.redirect('/');
   } else {
-    console.log("###################### inside the apply else condition");
     req.session.referralIdError = "The Entered referral code is Invalid"
     res.redirect('/enterCoupon')
   }
@@ -149,7 +146,6 @@ router.post('/verifyReferralID', async (req, res, next) => {
 
 
 router.post('/logIn', (req, res) => {
-  console.log("@#############################################", res.body);
   userHelpers.doLogin(req.body).then(async (response) => {
     console.log("after dologin", response.status);
     if (response.status == false) {
@@ -173,20 +169,19 @@ router.post('/logIn', (req, res) => {
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-  let hello = uid()
-  console.log(hello, "UID ******************");
-
   let userData = req.session.user
+  const bannerTop_main = await productHelpers.getBannerTop_main()
   if (userData) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
     userName = req.session.user.UserName
     let headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+
     categoryHelpers.getAllCategory().then(async (category) => {
-      res.render('users/user-home', { category, userName, cartCount, headerDetails })
+      res.render('users/user-home', { category, userName, cartCount, headerDetails, bannerTop_main })
     })
   } else {
     categoryHelpers.getAllCategory().then(async (category) => {
-      res.render('users/user-home', { category })
+      res.render('users/user-home', { category, bannerTop_main })
     })
   }
 });
@@ -352,7 +347,7 @@ router.get('/add-to-cart/:id', verifyUser, async (req, res, next) => {
 router.get('/wishlist', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   let productDetails = await wishlistHelper.getWishList(req.session.user._id)
-  
+
   res.render('users/wishlist', { cartCount, userName, headerDetails, productDetails });
 });
 
@@ -371,27 +366,27 @@ router.post('/removeWishlist', verifyUser, async (req, res, next) => {
     res.json({ status: false })
   } else {
     wishlistHelper.deleteWishList(req.body).then(async (response) => {
-     
+
       res.json({ status: true })
     })
   }
 })
 router.post('/addToCartWishlist', verifyUser, async (req, res, next) => {
-  
-  let proId=req.body.proId
+
+  let proId = req.body.proId
   if (userName == null) {
     res.json({ status: false })
   } else {
     userHelpers.addToCart(proId, req.session.user._id).then(async () => {
       const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-      cartCount=await userHelpers.getCartCount(req.session.user._id)
-      console.log(cartCount,"#######################new Count");
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
+      console.log(cartCount, "#######################new Count");
       wishlistHelper.deleteWishList(req.body).then(async (response) => {
-       
+
         res.json({ status: true })
-      })  
-        
-      
+      })
+
+
     })
   }
 })

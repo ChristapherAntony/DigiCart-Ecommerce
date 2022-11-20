@@ -70,7 +70,7 @@ module.exports = {
         })
     },
     updateProduct: (productId, productDetails) => {
-        
+
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
                 .updateOne({ _id: objectId(productId) }, {
@@ -152,6 +152,56 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let detail = await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(categoryID) }, { projection: { image: true } })
             resolve(detail.image)
+        })
+    },
+    addBanner: (details) => {
+        return new Promise(async (resolve, reject) => {
+            details.position = "Top_Main"
+            details.dateAdded = new Date
+            db.get().collection(collections.BANNER_COLLECTION).insertOne(details).then(() => {
+                resolve()
+            })
+
+        })
+    },
+    getBannerTop_main: () => {
+        return new Promise(async (resolve, reject) => {
+            let response = await db.get().collection(collections.BANNER_COLLECTION).find({position:'Top_Main'}).toArray()
+            resolve(response)
+        })
+    }
+    ,
+    getBannerDetails: (bannerId) => {
+        return new Promise(async (resolve, reject) => {
+            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({_id:objectId(bannerId)})
+            console.log(response);
+            resolve(response)
+        })
+    },
+    fetchBannerImg: (bannerId,BannerName) => {
+        return new Promise(async (resolve, reject) => {
+            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({_id:objectId(bannerId)})
+            if(BannerName==="largeImg"){
+                resolve(response.largeImg)
+            }else if(BannerName==="smallImg"){
+                resolve(response.smallImg)
+            }
+        })
+    },
+    updateBanner: (bannerId,bannerDetails) => {
+        console.log("indide the update banner",bannerId);
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.BANNER_COLLECTION).updateOne({ _id: objectId(bannerId) }, {
+                $set: {
+                    bannerTitle: bannerDetails.bannerTitle,
+                    bannerDescription: bannerDetails.bannerDescription,
+                    largeImg:bannerDetails.largeImg,
+                    smallImg:bannerDetails.smallImg,
+                    dateAdded:new Date()
+                }
+            }).then((response) => {
+                resolve()
+            })
         })
     }
 

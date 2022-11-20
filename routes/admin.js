@@ -36,6 +36,23 @@ const uploadOne = multer({ storage: multerStorageCategory });
 const uploadSingleFile = uploadOne.fields([{ name: 'image', maxCount: 1 }])
 
 /****************************** */
+const multerStorageBanner = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/banner-img");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+const uploadTwo = multer({ storage: multerStorageBanner });
+const uploadTwoBanner = uploadTwo.fields([{ name: 'largeImg', maxCount: 1 }, { name: 'smallImg', maxCount: 1 }])
+
+
+
+
+
+
+/******************************** */
 
 const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
@@ -74,7 +91,7 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const OrderHistory = await adminHelpers.getRecentOrderHistory()
   const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
 
-  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory,monthlygraph });
+  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory, monthlygraph });
 });
 
 router.get('/view-users', verifyAdmin, (req, res, next) => {
@@ -279,7 +296,7 @@ router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
   let orderProductsDetails = await userHelpers.oldProductDetails(req.params.id)
   console.log("***************************************** orderProductsDetails");
   console.log(orderProductsDetails);
-  
+
   orderProductsDetails.forEach(cartDetails => {
     cartDetails.orderId = orderDetails._id
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
@@ -330,9 +347,9 @@ router.get('/offerManagement', verifyAdmin, async (req, res, next) => {
 router.get('/CouponManagements', verifyAdmin, async (req, res, next) => {
   let activeCoupons = await adminHelpers.getActiveCoupons()
   let expiredCoupons = await adminHelpers.getExpiredCoupons()
-  
-  res.render('admin/CouponManagements', { layout: 'admin-layout',activeCoupons,expiredCoupons,couponError:req.session.couponError })
-  req.session.couponError=null
+
+  res.render('admin/CouponManagements', { layout: 'admin-layout', activeCoupons, expiredCoupons, couponError: req.session.couponError })
+  req.session.couponError = null
 })
 router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
 
@@ -340,10 +357,10 @@ router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
   req.body.maxAmount = parseInt(req.body.maxAmount)
   req.body.minSpend = parseInt(req.body.minSpend)
   let addCoupon = await adminHelpers.addNewCoupon(req.body)
-  if(addCoupon.status===false){
+  if (addCoupon.status === false) {
     req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
-  }else{
-    req.session.couponError=null
+  } else {
+    req.session.couponError = null
   }
   res.redirect('/admin/CouponManagements')
 })
@@ -359,9 +376,50 @@ router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
 })
 router.post('/getCouponDiscount/:couponCode', verifyAdmin, async (req, res, next) => {
   let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
-  
+
   res.json(getCouponDiscount)
 })
+
+router.get('/topBanner', verifyAdmin, async (req, res, next) => {
+  const bannerTop_main = await productHelpers.getBannerTop_main()
+
+  res.render('admin/topBanner', { layout: 'admin-layout', bannerTop_main })
+})
+router.get('/addBanner', verifyAdmin, async (req, res, next) => {
+
+
+  res.render('admin/add-banner', { layout: 'admin-layout' })
+})
+
+router.post('/add-banner', uploadTwoBanner, (req, res) => {
+  req.body.largeImg = req.files.largeImg[0].filename
+  req.body.smallImg = req.files.smallImg[0].filename
+  productHelpers.addBanner(req.body)
+  res.redirect('/admin/topBanner')
+})
+router.get('/edit-TopBanner/:id', async (req, res) => {
+  let topBanner = await productHelpers.getBannerDetails(req.params.id)
+  res.render('admin/edit-TopBanner', { layout: 'admin-layout', topBanner })
+})
+router.post('/update-TopBanner/:id', uploadTwoBanner, async (req, res) => {
+
+  if (req.files.largeImg == null) {
+    temp1 = await productHelpers.fetchBannerImg(req.params.id, "largeImg")
+  } else {
+    temp1 = req.files.largeImg[0].filename
+  }
+  if (req.files.smallImg == null) {
+    temp2 = await productHelpers.fetchBannerImg(req.params.id, "smallImg")
+  } else {
+    temp2 = req.files.smallImg[0].filename
+  }
+  req.body.largeImg = temp1
+  req.body.smallImg = temp2
+  productHelpers.updateBanner(req.params.id, req.body).then((response) => {
+    res.redirect('/admin/topBanner')
+  })
+})
+
 
 
 
