@@ -51,12 +51,20 @@ module.exports = {
         })
     },
     getCategoryProducts: (categoryId) => {
+        console.log(categoryId);
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId(categoryId) }).toArray()
             //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
             //console.log(categoryTitle);
             console.log(products);
             //response.categoryTitle=categoryTitle;
+            response.products = products;
+            resolve(products)
+        })
+    },
+    getTopDiscounted: () => {
+        return new Promise(async (resolve, reject) => {
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({totalDiscount:{$gte:15}}).toArray()
             response.products = products;
             resolve(products)
         })

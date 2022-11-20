@@ -171,17 +171,32 @@ router.post('/logIn', (req, res) => {
 router.get('/', async function (req, res, next) {
   let userData = req.session.user
   const bannerTop_main = await productHelpers.getBannerTop_main()
+  const mobileCategory= await productHelpers.getCategoryProducts('6358e5d0421c3c872a21c471' )
+  const laptopCategory= await productHelpers.getCategoryProducts('6358e6ae421c3c872a21c472' )
+  const audioCategory= await productHelpers.getCategoryProducts('6358e6d8421c3c872a21c473' )
+  const watchCategory= await productHelpers.getCategoryProducts('6358e72f421c3c872a21c474' )
+  const televisionCategory= await productHelpers.getCategoryProducts('6358e7a5421c3c872a21c476')
+  const topDiscounted= await productHelpers.getTopDiscounted()
+
+  const categoryProducts={
+    mobileCategory:mobileCategory,
+    laptopCategory:laptopCategory,
+    audioCategory:audioCategory,
+    watchCategory:watchCategory,
+    topDiscounted:topDiscounted,
+    televisionCategory:televisionCategory,
+  }
   if (userData) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
     userName = req.session.user.UserName
     let headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
     categoryHelpers.getAllCategory().then(async (category) => {
-      res.render('users/user-home', { category, userName, cartCount, headerDetails, bannerTop_main })
+      res.render('users/user-home', { category, userName, cartCount, headerDetails, bannerTop_main ,categoryProducts})
     })
   } else {
     categoryHelpers.getAllCategory().then(async (category) => {
-      res.render('users/user-home', { category, bannerTop_main })
+      res.render('users/user-home', { category, bannerTop_main,categoryProducts })
     })
   }
 });
@@ -206,6 +221,7 @@ router.get('/viewAll/:id', function (req, res, next) {
   let categoryId = req.params.id
   if (req.session.user) {
     productHelpers.getCategoryProducts(categoryId).then((products) => {
+      console.log(products);
       categoryHelpers.getAllCategory().then(async (category) => {
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
         res.render('users/user-viewAll', { products, category, userName, cartCount, headerDetails })

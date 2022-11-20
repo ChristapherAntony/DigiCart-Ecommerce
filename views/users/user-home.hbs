@@ -8,33 +8,7 @@
     }
 </style>
 
-{{!-- <div class="slider-area bg-gray-10">
-    <div class="container">
-        <div class="hero-slider-active-2 nav-style-1 nav-style-1-modify-2 nav-style-1-orange">
-            <div class="single-hero-slider single-hero-slider-hm10 single-animation-wrap">
-                <div class="row slider-animated-1">
-                    <div class="col-lg-5 col-md-5 col-12 col-sm-12">
-                        <div class="hero-slider-content-6 slider-content-hm9 slider-content-hm10">
-                            <h5 class="animated">Best Seller</h5>
-                            <h1 class="animated">new ipad pro <br>& phone x</h1>
-                            <p class="animated">Prodctect your house with home secure wifi camere indoor/outdoor</p>
-                            <div class="btn-style-1">
-                                <a class="animated btn-1-padding-4 btn-1-orange btn-1-font-14"
-                                    href="product-details.html">Explore Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7 col-12 col-sm-12">
-                        <div class="hm10-hero-slider-img">
-                            <img class="animated" src="/assets/images/slider/hm-10-slider-1.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div> --}}
+{{!-- carousel starts from here --}}
 {{!-- for laptop --}}
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade d-none d-md-block" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -117,7 +91,7 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
+{{!-- carousel ends from here --}}
 
 
 {{!-- product category --}}
@@ -213,6 +187,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 {{!-- top deals --}}
 <div class="product-area pb-70">
     <div class="container">
@@ -228,13 +206,14 @@
             </div>
             <div
                 class="product-slider-active-8 dot-style-2 dot-style-2-position-static dot-style-2-mrg-3 nav-style-5 nav-style-5-modify">
+                {{#each categoryProducts.topDiscounted}}
                 <div class="product-plr-1">
                     <div class="single-product-wrap">
                         <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-41.jpg" alt="">
+                            <a href="/details/{{this._id}}">
+                                <img src="/images/product-img/{{this.image1}}" alt="">
                             </a>
-                            <span class="pro-badge left bg-red">-40%</span>
+                            <span class="pro-badge left bg-red">-{{this.totalDiscount}}%</span>
                             <div class="product-action-2">
                                 <button title="Wishlist"><i class="icon-heart"></i></button>
                                 <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
@@ -243,7 +222,7 @@
                             </div>
                         </div>
                         <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Advantage Baby Milk</a>
+                            <h3 class="mrg-none"><a class="orange" href="/details/{{this._id}}">{{this.title}}</a>
                             </h3>
                             <div class="product-rating-wrap-2">
                                 <div class="product-rating-4">
@@ -256,11 +235,11 @@
                                 <span>(4)</span>
                             </div>
                             <div class="product-price-4">
-                                <span class="new-price">$38.50 </span>
-                                <span class="old-price">$42.85</span>
+                                <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
                             </div>
                             <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
+                                <span><a class="orange" href="#">{{this.brand}}</a></span>
                             </div>
                             <div class="product-sold">
                                 <div class="single-product-sold">
@@ -274,7 +253,7 @@
                             </div>
                         </div>
                         <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Advantage Baby Milk</a>
+                            <h3 class="mrg-none"><a class="orange" href="/details/{{this._id}}">{{this.title}}</a>
                             </h3>
                             <div class="product-rating-wrap-2">
                                 <div class="product-rating-4">
@@ -287,11 +266,11 @@
                                 <span>(4)</span>
                             </div>
                             <div class="product-price-4">
-                                <span class="new-price">$38.50 </span>
-                                <span class="old-price">$42.85</span>
+                                <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
                             </div>
                             <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
+                                <span><a class="orange" href="#">{{this.brand}}</a></span>
                             </div>
                             <div class="product-sold">
                                 <div class="single-product-sold">
@@ -304,425 +283,28 @@
                                 </div>
                             </div>
                             <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
+                                <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-42.jpg" alt="">
-                            </a>
-                            <span class="pro-badge left bg-red">-20%</span>
-                            <div class="product-action-2">
-                                <button title="Wishlist"><i class="icon-heart"></i></button>
-                                <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
-                                        class="icon-size-fullscreen icons"></i></button>
-                                <button title="Compare"><i class="icon-refresh"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Herchoe Backpack</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(2)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$26.50 </span>
-                                <span class="old-price">$45.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width50 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Herchoe Backpack</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(2)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$26.50 </span>
-                                <span class="old-price">$45.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width50 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                            <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-43.jpg" alt="">
-                            </a>
-                            <span class="pro-badge left bg-red">-15%</span>
-                            <div class="product-action-2">
-                                <button title="Wishlist"><i class="icon-heart"></i></button>
-                                <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
-                                        class="icon-size-fullscreen icons"></i></button>
-                                <button title="Compare"><i class="icon-refresh"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Pampers baby-dry
-                                    diapers</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(6)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$43.50 </span>
-                                <span class="old-price">$52.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width30 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Pampers baby-dry
-                                    diapers</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(6)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$43.50 </span>
-                                <span class="old-price">$52.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width30 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                            <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-44.jpg" alt="">
-                            </a>
-                            <span class="pro-badge left bg-red">-10%</span>
-                            <div class="product-action-2">
-                                <button title="Wishlist"><i class="icon-heart"></i></button>
-                                <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
-                                        class="icon-size-fullscreen icons"></i></button>
-                                <button title="Compare"><i class="icon-refresh"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">White Plastic Chair</a>
-                            </h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(3)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$123.50 </span>
-                                <span class="old-price">$152.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width90 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">White Plastic Chair</a>
-                            </h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(3)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$123.50 </span>
-                                <span class="old-price">$152.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width90 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                            <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-45.jpg" alt="">
-                            </a>
-                            <span class="pro-badge left bg-red">-35%</span>
-                            <div class="product-action-2">
-                                <button title="Wishlist"><i class="icon-heart"></i></button>
-                                <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
-                                        class="icon-size-fullscreen icons"></i></button>
-                                <button title="Compare"><i class="icon-refresh"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Ciate London Makeup</a>
-                            </h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star "></i>
-                                </div>
-                                <span>(1)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$86.75 </span>
-                                <span class="old-price">$94.52</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width60 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Ciate London Makeup</a>
-                            </h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star "></i>
-                                </div>
-                                <span>(1)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$86.75 </span>
-                                <span class="old-price">$94.52</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width60 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                            <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-plr-1">
-                    <div class="single-product-wrap">
-                        <div class="product-img product-img-zoom mb-20">
-                            <a href="product-details.html">
-                                <img src="assets/images/product/product-42.jpg" alt="">
-                            </a>
-                            <span class="pro-badge left bg-red">-20%</span>
-                            <div class="product-action-2">
-                                <button title="Wishlist"><i class="icon-heart"></i></button>
-                                <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
-                                        class="icon-size-fullscreen icons"></i></button>
-                                <button title="Compare"><i class="icon-refresh"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Herchoe Backpack</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(2)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$26.50 </span>
-                                <span class="old-price">$45.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width50 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                            <h3 class="mrg-none"><a class="orange" href="product-details.html">Herchoe Backpack</a></h3>
-                            <div class="product-rating-wrap-2">
-                                <div class="product-rating-4">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star gray"></i>
-                                </div>
-                                <span>(2)</span>
-                            </div>
-                            <div class="product-price-4">
-                                <span class="new-price">$26.50 </span>
-                                <span class="old-price">$45.85</span>
-                            </div>
-                            <div class="product-author">
-                                <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                            </div>
-                            <div class="product-sold">
-                                <div class="single-product-sold">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-width50 wow fadeInLeft"
-                                            data-progress="90%" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                        </div>
-                                    </div>
-                                    <span>Sold: 245/320 </span>
-                                </div>
-                            </div>
-                            <div class="pro-add-to-cart-2">
-                                <button title="Add to Cart">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
+
             </div>
         </div>
     </div>
 </div>
 {{!-- category sales --}}
+{{!-- {{#each category}}  --}}
 <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">
             <div class="row">
+                {{!-- left side area --}}
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="product-details.html"><img src="assets/images/banner/banner-29.jpg" alt=""></a>
+                            <a href="/viewAll/6358e5d0421c3c872a21c471"><img src="/images/category-img/1668334952182-mxw_2048,f_auto (42).avif" alt=""></a>
                         </div>
                         <div class="banner-content-23 text-center">
                             <div class="banner-content-23-top">
@@ -730,16 +312,18 @@
                                 <h2><span>50%</span> OFF <br>HasTech TV</h2>
                             </div>
                             <div class="banner-btn-3">
-                                <a href="product-details.html">Purchase Now</a>
+                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                {{!-- right side area --}}
+                
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
                             <div class="section-title-8">
-                                <h2>Consumer electric</h2>
+                                <h2>Mobiles Phones</h2>
                             </div>
                             <div class="tab-style-10 nav">
                                 <a class="active" href="#product-9" data-toggle="tab">Popular </a>
@@ -751,525 +335,50 @@
                             <div id="product-9" class="tab-pane active">
                                 <div
                                     class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
+                                    {{#each categoryProducts.mobileCategory}}
                                     <div class="product-plr-1">
                                         <div class="single-product-wrap">
                                             <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-62.jpg" alt="">
+                                                <a href="/details/{{this._id}}">
+                                                    <img src="/images/product-img/{{this.image1}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-content-wrap-3">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}} </span> --}}
+                                                    
+                                                            <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}} </span>
+                                                            <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
+                                                      
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span><a class="orange" >{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
                                                 class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                                    
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span> <a class="orange" >{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-63.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-64.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-65.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-66.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{/each }}
                                 </div>
                             </div>
-                            <div id="product-10" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-65.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-64.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-63.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-62.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-66.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="product-11" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-64.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone 6S</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-65.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Phone A38</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-62.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-63.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Norda Camera</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-66.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">DJ Spark II Quadcopter</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Electrone</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1277,6 +386,360 @@
         </div>
     </div>
 </div>
+{{!-- {{/each}} --}}
+
+{{!-- {{#each category}}  --}}
+<div class="banner-product-wrap pb-70">
+    <div class="container">
+        <div class="section-wrap-3">
+            <div class="row">
+                {{!-- left side area --}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="banner-wrap">
+                        <div class="banner-img banner-img-zoom">
+                            <a href="/viewAll/6358e5d0421c3c872a21c472"><img src="/images/category-img/1667590304127-mbp16-spacegray-select-202110.jpeg" alt=""></a>
+                        </div>
+                        <div class="banner-content-23 text-center">
+                            <div class="banner-content-23-top">
+                                <p>cyber<br>monday<br>sale</p>
+                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                            </div>
+                            <div class="banner-btn-3">
+                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- right side area --}}
+                
+                <div class="col-lg-8 col-md-6">
+                    <div class="product-area product-area-padding">
+                        <div class="section-title-btn-wrap mb-25">
+                            <div class="section-title-8">
+                                <h2>laptops</h2>
+                            </div>
+                            <div class="tab-style-10 nav">
+                                <a class="active" href="#product-9" data-toggle="tab">Popular </a>
+                                <a href="#product-10" data-toggle="tab"> Best Seller </a>
+                                <a href="#product-11" data-toggle="tab">Sale </a>
+                            </div>
+                        </div>
+                        <div class="tab-content jump">
+                            <div id="product-9" class="tab-pane active">
+                                <div
+                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
+                                    {{#each categoryProducts.laptopCategory}}
+                                    <div class="product-plr-1">
+                                        <div class="single-product-wrap">
+                                            <div class="product-img product-img-zoom mb-15">
+                                                <a href="product-details.html">
+                                                    <img src="/images/product-img/{{this.image1}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="product-content-wrap-3">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">Mini Protector</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                                <div class="pro-add-to-cart-2">
+                                                    <button title="Add to Cart">Add To Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- {{/each}} --}}
+
+{{!-- {{#each category}} --}}
+<div class="banner-product-wrap pb-70">
+    <div class="container">
+        <div class="section-wrap-3">
+            <div class="row">
+                {{!-- left side area --}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="banner-wrap">
+                        <div class="banner-img banner-img-zoom">
+                            <a href="/viewAll/6358e72f421c3c872a21c474"><img src="/images/category-img/1668334788876-mxw_2048,f_auto (6).avif" alt=""></a>
+                        </div>
+                        <div class="banner-content-23 text-center">
+                            <div class="banner-content-23-top">
+                                <p>cyber<br>monday<br>sale</p>
+                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                            </div>
+                            <div class="banner-btn-3">
+                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- right side area --}}
+                
+                <div class="col-lg-8 col-md-6">
+                    <div class="product-area product-area-padding">
+                        <div class="section-title-btn-wrap mb-25">
+                            <div class="section-title-8">
+                                <h2>Smart Watches</h2>
+                            </div>
+                            <div class="tab-style-10 nav">
+                                <a class="active" href="#product-9" data-toggle="tab">Popular </a>
+                                <a href="#product-10" data-toggle="tab"> Best Seller </a>
+                                <a href="#product-11" data-toggle="tab">Sale </a>
+                            </div>
+                        </div>
+                        <div class="tab-content jump">
+                            <div id="product-9" class="tab-pane active">
+                                <div
+                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
+                                    {{#each categoryProducts.watchCategory}}
+                                    <div class="product-plr-1">
+                                        <div class="single-product-wrap">
+                                            <div class="product-img product-img-zoom mb-15">
+                                                <a href="product-details.html">
+                                                    <img src="/images/product-img/{{this.image1}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="product-content-wrap-3">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">Mini Protector</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                                <div class="pro-add-to-cart-2">
+                                                    <button title="Add to Cart">Add To Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- {{/each}} --}}
+
+{{!-- {{#each category}}  --}}
+<div class="banner-product-wrap pb-70">
+    <div class="container">
+        <div class="section-wrap-3">
+            <div class="row">
+                {{!-- left side area --}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="banner-wrap">
+                        <div class="banner-img banner-img-zoom">
+                            <a href="/viewAll/6358e7a5421c3c872a21c476"><img src="/images/category-img/1668334809417-mxw_2048,f_auto (39).avif" alt=""></a>
+                        </div>
+                        <div class="banner-content-23 text-center">
+                            <div class="banner-content-23-top">
+                                <p>cyber<br>monday<br>sale</p>
+                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                            </div>
+                            <div class="banner-btn-3">
+                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- right side area --}}
+                
+                <div class="col-lg-8 col-md-6">
+                    <div class="product-area product-area-padding">
+                        <div class="section-title-btn-wrap mb-25">
+                            <div class="section-title-8">
+                                <h2>Televisions</h2>
+                            </div>
+                            <div class="tab-style-10 nav">
+                                <a class="active" href="#product-9" data-toggle="tab">Popular </a>
+                                <a href="#product-10" data-toggle="tab"> Best Seller </a>
+                                <a href="#product-11" data-toggle="tab">Sale </a>
+                            </div>
+                        </div>
+                        <div class="tab-content jump">
+                            <div id="product-9" class="tab-pane active">
+                                <div
+                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
+                                    {{#each categoryProducts.televisionCategory}}
+                                    <div class="product-plr-1">
+                                        <div class="single-product-wrap">
+                                            <div class="product-img product-img-zoom mb-15">
+                                                <a href="product-details.html">
+                                                    <img src="/images/product-img/{{this.image1}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="product-content-wrap-3">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">Mini Protector</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                                <div class="pro-add-to-cart-2">
+                                                    <button title="Add to Cart">Add To Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- {{/each}} --}}
+
+{{!-- {{#each category}}  --}}
+<div class="banner-product-wrap pb-70">
+    <div class="container">
+        <div class="section-wrap-3">
+            <div class="row">
+                {{!-- left side area --}}
+                <div class="col-lg-4 col-md-6">
+                    <div class="banner-wrap">
+                        <div class="banner-img banner-img-zoom">
+                            <a href="/viewAll/6358e72f421c3c872a21c473"><img src="/images/category-img/1668334823791-mxw_2048,f_auto (40).avif" alt=""></a>
+                        </div>
+                        <div class="banner-content-23 text-center">
+                            <div class="banner-content-23-top">
+                                <p>cyber<br>monday<br>sale</p>
+                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                            </div>
+                            <div class="banner-btn-3">
+                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- right side area --}}
+                
+                <div class="col-lg-8 col-md-6">
+                    <div class="product-area product-area-padding">
+                        <div class="section-title-btn-wrap mb-25">
+                            <div class="section-title-8">
+                                <h2>Audio</h2>
+                            </div>
+                            <div class="tab-style-10 nav">
+                                <a class="active" href="#product-9" data-toggle="tab">Popular </a>
+                                <a href="#product-10" data-toggle="tab"> Best Seller </a>
+                                <a href="#product-11" data-toggle="tab">Sale </a>
+                            </div>
+                        </div>
+                        <div class="tab-content jump">
+                            <div id="product-9" class="tab-pane active">
+                                <div
+                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
+                                    {{#each categoryProducts.audioCategory}}
+                                    <div class="product-plr-1">
+                                        <div class="single-product-wrap">
+                                            <div class="product-img product-img-zoom mb-15">
+                                                <a href="product-details.html">
+                                                    <img src="/images/product-img/{{this.image1}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="product-content-wrap-3">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
+                                                <h3 class="mrg-none bold"><a class="orange"
+                                                        href="product-details.html">Mini Protector</a></h3>
+                                                <div class="product-price-4 product-price-4-hm10">
+                                                    <span>$19.98 </span>
+                                                </div>
+                                                <div class="product-author">
+                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                </div>
+                                                <div class="pro-add-to-cart-2">
+                                                    <button title="Add to Cart">Add To Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- {{/each}} --}}
+
 {{!-- <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">

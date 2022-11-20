@@ -522,3 +522,12 @@ db.order.aggregate([
             }
         }
     ])
+
+    //////////////////////group all products in a category
+    db.product.aggregate([
+        {
+            $group:{_id:{category:'$category'},name:"$title"}
+        }
+    ])
+
+    db.product.find({totalDiscount:{$gt:15}})
