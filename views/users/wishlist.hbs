@@ -55,31 +55,29 @@
                 </div>
 
                 {{!-- table for mobile --}}
-                <div class="   d-block d-md-none">
+                <div class="d-block d-md-none">
                     {{#each productDetails}}
-                    <div class="" style="height: 200px; ">
+                    <div  style="height: 200px; ">
                         <div class=" col-4 float-left">
-                            <a href="#"><img src="/images/product-img/{{products.image1}}" width="150" alt=""></a>
+                            <a href="#"><img src="/images/product-img/{{products.image1}}" width="100" alt=""></a>
                         </div>
                         <div class="col-8 float-right">
-                            <a class="font-weight-bold" href="#">{{products.title}}
-                                <p>MRP:{{products.MRP}} {{products.totalDiscount}}% Off <br>Offer Price:
-                                    {{products.offerPrice}}</p>
-                                <div class="mt-3">
-                                    <button onclick="addToCartWishlist('{{products._id}}','{{this._id}}')"
-                                        class="btn btn-sm text-light " style="background-color:rgb(228,67,17) ;"
-                                        href="#"><i class="bi bi-cart3"></i> Add</button>
-                                    <button onclick="removeWishlist('{{products._id}}','{{this._id}}') "
-                                        class="btn btn-outline-secondary btn-sm ml-3"><i
-                                            class="bi bi-trash3"></i></button>
+                            <a class="font-weight-bold" href="#">{{products.title}}</a>
 
-                                </div>
+                            <p>MRP:{{products.MRP}} {{products.totalDiscount}}% Off <br>Offer Price:
+                                {{products.offerPrice}}</p>
+                            <div class="mt-3">
+                                <button onclick="addToCartWishlist('{{products._id}}','{{this._id}}')"
+                                    class="btn btn-sm text-light " style="background-color:rgb(228,67,17) ;" href="#"><i
+                                        class="bi bi-cart3"></i> Add</button>
+                                <button onclick="removeWishlist('{{products._id}}','{{this._id}}') "
+                                    class="btn btn-outline-secondary btn-sm ml-3"><i class="bi bi-trash3"></i></button>
+
+                            </div>
                         </div>
 
                     </div>
                     {{/each }}
-
-
                 </div>
 
             </div>
@@ -130,7 +128,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     }),
-                    location.reload()
+                        location.reload()
                 } else {
                     Swal.fire({
                         position: 'top-end',

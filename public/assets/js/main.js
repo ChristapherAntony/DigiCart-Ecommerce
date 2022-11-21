@@ -1162,8 +1162,9 @@ function addToCart(proId) {
 function changeQuantity(cartId, proId, userId, price, count) {
     let totalPrice = parseInt(document.getElementById(price).innerHTML)
     let quantity = parseInt(document.getElementById(proId).innerHTML)
+    console.log(document.getElementById(price + price).innerHTML);
     count = parseInt(count)
-    price = parseInt(price)
+    priceInt = parseInt(price)
     if (count == -1 && quantity == 1) {
         Swal.fire({
             title: 'Are you sure ?',
@@ -1183,7 +1184,7 @@ function changeQuantity(cartId, proId, userId, price, count) {
                         product: proId,
                         count: count,
                         quantity: quantity,
-                        price: price,
+                        price: priceInt,
                         totalPrice: totalPrice
 
                     },
@@ -1197,13 +1198,17 @@ function changeQuantity(cartId, proId, userId, price, count) {
                             )
                             location.reload()
                         } else {
-                            document.getElementById(proId).innerHTML = quantity + count
+                            document.getElementById(proId + proId).innerHTML = quantity + count //chnage mobile ver
+                            document.getElementById(proId).innerHTML = quantity + count// chnage laptop ver
+
                             document.getElementById('total').innerHTML = response.total
                             document.getElementById('g-total').innerHTML = response.total
                             if (count > 0) {
-                                document.getElementById(price).innerHTML = totalPrice + price
+                                document.getElementById(price + price).innerHTML = totalPrice + priceInt
+                                document.getElementById(price).innerHTML = totalPrice + priceInt
                             } else if (count < 0) {
-                                document.getElementById(price).innerHTML = totalPrice - price
+                                document.getElementById(price + price).innerHTML = totalPrice - priceInt
+                                document.getElementById(price).innerHTML = totalPrice - priceInt
                             }
 
                         }
@@ -1222,7 +1227,6 @@ function changeQuantity(cartId, proId, userId, price, count) {
                 quantity: quantity,
                 price: price,
                 totalPrice: totalPrice
-
             },
             method: 'post',
             success: (response) => {
@@ -1230,13 +1234,16 @@ function changeQuantity(cartId, proId, userId, price, count) {
                     alert("Product Removed from Cart")
                     location.reload()
                 } else {
+                    document.getElementById(proId + proId).innerHTML = quantity + count
                     document.getElementById(proId).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
                     document.getElementById('g-total').innerHTML = response.total
                     if (count > 0) {
-                        document.getElementById(price).innerHTML = totalPrice + price
+                        document.getElementById(price + price).innerHTML = totalPrice + priceInt
+                        document.getElementById(price).innerHTML = totalPrice + priceInt
                     } else if (count < 0) {
-                        document.getElementById(price).innerHTML = totalPrice - price
+                        document.getElementById(price + price).innerHTML = totalPrice - priceInt
+                        document.getElementById(price).innerHTML = totalPrice - priceInt
                     }
 
 
@@ -1431,7 +1438,7 @@ function search2() {
         // },
         method: 'get',
         success: (response) => {
-            location.href="/"
+            location.href = "/viewAll"
         }
     })
 

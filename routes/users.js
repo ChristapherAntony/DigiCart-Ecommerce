@@ -99,7 +99,7 @@ router.post('/verifyOtp', (req, res, next) => {
       mobileNumber = req.session.mobileNumber
       req.session.mobileNumber = null
       req.session.user = await userHelpers.otpLogin(mobileNumber)
-      res.redirect('/');
+      res.redirect('/');``
     }
     else {
       req.session.otpError = "Invalid OTP";
@@ -387,6 +387,7 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
 
   userHelpers.getCartProducts(req.session.user._id).then((products) => {
+    console.log(products);
     userHelpers.getCartCount(req.session.user._id).then(async (response) => {
       cartCount = response
       let totalValue = 0
