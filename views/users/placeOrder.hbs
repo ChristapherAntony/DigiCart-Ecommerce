@@ -308,6 +308,7 @@
                     location.href = '/orderSuccess/' + response.orderId
                 }
                 else if (response.razor) {
+                    
                     razorpayPayment(response)
                 }
                 else if (response.payPal) {
@@ -320,7 +321,8 @@
 
 
     function razorpayPayment(order) {
-        console.log(order,"orderiddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+        console.log("*******************************************order in function")
+        console.log(order)
         var options = {
             "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
             "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -334,7 +336,7 @@
             },
             "modal": {
                 "ondismiss": function () {
-                    window.location.replace("http://localhost:3000/ProceedToCheckOut/");
+                    window.location.replace("http://localhost:3000/paymentFailed/"+order.receipt);
                 }
             },
             "prefill": {

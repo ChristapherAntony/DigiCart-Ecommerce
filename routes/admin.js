@@ -290,17 +290,11 @@ router.get('/viewOrders', verifyAdmin, (req, res, next) => {
 
 router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
   let orderDetails = await adminHelpers.getOrderDetails(req.params.id)
-  console.log("***************************************** order details admin side");
-  console.log(orderDetails);
   //let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id) // old method chnaged to static
   let orderProductsDetails = await userHelpers.oldProductDetails(req.params.id)
-  console.log("***************************************** orderProductsDetails");
-  console.log(orderProductsDetails);
-
   orderProductsDetails.forEach(cartDetails => {
     cartDetails.orderId = orderDetails._id
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
-
   res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails, orderProductsDetails })
 })
 

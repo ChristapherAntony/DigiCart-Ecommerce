@@ -64,7 +64,7 @@ module.exports = {
     },
     getTopDiscounted: () => {
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({totalDiscount:{$gte:15}}).toArray()
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ totalDiscount: { $gte: 15 } }).toArray()
             response.products = products;
             resolve(products)
         })
@@ -173,38 +173,38 @@ module.exports = {
     },
     getBannerTop_main: () => {
         return new Promise(async (resolve, reject) => {
-            let response = await db.get().collection(collections.BANNER_COLLECTION).find({position:'Top_Main'}).toArray()
+            let response = await db.get().collection(collections.BANNER_COLLECTION).find({ position: 'Top_Main' }).toArray()
             resolve(response)
         })
     }
     ,
     getBannerDetails: (bannerId) => {
         return new Promise(async (resolve, reject) => {
-            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({_id:objectId(bannerId)})
+            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({ _id: objectId(bannerId) })
             console.log(response);
             resolve(response)
         })
     },
-    fetchBannerImg: (bannerId,BannerName) => {
+    fetchBannerImg: (bannerId, BannerName) => {
         return new Promise(async (resolve, reject) => {
-            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({_id:objectId(bannerId)})
-            if(BannerName==="largeImg"){
+            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({ _id: objectId(bannerId) })
+            if (BannerName === "largeImg") {
                 resolve(response.largeImg)
-            }else if(BannerName==="smallImg"){
+            } else if (BannerName === "smallImg") {
                 resolve(response.smallImg)
             }
         })
     },
-    updateBanner: (bannerId,bannerDetails) => {
-        console.log("indide the update banner",bannerId);
+    updateBanner: (bannerId, bannerDetails) => {
+        console.log("indide the update banner", bannerId);
         return new Promise((resolve, reject) => {
             db.get().collection(collections.BANNER_COLLECTION).updateOne({ _id: objectId(bannerId) }, {
                 $set: {
                     bannerTitle: bannerDetails.bannerTitle,
                     bannerDescription: bannerDetails.bannerDescription,
-                    largeImg:bannerDetails.largeImg,
-                    smallImg:bannerDetails.smallImg,
-                    dateAdded:new Date()
+                    largeImg: bannerDetails.largeImg,
+                    smallImg: bannerDetails.smallImg,
+                    dateAdded: new Date()
                 }
             }).then((response) => {
                 resolve()
@@ -214,10 +214,44 @@ module.exports = {
     deleteTopBanner: (bannerId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collections.BANNER_COLLECTION).deleteOne({ _id: objectId(bannerId) }).then((response) => {
-                resolve({response:true})
+                resolve({ response: true })
             })
         })
     },
+    getProductsBySearch: (searchData) => {
+        console.log(searchData, "LLLLLLLLLLLLLLLLLLLLLL");
+        return new Promise(async (resolve, reject) => {
+            let length = searchData.length;
+            let products = []
+            if (length == 0 || searchData === " ") {
+                resolve(products)
+            } else {
+                var re = new RegExp(searchData, "i");
+                console.log(re, "reeeeeeeeee");
+                products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ title: re }).toArray()
+                // let arr=[]
+                // products.forEach((products,index)=>{
+                //     arr.push(products.title)
+                // })
+                console.log(products);
+                resolve(products)
+            }
+
+
+
+
+        })
+    },
+    filterPrice: (range) => {
+        
+        min = parseInt(range.range1)
+        max = parseInt(range.range2)
+        return new Promise(async (resolve, reject) => {
+            let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ offerPrice: { $gte: min, $lte: max } }).toArray()
+            console.log(products);
+            resolve(products)
+        })
+    }
 
 
 }

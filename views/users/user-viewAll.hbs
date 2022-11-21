@@ -1,3 +1,212 @@
+<style>
+    /* --- fillter */
+
+    .range-slider {
+        padding-top: 3.5em;
+        position: relative;
+        text-align: center;
+    }
+
+    .range-slider::before,
+    .range-slider::after {
+        content: " ";
+        display: table;
+    }
+
+    .range-slider::after {
+        clear: both;
+    }
+
+    .range-slider .track {
+        bottom: 15px;
+        height: 6px;
+        left: 0;
+        margin-bottom: -3px;
+        position: absolute;
+        width: 0;
+        z-index: 50;
+        border-radius: 15px;
+    }
+
+    .range-slider .track--full {
+        background: #cccccc;
+        width: 100%;
+    }
+
+    .range-slider .track--included {
+        background: #f26522;
+        border-radius: 3px;
+    }
+
+    .range-slider .slider-thumb {
+        background: #463a3e;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        display: inline-block;
+        height: 20px;
+        left: 0;
+        position: absolute;
+        width: 20px;
+        z-index: 101;
+    }
+
+    .range-slider [type=range] {
+        -webkit-appearance: media-slider;
+        background: none;
+        height: 25px;
+        margin: 0;
+        outline: none;
+        padding: 0;
+        pointer-events: none;
+        position: relative;
+        width: 100%;
+        z-index: 75;
+    }
+
+    .range-slider [type=range]:focus {
+        outline: none;
+    }
+
+    .range-slider [type=range]::-moz-focus-outer {
+        border: 0;
+    }
+
+    .range-slider [type=range]:first-of-type {
+        float: left;
+        margin-bottom: -30px;
+    }
+
+    .range-slider [type=range]:last-of-type {
+        float: right;
+        margin-bottom: 0;
+    }
+
+    .range-slider [type=range]::-webkit-slider-runnable-track {
+        background: none;
+        border: 0;
+        height: 6px;
+        z-index: -1;
+    }
+
+    .range-slider [type=range]::-ms-fill-lower {
+        background: none;
+        border: 0;
+    }
+
+    .range-slider [type=range]::-ms-fill-upper {
+        background: none;
+        border: 0;
+    }
+
+    .range-slider [type=range]::-ms-track {
+        background: transparent;
+        border: 0;
+        border-color: transparent;
+        color: transparent;
+        height: 6px;
+        z-index: -1;
+    }
+
+    .range-slider [type=range]:focus::-ms-fill-lower {
+        background: none;
+        border: 0;
+    }
+
+    .range-slider [type=range]:focus::-ms-fill-upper {
+        background: none;
+        border: 0;
+    }
+
+    .range-slider [type=range]::-moz-range-track {
+        -moz-appearance: none;
+        background: none;
+        border: 0;
+        height: 6px;
+        z-index: -1;
+    }
+
+    .range-slider [type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background: #555;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 30px;
+        margin-top: -12px;
+        outline: 0;
+        pointer-events: all;
+        position: relative;
+        width: 30px;
+        z-index: 100;
+    }
+
+
+    .range-slider [type=range]::-ms-thumb {
+        background: #555;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 30px;
+        margin-top: 0;
+        pointer-events: all;
+        position: relative;
+        width: 30px;
+        z-index: 100;
+    }
+
+
+    .range-slider [type=range]::-moz-range-thumb {
+        -moz-appearance: none;
+        background: #555;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 30px;
+        margin-top: -12px;
+        pointer-events: all;
+        position: relative;
+        width: 30px;
+        z-index: 100;
+    }
+
+    .range-slider .output,
+    .range-slider output {
+        background: none;
+        border: none;
+        border-radius: 4px;
+        color: #777777;
+        font-weight: bold;
+        display: inline-block;
+        height: 2.5em;
+        font-size: 15px;
+        left: 50%;
+        line-height: 2.5em;
+        padding: 0 0.75em;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        transform: translate(-50%, 0);
+    }
+
+    .fillter {
+        span.left {
+            color: #bebdbd;
+            text-align: left;
+            display: inline-block;
+            padding-top: 12px;
+        }
+
+        span.right {
+            color: #bebdbd;
+            float: right;
+            padding-top: 12px;
+        }
+    }
+
+    /* --- fillter ------ */
+</style>
+
 <div class="breadcrumb-area bg-gray menuBarTop">
     <div class="container">
         <div class="breadcrumb-content text-center">
@@ -154,7 +363,8 @@
                                             <div class="product-list-action">
                                                 <button onclick="addToCart('{{this._id}}')" title="Add To Cart"><i
                                                         class="bi bi-cart2"></i></button>
-                                                <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i class="bi bi-heart fa-sm"></i></button>
+                                                <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i
+                                                        class="bi bi-heart fa-sm"></i></button>
                                                 <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
                                             </div>
                                         </div>
@@ -204,10 +414,38 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="sidebar-widget shop-sidebar-border mb-40 pt-40">
+
+
+
+
+
+
+                    <!-- /fillter -->
+                    <div class="fillter">
+                        <h4 class="sidebar-widget-title">Price Filter </h4>
+                        <span>Range: <i class="bi bi-currency-rupee"></i> 10,000 - 300,000</span>
+                        <form action="/viewAllByRange" method="get">
+                            <section class="range-slider" id="facet-price-range-slider"
+                                data-options='{"output":{"prefix":""},"maxSymbol":""}'>
+                                {{#if range}}
+                                <input name="range1" value="{{range.min}}" min="10000" max="300000" step="1"
+                                    type="range">
+                                <input name="range2" value="{{range.max}}" min="10000" max="300000" step="1"
+                                    type="range">
+                                {{else}}
+                                <input name="range1" value="10000" min="10000" max="300000" step="1" type="range">
+                                <input name="range2" value="300000" min="10000" max="300000" step="1" type="range">
+                                {{/if}}
+                            </section>
+                            <button type="submit " class="btn btn-dark text-light btn-sm">Filter</button>
+                            <a href="/viewAll" class="btn btn-dark text-light btn-sm">Reset</a>
+                        </form>
+                    </div>
+                    <!-- /fillter -->
+                    {{!-- <div class="sidebar-widget shop-sidebar-border mb-40 pt-40">
                         <h4 class="sidebar-widget-title">Price Filter </h4>
                         <div class="price-filter">
-                            <span>Range: $100.00 - 2.300.00 </span>
+                            <span>Range: $100.00 - 1.300.00 </span>
                             <div id="slider-range"></div>
                             <div class="price-slider-amount">
                                 <div class="label-input">
@@ -216,8 +454,15 @@
                                 <button type="button">Filter</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="sidebar-widget shop-sidebar-border mb-40 pt-40">
+                                  
+                    </div> --}}
+
+
+
+
+
+
+                    {{!-- <div class="sidebar-widget shop-sidebar-border mb-40 pt-40">
                         <h4 class="sidebar-widget-title">Refine By </h4>
                         <div class="sidebar-widget-list">
                             <ul>
@@ -241,7 +486,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                     {{!-- <div class="sidebar-widget shop-sidebar-border mb-40 pt-40">
                         <h4 class="sidebar-widget-title">Size </h4>
                         <div class="sidebar-widget-list">
@@ -463,9 +708,9 @@
             success: (response) => {
                 if (response.status) {
                     let count = $('#wishList-count').html()
-                    console.log("old count",count)
+                    console.log("old count", count)
                     count = parseInt(count) + 1
-                    console.log("added count",count)
+                    console.log("added count", count)
                     $('#wishList-count').html(count)
                     Swal.fire({
                         position: 'top-end',
@@ -494,4 +739,256 @@
             }
         })
     }
+
+
+    // fillter 
+
+    (function ($) {
+
+        "use strict";
+
+        var DEBUG = false, // make true to enable debug output
+            PLUGIN_IDENTIFIER = "RangeSlider";
+
+        var RangeSlider = function (element, options) {
+            this.element = element;
+            this.options = options || {};
+            this.defaults = {
+                output: {
+                    prefix: '', // function or string
+                    suffix: '', // function or string
+                    format: function (output) {
+                        return output;
+                    }
+                },
+                change: function (event, obj) { }
+            };
+            // This next line takes advantage of HTML5 data attributes
+            // to support customization of the plugin on a per-element
+            // basis.
+            this.metadata = $(this.element).data('options');
+        };
+
+        RangeSlider.prototype = {
+
+            ////////////////////////////////////////////////////
+            // Initializers
+            ////////////////////////////////////////////////////
+
+            init: function () {
+                if (DEBUG && console) console.log('RangeSlider init');
+                this.config = $.extend(true, {}, this.defaults, this.options, this.metadata);
+
+                var self = this;
+                // Add the markup for the slider track
+                this.trackFull = $('<div class="track track--full"></div>').appendTo(self.element);
+                this.trackIncluded = $('<div class="track track--included"></div>').appendTo(self.element);
+                this.inputs = [];
+
+                $('input[type="range"]', this.element).each(function (index, value) {
+                    var rangeInput = this;
+                    // Add the ouput markup to the page.
+                    rangeInput.output = $('<output>').appendTo(self.element);
+                    // Get the current z-index of the output for later use
+                    rangeInput.output.zindex = parseInt($(rangeInput.output).css('z-index')) || 1;
+                    // Add the thumb markup to the page.
+                    rangeInput.thumb = $('<div class="slider-thumb">').prependTo(self.element);
+                    // Store the initial val, incase we need to reset.
+                    rangeInput.initialValue = $(this).val();
+                    // Method to update the slider output text/position
+                    rangeInput.update = function () {
+                        if (DEBUG && console) console.log('RangeSlider rangeInput.update');
+                        var range = $(this).attr('max') - $(this).attr('min'),
+                            offset = $(this).val() - $(this).attr('min'),
+                            pos = offset / range * 100 + '%',
+                            transPos = offset / range * -100 + '%',
+                            prefix = typeof self.config.output.prefix == 'function' ? self.config.output.prefix.call(self, rangeInput) : self.config.output.prefix,
+                            format = self.config.output.format($(rangeInput).val()),
+                            suffix = typeof self.config.output.suffix == 'function' ? self.config.output.suffix.call(self, rangeInput) : self.config.output.suffix;
+
+                        // Update the HTML
+                        $(rangeInput.output).html(prefix + '' + format + '' + suffix);
+                        $(rangeInput.output).css('left', pos);
+                        $(rangeInput.output).css('transform', 'translate(' + transPos + ',0)');
+
+                        // Update the IE hack thumbs
+                        $(rangeInput.thumb).css('left', pos);
+                        $(rangeInput.thumb).css('transform', 'translate(' + transPos + ',0)');
+
+                        // Adjust the track for the inputs
+                        self.adjustTrack();
+                    };
+
+                    // Send the current ouput to the front for better stacking
+                    rangeInput.sendOutputToFront = function () {
+                        $(this.output).css('z-index', rangeInput.output.zindex + 1);
+                    };
+
+                    // Send the current ouput to the back behind the other
+                    rangeInput.sendOutputToBack = function () {
+                        $(this.output).css('z-index', rangeInput.output.zindex);
+                    };
+
+                    ///////////////////////////////////////////////////
+                    // IE hack because pointer-events:none doesn't pass the 
+                    // event to the slider thumb, so we have to make our own.
+                    ///////////////////////////////////////////////////
+                    $(rangeInput.thumb).on('mousedown', function (event) {
+                        // Send all output to the back
+                        self.sendAllOutputToBack();
+                        // Send this output to the front
+                        rangeInput.sendOutputToFront();
+                        // Turn mouse tracking on
+                        $(this).data('tracking', true);
+                        $(document).one('mouseup', function () {
+                            // Turn mouse tracking off
+                            $(rangeInput.thumb).data('tracking', false);
+                            // Trigger the change event
+                            self.change(event);
+                        });
+                    });
+
+                    // IE hack - track the mouse move within the input range
+                    $('body').on('mousemove', function (event) {
+                        // If we're tracking the mouse move
+                        if ($(rangeInput.thumb).data('tracking')) {
+                            var rangeOffset = $(rangeInput).offset(),
+                                relX = event.pageX - rangeOffset.left,
+                                rangeWidth = $(rangeInput).width();
+                            // If the mouse move is within the input area
+                            // update the slider with the correct value
+                            if (relX <= rangeWidth) {
+                                var val = relX / rangeWidth;
+                                $(rangeInput).val(val * $(rangeInput).attr('max'));
+                                rangeInput.update();
+                            }
+                        }
+                    });
+
+                    // Update the output text on slider change
+                    $(this).on('mousedown input change touchstart', function (event) {
+                        if (DEBUG && console) console.log('RangeSlider rangeInput, mousedown input touchstart');
+                        // Send all output to the back
+                        self.sendAllOutputToBack();
+                        // Send this output to the front
+                        rangeInput.sendOutputToFront();
+                        // Update the output
+                        rangeInput.update();
+                    });
+
+                    // Fire the onchange event 
+                    $(this).on('mouseup touchend', function (event) {
+                        if (DEBUG && console) console.log('RangeSlider rangeInput, change');
+                        self.change(event);
+                    });
+
+                    // Add this input to the inputs array for use later
+                    self.inputs.push(this);
+                });
+
+                // Reset to set to initial values
+                this.reset();
+
+                // Return the instance
+                return this;
+            },
+
+            sendAllOutputToBack: function () {
+                $.map(this.inputs, function (input, index) {
+                    input.sendOutputToBack();
+                });
+            },
+
+            change: function (event) {
+                if (DEBUG && console) console.log('RangeSlider change', event);
+                // Get the values of each input
+                var values = $.map(this.inputs, function (input, index) {
+                    return {
+                        value: parseInt($(input).val()),
+                        min: parseInt($(input).attr('min')),
+                        max: parseInt($(input).attr('max'))
+                    };
+                });
+
+                // Sort the array by value, if we have 2 or more sliders
+                values.sort(function (a, b) {
+                    return a.value - b.value;
+                });
+
+                // call the on change function in the context of the rangeslider and pass the values
+                this.config.change.call(this, event, values);
+            },
+
+            reset: function () {
+                if (DEBUG && console) console.log('RangeSlider reset');
+                $.map(this.inputs, function (input, index) {
+                    $(input).val(input.initialValue);
+                    input.update();
+                });
+            },
+
+            adjustTrack: function () {
+                if (DEBUG && console) console.log('RangeSlider adjustTrack');
+                var valueMin = Infinity,
+                    rangeMin = Infinity,
+                    valueMax = 0,
+                    rangeMax = 0;
+
+                // Loop through all input to get min and max
+                $.map(this.inputs, function (input, index) {
+                    var val = parseInt($(input).val()),
+                        min = parseInt($(input).attr('min')),
+                        max = parseInt($(input).attr('max'));
+
+                    // Get the min and max values of the inputs
+                    valueMin = (val < valueMin) ? val : valueMin;
+                    valueMax = (val > valueMax) ? val : valueMax;
+                    // Get the min and max possible values
+                    rangeMin = (min < rangeMin) ? min : rangeMin;
+                    rangeMax = (max > rangeMax) ? max : rangeMax;
+                });
+
+                // Get the difference if there are 2 range input, use max for one input.
+                // Sets left to 0 for one input and adjust for 2 inputs
+                if (this.inputs.length > 1) {
+                    this.trackIncluded.css('width', (valueMax - valueMin) / (rangeMax - rangeMin) * 100 + '%');
+                    this.trackIncluded.css('left', (valueMin - rangeMin) / (rangeMax - rangeMin) * 100 + '%');
+                } else {
+                    this.trackIncluded.css('width', valueMax / (rangeMax - rangeMin) * 100 + '%');
+                    this.trackIncluded.css('left', '0%');
+                }
+            }
+        };
+
+        RangeSlider.defaults = RangeSlider.prototype.defaults;
+
+        $.fn.RangeSlider = function (options) {
+            if (DEBUG && console) console.log('$.fn.RangeSlider', options);
+            return this.each(function () {
+                var instance = $(this).data(PLUGIN_IDENTIFIER);
+                if (!instance) {
+                    instance = new RangeSlider(this, options).init();
+                    $(this).data(PLUGIN_IDENTIFIER, instance);
+                }
+            });
+        };
+
+    }
+    )(jQuery);
+
+
+    var rangeSlider = $('#facet-price-range-slider');
+    if (rangeSlider.length > 0) {
+        rangeSlider.RangeSlider({
+            output: {
+                format: function (output) {
+                    return output.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                },
+                suffix: function (input) {
+                    return parseInt($(input).val()) == parseInt($(input).attr('max')) ? this.config.maxSymbol : '';
+                }
+            }
+        });
+    }
+
 </script>

@@ -46,7 +46,7 @@ module.exports = {
 
     },
     verifyOTP:(OTP)=>{
-      console.log(OTP);
+      
         return new Promise(async(resolve,reject)=>{
             client.verify
             .services(serviceID) 

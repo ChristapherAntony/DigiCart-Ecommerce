@@ -1385,6 +1385,58 @@ function copyToClipboard(element) {
     $temp.remove();
 }
 
+function search() {
+    let strings = document.getElementById('searchBox').value
+    $.ajax({
+        url: "/getSearch",
+        data: {
+            searchKey: strings
+        },
+        method: 'get',
+        success: (response) => {
+            if (response.length != 0) {
+                document.getElementById("drop").innerHTML = ''
+                for (i = 0; i < response.length; i++) {
+                    const div1 = document.getElementById("drop");
+                    const aTag = document.createElement('a');
+                    aTag.setAttribute('href', "/details/" + response[i]._id);
+                    aTag.innerText = response[i].title;
+                    div1.appendChild(aTag);
+                    const bTag = document.createElement('br');
+                    div1.appendChild(bTag);
+                }
+                // document.getElementById('drop').style.display = "block"
+            } else {
+                document.getElementById("drop").innerHTML = ''
+                // const div1 = document.getElementById("div1");
+                // const aTag = document.createElement('p');
+                // aTag.innerText = "no match found";
+                // div1.appendChild(aTag);
+
+            }
+        }
+    })
+
+}
+function search2() {
+    let searchKey = document.getElementById('searchBox').value
+    console.log(searchKey);
+
+
+
+    $.ajax({
+        url: "/viewAll",
+        // data: {
+        //     searchKey: searchKey
+        // },
+        method: 'get',
+        success: (response) => {
+            location.href="/"
+        }
+    })
+
+}
+
 
 
 
