@@ -78,7 +78,6 @@ module.exports = {
         })
     },
     updateProduct: (productId, productDetails) => {
-
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
                 .updateOne({ _id: objectId(productId) }, {
