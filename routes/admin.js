@@ -97,7 +97,7 @@ router.get('/block/:id', verifyAdmin, function (req, res) {
 })
 
 router.get('/unBlock/:id', verifyAdmin, function (req, res) {
-  userHelpers.unBlockUser( req.params.id)
+  userHelpers.unBlockUser(req.params.id)
   res.redirect('/admin/view-users')
 })
 
@@ -156,7 +156,7 @@ router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
 router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
   let categoryId = req.params.id
   categoryHelpers.deleteCategory(categoryId).then((response) => {
-    res.redirect('/admin/product-category')
+    res.json(response)
   })
 })
 

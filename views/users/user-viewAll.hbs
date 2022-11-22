@@ -267,7 +267,7 @@
                                                 <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i
                                                         class="bi bi-heart fa-sm"></i></i></button>
                                                 <button title="Quick View" data-toggle="modal"
-                                                    data-target="#exampleModal"><i
+                                                    data-target="#exampleModal{{this._id}}"><i
                                                         class="bi bi-arrows-fullscreen"></i></button>
                                                 <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
                                             </div>
@@ -330,7 +330,7 @@
                                             </a>
                                             <div class="product-list-quickview">
                                                 <button title="Quick View" data-toggle="modal"
-                                                    data-target="#exampleModal"><i
+                                                    data-target="#exampleModal{{this._id}}"><i
                                                         class="bi bi-arrows-fullscreen"></i></button>
                                             </div>
                                         </div>
@@ -358,6 +358,7 @@
                                                 <li>Free Delivery</li>
                                                 <li>Specifications :</li>
                                             </ul>
+                                            
 
                                             {{!-- <p>{{this.productDescription}}</p> --}}
                                             <div class="product-list-action">
@@ -394,12 +395,18 @@
                     <div class="sidebar-widget mb-40">
                         <h4 class="sidebar-widget-title">Search </h4>
                         <div class="sidebar-search">
-                            <form class="sidebar-search-form" action="#">
-                                <input type="text" placeholder="Search here...">
-                                <button>
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </form>
+                            <div class="input-group md-form form-sm form-2 pl-0">
+                                <input id="searchBoxSide" class="form-control my-0 py-1 red-border" type="text"
+                                    onkeyup="searchSide()" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button onclick="search2()" class="input-group-text red lighten-3 "
+                                        id="basic-text1"><i class="fas fa-search text-grey"
+                                            aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-11" id="dropSide"
+                                style="background-color: white; position: absolute; z-index: 10;">
+                            </div>
                         </div>
                     </div>
                     <div class="sidebar-widget shop-sidebar-border mb-35 pt-40">
@@ -407,7 +414,7 @@
                         <div class="shop-catigory">
                             <ul>
                                 <li><a href="/viewAll">View All</a></li>
-                                {{#each category}}
+                                {{#each headerDetails.categories}}
                                 <li><a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
                                 {{/each}}
 
@@ -422,7 +429,7 @@
 
                     <!-- /fillter -->
                     <div class="fillter">
-                        <h4 class="sidebar-widget-title "><b>Price Filter</b>  </h4>
+                        <h4 class="sidebar-widget-title "><b>Price Filter</b> </h4>
                         <span>Range: <i class="bi bi-currency-rupee"></i> 10,000 - 300,000</span>
                         <form action="/viewAllByRange" method="get">
                             <section class="range-slider" id="facet-price-range-slider"
@@ -566,8 +573,11 @@
         </div>
     </div>
 </div>
+
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+{{#each products}}
+<div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -579,34 +589,16 @@
                     <div class="col-lg-5 col-md-6 col-12 col-sm-12">
                         <div class="tab-content quickview-big-img">
                             <div id="pro-1" class="tab-pane fade show active">
-                                <img src="assets/images/product/product-1.jpg" alt="">
+                                <img src="/images/product-img/{{this.image1}}" alt="">
                             </div>
-                            <div id="pro-2" class="tab-pane fade">
-                                <img src="assets/images/product/product-3.jpg" alt="">
-                            </div>
-                            <div id="pro-3" class="tab-pane fade">
-                                <img src="assets/images/product/product-6.jpg" alt="">
-                            </div>
-                            <div id="pro-4" class="tab-pane fade">
-                                <img src="assets/images/product/product-3.jpg" alt="">
-                            </div>
+
+
                         </div>
-                        <div class="quickview-wrap mt-15">
-                            <div class="quickview-slide-active nav-style-6">
-                                <a class="active" data-toggle="tab" href="#pro-1"><img
-                                        src="assets/images/product/quickview-s1.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-2"><img src="assets/images/product/quickview-s2.jpg"
-                                        alt=""></a>
-                                <a data-toggle="tab" href="#pro-3"><img src="assets/images/product/quickview-s3.jpg"
-                                        alt=""></a>
-                                <a data-toggle="tab" href="#pro-4"><img src="assets/images/product/quickview-s2.jpg"
-                                        alt=""></a>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="col-lg-7 col-md-6 col-12 col-sm-12">
                         <div class="product-details-content quickview-content">
-                            <h2>Simple Black T-Shirt</h2>
+                            <h2>{{this.title}}</h2>
                             <div class="product-ratting-review-wrap">
                                 <div class="product-ratting-digit-wrap">
                                     <div class="product-ratting">
@@ -625,57 +617,41 @@
                                     <span>242 orders</span>
                                 </div>
                             </div>
-                            <p>Seamlessly predominate enterprise metrics without performance based process improvements.
-                            </p>
+                            <p>{{this.productDescription}}</p>
                             <div class="pro-details-price">
-                                <span class="new-price">$75.72</span>
-                                <span class="old-price">$95.72</span>
+                                <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
                             </div>
                             <div class="pro-details-color-wrap">
-                                <span>Color:</span>
-                                <div class="pro-details-color-content">
-                                    <ul>
-                                        <li><a class="dolly" href="#">dolly</a></li>
-                                        <li><a class="white" href="#">white</a></li>
-                                        <li><a class="azalea" href="#">azalea</a></li>
-                                        <li><a class="peach-orange" href="#">Orange</a></li>
-                                        <li><a class="mona-lisa active" href="#">lisa</a></li>
-                                        <li><a class="cupid" href="#">cupid</a></li>
-                                    </ul>
-                                </div>
+                                <span>Color: {{this.color}}</span>
+
                             </div>
                             <div class="pro-details-size">
-                                <span>Size:</span>
-                                <div class="pro-details-size-content">
-                                    <ul>
-                                        <li><a href="#">XS</a></li>
-                                        <li><a href="#">S</a></li>
-                                        <li><a href="#">M</a></li>
-                                        <li><a href="#">L</a></li>
-                                        <li><a href="#">XL</a></li>
-                                    </ul>
-                                </div>
+                                <span>Brand: {{this.brand}}</span>
+
                             </div>
-                            <div class="pro-details-quality">
+                            {{!-- <div class="pro-details-quality">
                                 <span>Quantity:</span>
                                 <div class="cart-plus-minus">
                                     <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
                                 </div>
-                            </div>
-                            <div class="product-details-meta">
+                            </div> --}}
+                            {{!-- <div class="product-details-meta">
                                 <ul>
                                     <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a
                                             href="#">T-Shirt</a></li>
                                     <li><span>Tag: </span> <a href="#">Fashion,</a> <a href="#">Mentone</a> , <a
                                             href="#">Texas</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
+
+                            
                             <div class="pro-details-action-wrap">
                                 <div class="pro-details-add-to-cart">
-                                    <a title="Add to Cart" href="#">Add To Cart </a>
+                                    <button title="Add to Cart" onclick="addToCart('{{this._id}}')">Add To Cart </button>
                                 </div>
                                 <div class="pro-details-action">
-                                    <a title="Add to Wishlist" href="#"><i class="icon-heart"></i></a>
+                                    <button title="Add to Wishlist" onclick="addToWishList('{{this._id}}')"><i class="icon-heart"></i></button>
                                     <a title="Add to Compare" href="#"><i class="icon-refresh"></i></a>
                                     <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
                                     <div class="product-dec-social">
@@ -697,6 +673,8 @@
         </div>
     </div>
 </div>
+{{/each}} 
+<!-- Modal end -->
 
 
 <script>

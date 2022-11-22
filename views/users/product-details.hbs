@@ -348,7 +348,7 @@
                         </a>
                         <div class="product-action-2 tooltip-style-2">
                             <button title="Wishlist"><i class="icon-heart"></i></button>
-                            <button title="Quick View" data-toggle="modal" data-target="#exampleModal"><i
+                            <button title="Quick View" data-toggle="modal" data-target="#exampleModal{{this._id}}"><i
                                     class="icon-size-fullscreen icons"></i></button>
                             <button title="Compare"><i class="icon-refresh"></i></button>
                         </div>
@@ -380,12 +380,12 @@
                             </div>
                             <span>(2)</span>
                         </div>
-                        <h3><a href=<a href="/details/{{this._id}}">{{this.title}}</a></h3>
+                        <h3><a  href="/details/{{this._id}}">{{this.title}}</a></h3>
                         <div class="product-price-2">
                             <span>{{this.offerPrice}}</span>
                         </div>
                         <div class="pro-add-to-cart">
-                            <button title="Add to Cart">Add To Cart</button>
+                            <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart </button>
                         </div>
                     </div>
                 </div>

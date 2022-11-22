@@ -38,12 +38,13 @@
                 <td scope="row">{{this.categoryDiscount}} %</td>
                 <td><a href="/admin/edit-category/{{this._id}}" class="btn btn-warning btn-sm "> <i
                             class="bi bi-pencil-square"></i></a>
-                    <a href="/admin/delete-category/{{this._id}}" class="btn btn-danger btn-sm"> <i
-                            class="bi bi-trash3"></i></a>
+                    <button onclick="deleteCategory('{{this._id}}')" class="btn btn-danger btn-sm"> <i
+                            class="bi bi-trash3"></i></button>
                 </td>
             </tr>
             {{/each}}
- 
+
+
 
         </tbody>
     </table>
@@ -52,3 +53,43 @@
 
 
 </main>
+
+<script>
+    function deleteCategory(Id) {
+        console.log(Id)
+        Swal.fire({
+            text: "Are You really want to delete this category !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/delete-category/' + Id,
+                    method: 'get',
+                    success: (response) => {
+                        if (response.status) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your Category has been deleted.',
+                                'success'
+                            )
+                            location.reload()
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: response.length +' product exists in ths category!',
+                                footer: '<a href="/admin/view-products">Do you really need to delete? Manage products here..</a>'
+                            })
+
+                        }
+                    }
+                })
+            }
+        })
+
+    }
+</script>

@@ -18,10 +18,21 @@ module.exports = {
         })
     },
     deleteCategory: (categoryId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collections.CATEGORY_COLLECTION).deleteOne({ _id: objectId(categoryId) }).then((response) => {
+        return new Promise(async (resolve, reject) => {
+            let categoryProducts = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId(categoryId) }).toArray()
+            let response = {}
+            if (categoryProducts.length == 0) {
+                db.get().collection(collections.CATEGORY_COLLECTION).deleteOne({ _id: objectId(categoryId) }).then((response) => {
+                    { response.status=true }
+                    resolve(response)
+                })
+            } else {
+                
+                response.status = false,
+                response.length = categoryProducts.length
                 resolve(response)
-            })
+            }
+
         })
     },
     getCategoryDetails: (categoryId) => {
@@ -32,12 +43,12 @@ module.exports = {
 
         })
     },
-    getCategoryDiscount:(categoryName)=>{
-        console.log(categoryName,"hello");
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collections.CATEGORY_COLLECTION).findOne({category:categoryName}).then((response)=>{
+    getCategoryDiscount: (categoryName) => {
+        console.log(categoryName, "hello");
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.CATEGORY_COLLECTION).findOne({ category: categoryName }).then((response) => {
                 resolve(response.categoryDiscount)
-            })   
+            })
         })
     },
     updateCategory: (categoryId, categoryDetails) => {
@@ -46,28 +57,28 @@ module.exports = {
                 $set: {
                     category: categoryDetails.category,
                     Description: categoryDetails.Description,
-                    image:categoryDetails.image,
-                    categoryDiscount:parseInt(categoryDetails.categoryDiscount)
+                    image: categoryDetails.image,
+                    categoryDiscount: parseInt(categoryDetails.categoryDiscount)
                 }
             }).then((response) => {
                 resolve()
-                
+
             })
 
         })
     },
-    updateProduct:(productId,productDetails)=>{
-        return new Promise((resolve,reject)=>{
+    updateProduct: (productId, productDetails) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION)
-            .updateOne({_id:objectId(productId)},{
-                $set:{
-                    Brand:productDetails.Brand,
-                    Description:productDetails.Description,
-                    Price:productDetails.Price
-                }
-            }).then((response)=>{
-                resolve()
-            })
+                .updateOne({ _id: objectId(productId) }, {
+                    $set: {
+                        Brand: productDetails.Brand,
+                        Description: productDetails.Description,
+                        Price: productDetails.Price
+                    }
+                }).then((response) => {
+                    resolve()
+                })
         })
     }
 }
