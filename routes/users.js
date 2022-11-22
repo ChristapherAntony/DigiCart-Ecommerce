@@ -21,6 +21,7 @@ paypal.configure({
 const verifyUser = (req, res, next) => {
   req.session.returnTo = req.url
   if (req.session.user) {
+    
     next();
   } else {
     res.render('users/login-signUp');
@@ -486,9 +487,14 @@ router.get('/clearCart', verifyUser, (req, res) => {
 })
 
 router.get('/orderSuccess/:orderId', verifyUser, async (req, res) => {
+  console.log(req.params.orderId);
   const changeStatus = await userHelpers.changePaymentStatus(req.params.orderId, req.session.user._id)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  res.render('users/orderSuccess', { headerDetails })
+  let orderDetails = await userHelpers.getOrderDetails(req.params.orderId)
+  let oldProductDetails = await userHelpers.oldProductDetails(req.params.orderId)
+  console.log(orderDetails);
+  console.log(oldProductDetails);
+  res.render('users/orderSuccess', { headerDetails,orderDetails,oldProductDetails })
 })
 
 router.get('/viewOrders', verifyUser, async (req, res) => {

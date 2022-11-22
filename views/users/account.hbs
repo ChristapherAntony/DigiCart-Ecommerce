@@ -50,8 +50,13 @@
                                     <div class="myaccount-content">
                                         <h3>Referral Code</h3>
                                         <div class="welcome">
-                                            <p>Share this code to a new user and get a <i class="bi bi-currency-rupee"></i> 1000 as a referral bonus on their Sign Up</p>
-                                            <span class="border border-danger p-2"  id="p1">{{userDetails.referralId}}</span><button style="background-color: rgb(228,67,17); color: white;" class="btn btn-sm ml-2" onclick="copyToClipboard('#p1')">Copy</button>
+                                            <p>Share this code to a new user and get a <i
+                                                    class="bi bi-currency-rupee"></i> 1000 as a referral bonus on their
+                                                Sign Up</p>
+                                            <span class="border border-danger p-2"
+                                                id="p1">{{userDetails.referralId}}</span><button
+                                                style="background-color: rgb(228,67,17); color: white;"
+                                                class="btn btn-sm ml-2" onclick="copyToClipboard('#p1')">Copy</button>
                                         </div>
                                     </div>
                                 </div>
@@ -60,11 +65,12 @@
                                 <div class="tab-pane fade " id="orders" role="tabpanel">
                                     <div class="cart-main-area pt-0 pb-0">
                                         <div class="container">
-                                            <h3 class="cart-page-title">Your cart items</h3>
+                                            <h3 class="cart-page-title">Your Order items</h3>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                                                     <form>
-                                                        <div class="table-content table-responsive cart-table-content">
+                                                        <div
+                                                            class="table-content table-responsive cart-table-content d-none d-md-block">
                                                             <table class="text-left">
                                                                 <thead>
                                                                     <tr>
@@ -102,6 +108,38 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                        {{!-- dcksdncksdl --}}
+                                                        <div
+                                                            class="table-content table-responsive cart-table-content d-block d-md-none">
+                                                            
+                                                            {{#each orders}}
+                                                            <div
+                                                                style="">
+                                                                <div>
+                                                                    <span class="float-left ">{{@index}}</span><div class="float-right ">Date: {{this.orderDate}} </div> 
+                                                                </div><br>
+                                                                <p class="">
+                                                                    <p>Shipping Address</p>
+                                                                    {{this.deliveryDetails.Name}} <br>
+                                                                    {{this.deliveryDetails.TownCity}}-{{this.deliveryDetails.State}}
+                                                                    <br>
+                                                                    {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
+
+                                                                </p>
+                                                                <div class=" mb-5 " >
+                                                                    <div class="col-6" >
+                                                                        Rs.{{this.totalAmount}}</div>
+                                                                    <div class="col-6">
+                                                                        <a class="btn btn-sm btn-danger" href="/orderDetails/{{this._id}}">View
+                                                                            Order</a>
+
+                                                                    </div>
+                                                                    
+                                                                </div>
+
+                                                            </div>
+                                                            {{/each }}
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -114,7 +152,8 @@
                                     <div class="myaccount-content">
                                         <div class="row">
                                             <h3 class="col-md-9">Wallet</h3>
-                                            <h3 class="col-md-3 mr-auto">Balance:<i class="bi bi-currency-rupee"></i> {{wallet.walletBalance}}</h3>
+                                            <h3 class="col-md-3 mr-auto">Balance:<i class="bi bi-currency-rupee"></i>
+                                                {{wallet.walletBalance}}</h3>
                                         </div>
 
 
@@ -138,7 +177,7 @@
                                                         <td>{{this.transaction}} ({{this.user}})</td>
                                                         <td>{{this.amount}}</td>
                                                     </tr>
-                                                     {{/each }}
+                                                    {{/each }}
                                                 </tbody>
                                             </table>
 
