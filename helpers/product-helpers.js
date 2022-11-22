@@ -8,8 +8,18 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addProduct: (product) => {
-        product.category = objectId(product.category)
-        db.get().collection(collections.PRODUCT_COLLECTION).insertOne(product)
+        console.log(product,"out above from  the db ");
+        return new Promise (async(resolve,reject)=>{
+            product.category = objectId(product.category)
+            let Product = await db.get().collection(collections.PRODUCT_COLLECTION).findOne({ title: product.title })
+            console.log(Product,"inside from  the db ");
+            if (Product) {
+                resolve({ status: false })
+            } else {
+                db.get().collection(collections.PRODUCT_COLLECTION).insertOne(product)
+                resolve({ status: true })
+            }
+        })  
     },
     getAllProducts: () => {
         return new Promise(async (resolve, reject) => {

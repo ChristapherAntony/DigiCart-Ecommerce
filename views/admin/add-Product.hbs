@@ -9,7 +9,13 @@
                 <li class="breadcrumb-item active">View Products</li </ol>
         </nav>
     </div><!-- End Page Title -->
-
+    {{#if productError}}
+    <div class="alert alert-danger alert-dismissible fade show " role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        {{productError}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
 
     <section class="section">
         <div class="row">
@@ -39,7 +45,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select onchange="getCategoryDiscount()" name="category" class="form-select"
+                                    <select onchange="getCategoryDiscount()" name="category" class="form-select" required
                                         id="floatingCategory" aria-label="State">
                                         <option selected>Select Any</option>
                                         {{#each category}}

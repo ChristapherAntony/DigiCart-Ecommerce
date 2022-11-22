@@ -119,15 +119,23 @@ router.get('/product-category', verifyAdmin, (req, res, next) => {
 })
 
 router.get('/add-category', verifyAdmin, (req, res, next) => {
-  res.render('admin/add-category', { layout: 'admin-layout' })
+
+  let categoryError = req.session.categoryError
+  req.session.categoryError = null
+  res.render('admin/add-category', { layout: 'admin-layout', categoryError })
 })
 
 
-router.post('/addNewCategory', uploadSingleFile, (req, res, next) => {
+router.post('/addNewCategory', uploadSingleFile, async (req, res, next) => {
   req.body.image = req.files.image[0].filename
-  categoryHelpers.addCategory(req.body)
-  res.redirect("/admin/product-category")
-
+  const addCategory = await categoryHelpers.addCategory(req.body)
+  if (addCategory.status === false) {
+    req.session.categoryError = "Your Entered Category Already exists! Try again..";
+    res.redirect('/admin/add-category')
+  } else {
+    req.session.categoryError = null
+    res.redirect("/admin/product-category")
+  }
 })
 
 router.get('/edit-category/:id', async (req, res) => {
@@ -179,7 +187,8 @@ router.get('/view-products', verifyAdmin, (req, res, next) => {
 
 router.get('/add-product', verifyAdmin, (req, res, next) => {
   categoryHelpers.getAllCategory().then((category) => {
-    res.render('admin/add-product', { layout: 'admin-layout', category })
+    res.render('admin/add-product', { layout: 'admin-layout', category, productError:req.session.productError })
+    req.session.productError=null
   })
 })
 router.get('/getCategoryDiscount', verifyAdmin, (req, res, next) => {
@@ -192,7 +201,7 @@ router.get('/getCategoryDiscount', verifyAdmin, (req, res, next) => {
 })
 
 
-router.post('/add-products', uploadMultiple, (req, res) => {
+router.post('/add-products', uploadMultiple, async(req, res) => {
   req.body.image1 = req.files.image1[0].filename
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
@@ -204,8 +213,14 @@ router.post('/add-products', uploadMultiple, (req, res) => {
     req.body.totalDiscount = parseInt(req.body.totalDiscount),
     req.body.offerPrice = parseInt(req.body.offerPrice),
     req.body.stock = parseInt(req.body.stock)
-  productHelpers.addProduct(req.body)
-  res.redirect('/admin/view-products')
+  const response = await productHelpers.addProduct(req.body)
+  if (response.status === false) {
+    req.session.productError = "Your Product Already exists! Try again..";
+    res.redirect('/admin/add-product')
+  } else {
+    res.redirect('/admin/view-products')
+  }
+  
 })
 
 
@@ -327,7 +342,6 @@ router.get('/CouponManagements', verifyAdmin, async (req, res, next) => {
   req.session.couponError = null
 })
 router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
-
   req.body.couponDiscount = parseInt(req.body.couponDiscount)
   req.body.maxAmount = parseInt(req.body.maxAmount)
   req.body.minSpend = parseInt(req.body.minSpend)
@@ -336,11 +350,11 @@ router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
     req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
   } else {
     req.session.couponError = null
+    res.redirect('/admin/CouponManagements')
   }
-  res.redirect('/admin/CouponManagements')
+
 })
 router.post('/updateCoupon', verifyAdmin, async (req, res, next) => {
-  console.log(req.body);
   let updateCoupon = await adminHelpers.updateCoupon(req.body)
   res.redirect('/admin/CouponManagements')
 })

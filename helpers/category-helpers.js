@@ -8,8 +8,16 @@ var objectId = require('mongodb').ObjectId
 module.exports = {
 
     addCategory: (categoryDetails) => {
-        categoryDetails.categoryDiscount = parseInt(categoryDetails.categoryDiscount)
-        db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryDetails)
+        return new Promise(async(resolve,reject)=>{
+            categoryDetails.categoryDiscount = parseInt(categoryDetails.categoryDiscount)
+            let category = await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ category: categoryDetails.category })
+            if (category) {
+                resolve({ status: false })
+            } else {
+                db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryDetails)
+                resolve({ status: true })
+            }
+        })  
     },
     getAllCategory: () => {
         return new Promise(async (resolve, reject) => {   //getting data should write in await 

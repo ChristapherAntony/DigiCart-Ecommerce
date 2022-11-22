@@ -47,7 +47,6 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let existingUser = await db.get().collection(collection.USER_COLLECTION).findOne({ referralId: referralId })// check if any user have the referral id
             if (existingUser) {
-                console.log("######################user matched");
                 let newUser = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userID) })
                 const transactionNewUser = {
                     date: new Date(),

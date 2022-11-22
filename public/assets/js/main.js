@@ -1325,7 +1325,7 @@ function applyCoupon() {
                 let subtotal = parseInt(document.getElementById('subTotal').innerHTML)
                 if (subtotal >= obj.minSpend) {
                     discount = subtotal * obj.couponDiscount / 100
-                    if ((subtotal + discount) > obj.maxAmount) {
+                    if (discount > obj.maxAmount) {    /*((subtotal + discount) > obj.maxAmount)*/
                         discount = obj.maxAmount
                     }
                     total = (subtotal - discount)
