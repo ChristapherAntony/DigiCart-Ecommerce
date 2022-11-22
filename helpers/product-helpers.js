@@ -54,12 +54,26 @@ module.exports = {
         console.log(categoryId);
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId(categoryId) }).toArray()
-            //let categoryTitle=await db.get().collection(collections.CATEGORY_COLLECTION).findOne({ _id: objectId(category) })
-            //console.log(categoryTitle);
-            console.log(products);
-            //response.categoryTitle=categoryTitle;
             response.products = products;
             resolve(products)
+        })
+    },
+    getCategoryProductsHome: (categoryId) => {
+        console.log(categoryId);
+        return new Promise(async (resolve, reject) => {
+            let mobileCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e5d0421c3c872a21c471') }).toArray()
+            let laptopCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e6ae421c3c872a21c472') }).toArray()
+            let audioCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e6d8421c3c872a21c473') }).toArray()
+            let watchCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e72f421c3c872a21c474') }).toArray()
+            let televisionCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e7a5421c3c872a21c476') }).toArray()
+            let categoryProducts = {
+                mobileCategory: mobileCategory,
+                laptopCategory: laptopCategory,
+                audioCategory: audioCategory,
+                watchCategory: watchCategory,
+                televisionCategory: televisionCategory,
+              }
+            resolve(categoryProducts)
         })
     },
     getTopDiscounted: () => {

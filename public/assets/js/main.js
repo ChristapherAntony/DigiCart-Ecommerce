@@ -1412,13 +1412,10 @@ function search() {
                     const bTag = document.createElement('br');
                     div1.appendChild(bTag);
                 }
-                // document.getElementById('drop').style.display = "block"
+
             } else {
                 document.getElementById("drop").innerHTML = ''
-                // const div1 = document.getElementById("div1");
-                // const aTag = document.createElement('p');
-                // aTag.innerText = "no match found";
-                // div1.appendChild(aTag);
+ 
 
             }
         }
@@ -1439,6 +1436,39 @@ function search2() {
         method: 'get',
         success: (response) => {
             location.href = "/viewAll"
+        }
+    })
+
+}
+function searchMobile() {
+    console.log("helooooooooooo");
+    let strings = document.getElementById('searchBoxMobile').value
+    console.log(strings);
+    $.ajax({
+        url: "/getSearch",
+        data: {
+            searchKey: strings
+        },
+        method: 'get',
+        success: (response) => {
+            if (response.length != 0) {
+                console.log(response);
+                document.getElementById("dropMobile").innerHTML = ''
+                for (i = 0; i < response.length; i++) {
+                    const div1 = document.getElementById("dropMobile");
+                    const aTag = document.createElement('a');
+                    aTag.setAttribute('href', "/details/" + response[i]._id);
+                    aTag.innerText = response[i].title;
+                    div1.appendChild(aTag);
+                    const bTag = document.createElement('br');
+                    div1.appendChild(bTag);
+                }
+
+            } else {
+                document.getElementById("dropMobile").innerHTML = ''
+ 
+
+            }
         }
     })
 

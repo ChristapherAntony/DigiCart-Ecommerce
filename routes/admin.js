@@ -21,8 +21,6 @@ const multerStorage = multer.diskStorage({
 const upload = multer({ storage: multerStorage });
 const uploadMultiple = upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
 
-
-
 /************************multer  */
 const multerStorageCategory = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,11 +45,6 @@ const multerStorageBanner = multer.diskStorage({
 const uploadTwo = multer({ storage: multerStorageBanner });
 const uploadTwoBanner = uploadTwo.fields([{ name: 'largeImg', maxCount: 1 }, { name: 'smallImg', maxCount: 1 }])
 
-
-
-
-
-
 /******************************** */
 
 const verifyAdmin = (req, res, next) => {
@@ -63,10 +56,10 @@ const verifyAdmin = (req, res, next) => {
     //res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
+
+
 /* GET users listing. */
-
 router.get('/', verifyAdmin, async function (req, res, next) {
-
   res.redirect('/admin/dash');
 });
 
@@ -74,7 +67,6 @@ router.get('/', verifyAdmin, async function (req, res, next) {
 router.post('/dash', (req, res) => {
   userHelper.adminLogin(req.body).then((response) => {
     if (response.status) {
-      //req.session.loggedIn = true
       req.session.admin = response.user
       res.redirect('/admin/dash')
     } else {
@@ -90,7 +82,6 @@ router.get('/dash', verifyAdmin, async function (req, res, next) {
   const TopSelling = await adminHelpers.topSelling()
   const OrderHistory = await adminHelpers.getRecentOrderHistory()
   const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
-
   res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory, monthlygraph });
 });
 
@@ -101,16 +92,13 @@ router.get('/view-users', verifyAdmin, (req, res, next) => {
 })
 
 router.get('/block/:id', verifyAdmin, function (req, res) {
-  let userID = req.params.id
-  userHelpers.blockUser(userID)
+  userHelpers.blockUser(req.params.id)
   res.redirect('/admin/view-users')
 })
 
 router.get('/unBlock/:id', verifyAdmin, function (req, res) {
-  let userID = req.params.id
-  userHelpers.unBlockUser(userID)
+  userHelpers.unBlockUser( req.params.id)
   res.redirect('/admin/view-users')
-
 })
 
 router.get('/signOut', verifyAdmin, (req, res, next) => {
@@ -155,7 +143,6 @@ router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
     Image1 = req.files.image[0].filename
   }
   req.body.image = Image1
-
   categoryHelpers.updateCategory(req.params.id, req.body).then(async () => {
     let changeValues = await productHelpers.changeValues(req.params.id, req.body.categoryDiscount)
     if (req.session.offer) {
@@ -210,7 +197,6 @@ router.post('/add-products', uploadMultiple, (req, res) => {
   req.body.image2 = req.files.image2[0].filename
   req.body.image3 = req.files.image3[0].filename
   req.body.image4 = req.files.image4[0].filename
-
   req.body.costPrice = parseInt(req.body.costPrice),
     req.body.MRP = parseInt(req.body.MRP),
     req.body.categoryDiscount = parseInt(req.body.categoryDiscount),
@@ -218,7 +204,6 @@ router.post('/add-products', uploadMultiple, (req, res) => {
     req.body.totalDiscount = parseInt(req.body.totalDiscount),
     req.body.offerPrice = parseInt(req.body.offerPrice),
     req.body.stock = parseInt(req.body.stock)
-
   productHelpers.addProduct(req.body)
   res.redirect('/admin/view-products')
 })
@@ -237,7 +222,6 @@ router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
 })
 
 router.post('/update-product/:id', uploadMultiple, async (req, res) => {
-
   if (req.files.image1 == null) {
     Image1 = await productHelpers.fetchImage1(req.params.id)
   } else {
@@ -262,7 +246,6 @@ router.post('/update-product/:id', uploadMultiple, async (req, res) => {
   req.body.image2 = Image2
   req.body.image3 = Image3
   req.body.image4 = Image4
-
   productHelpers.updateProduct(req.params.id, req.body).then(() => {
     if (req.session.offer) {
       res.redirect('/admin/offerManagement')
@@ -285,7 +268,6 @@ router.get('/viewOrders', verifyAdmin, (req, res, next) => {
     res.render('admin/View_Orders', { layout: 'admin-layout', OrderHistory })
   })
 })
-
 
 
 router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
@@ -341,7 +323,6 @@ router.get('/offerManagement', verifyAdmin, async (req, res, next) => {
 router.get('/CouponManagements', verifyAdmin, async (req, res, next) => {
   let activeCoupons = await adminHelpers.getActiveCoupons()
   let expiredCoupons = await adminHelpers.getExpiredCoupons()
-
   res.render('admin/CouponManagements', { layout: 'admin-layout', activeCoupons, expiredCoupons, couponError: req.session.couponError })
   req.session.couponError = null
 })
@@ -370,7 +351,6 @@ router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
 })
 router.post('/getCouponDiscount/:couponCode', verifyAdmin, async (req, res, next) => {
   let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
-
   res.json(getCouponDiscount)
 })
 
@@ -380,8 +360,6 @@ router.get('/topBanner', verifyAdmin, async (req, res, next) => {
   res.render('admin/topBanner', { layout: 'admin-layout', bannerTop_main })
 })
 router.get('/addBanner', verifyAdmin, async (req, res, next) => {
-
-
   res.render('admin/add-banner', { layout: 'admin-layout' })
 })
 
@@ -426,7 +404,5 @@ router.post('/removeProduct', (req, res, next) => {
     res.json(response)
   })
 })
-
-
 
 module.exports = router;

@@ -293,7 +293,6 @@ module.exports = {
                 .aggregate([
                     {
                         $match: { user: objectId(userId) }
-
                     },
                     {
                         $unwind: '$products'
@@ -325,7 +324,6 @@ module.exports = {
                     }
 
                 ]).toArray()
-
             let cart = null
             ///////////////////////////////////////////
             cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
@@ -334,7 +332,6 @@ module.exports = {
                 let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: objectId(userId) }  //get cart of th user
-
                     },
                     {
                         $unwind: '$products'
@@ -367,11 +364,42 @@ module.exports = {
                 ]).toArray()
                 Total = total[0].total
             }
-            ///////////////////////////////
+            ///////////////////
+            let wishlistProducts = await db.get().collection(collection.WISHLIST_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { user: objectId(userId) }
+                    },
+                    {
+                        $unwind: "$products"
+                    },
+                    {
+                        $lookup: {
+                            from: "product",
+                            localField: "products",
+                            foreignField: "_id",
+                            as: "products"
+                        }
+                    },
+                    {
+                        $project: {
+                            products: { $arrayElemAt: ['$products', 0] }
+                        }
+                    }
+                ]).toArray()
+            
+            ///////////////////
+            let categories = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()  // toArray- convert into an array
+
+            //////////////////
             const headerDetails = {}
-            headerDetails.user = user.UserName
+            headerDetails.userName = user?.UserName   //user name for all headers
+            headerDetails.userId = user?._id
             headerDetails.cartProducts = CartProducts
             headerDetails.total = Total
+            headerDetails.cartCount = CartProducts?.length
+            headerDetails.wishlistCount = wishlistProducts?.length
+            headerDetails.categories = categories
             resolve(headerDetails)
         })
     },
@@ -440,7 +468,7 @@ module.exports = {
             }
         })
     },
- 
+
     getCartProducts: (userId) => {
 
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
@@ -541,6 +569,8 @@ module.exports = {
 
         })
     },
+
+    /////----------------------------()
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let count = 0

@@ -8,12 +8,12 @@
                             <a href="/"><img src="/assets/images/logo/logo-3.png" alt="logo"></a>
                         </div>
                     </div>
-    
+
                     <div class="col-xl-6 col-lg-6">
                         <div class="input-group md-form form-sm form-2 pl-0">
-                            
-                            <input id="searchBox" class="form-control my-0 py-1 red-border" 
-                                type="text" onkeyup="search()" placeholder="Search" aria-label="Search">
+
+                            <input id="searchBox" class="form-control my-0 py-1 red-border" type="text"
+                                onkeyup="search()" placeholder="Search" aria-label="Search">
 
                             <div class="input-group-append">
                                 <button onclick="search2()" class="input-group-text red lighten-3 " id="basic-text1"><i
@@ -21,17 +21,16 @@
                             </div>
                         </div>
                         <div class="col-11" id="drop" style="background-color: white; position: absolute; z-index: 10;">
-                            {{!-- <div id="div1">
-                            </div> --}}
+
                         </div>
 
                     </div>
                     <div class="col-xl-4 col-lg-4">
                         <div class="header-action header-action-flex">
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                                {{#if userName}}
+                                {{#if headerDetails.userName}}
                                 <a href="/account"><i class="bi bi-person "></i><span
-                                        style="font-size: small ;">{{userName}}</span></a>
+                                        style="font-size: small ;">{{headerDetails.userName}}</span></a>
                                 {{else}}
                                 <a href="/account"><i class="bi bi-person "></i></a>
                                 {{/if}}
@@ -40,14 +39,23 @@
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                                 <a href="/account"><i class="bi bi-wallet2"></i></a>
                             </div>
+
+                            {{#if headerDetails.wishlistCount}}
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                                 <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span class="pro-count black"
-                                        id="wishList-count">0</span></a>
+                                        id="wishList-count">{{headerDetails.wishlistCount}}</span></a>
+                            </div>
+                            {{else}}
+                            <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                                <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
+                                        id="wishList-count"></span></a>
                             </div>
 
+                            {{/if}}
 
 
-                            {{#if userName}}
+
+                            {{#if headerDetails.userName}}
                             <div
                                 class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                                 {{#if headerDetails.cartProducts}}
@@ -58,7 +66,7 @@
                                         {{!-- <a class="cart-active" href="#"> --}}
 
                                             <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
-                                                id="cart-count">{{cartCount}}</span>
+                                                id="cart-count">{{headerDetails.cartCount}}</span>
                                             <span class="cart-amount white"><i
                                                     class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
                                         </a>
@@ -100,19 +108,19 @@
                                                 <a class="dropdown-title text-bold font-weight-bold"
                                                     href="/viewAll">Shop All</a>
                                             </li>
-                                            {{#each category}}
+                                            {{#each headerDetails.categories}}
                                             <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
                                             {{/each}}
                                         </ul>
                                     </li>
 
-                                    {{#each category}}
+                                    {{#each headerDetails.categories}}
                                     <li><a href="/viewAll/{{this._id}}">{{this.category}} </a></li>
 
                                     {{/each}}
 
                                     <li class="float-right">
-                                        {{#if userName}}
+                                        {{#if headerDetails.userName}}
                                         <a onclick="confirmLogOut()">Log out </a>
                                         {{else}}
                                         <a href="/login-register">Log In </a>
@@ -131,7 +139,7 @@
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="mobile-logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img alt="" src="assets/images/logo/logo-3.png">
                         </a>
                     </div>
@@ -139,18 +147,35 @@
                 <div class="col-7">
                     <div class="header-action header-action-flex">
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                            <a href="/login-register"><i class="bi bi-person "></i></a>
+                            <a href="/account"><i class="bi bi-person "></i></a>
                         </div>
+
+                        {{#if headerDetails.userName}}
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                             <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
-                                    class="pro-count black"></span></a>
+                                    class="pro-count black">{{headerDetails.wishlistCount}}</span></a>
                         </div>
                         <div
                             class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
-                            <a class="cart-active" href="#">
-                                <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black">0</span>
+                            <a class="cart-active" href="/cart">
+                                <i class="bi bi-cart3 fa-sm"></i><span
+                                    class="pro-count black">{{headerDetails.cartCount}}</span>
                             </a>
                         </div>
+                        {{else}}
+                        <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                            <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span></span></a>
+                        </div>
+                        <div
+                            class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                            <a class="cart-active" href="/cart">
+                                <i class="bi bi-cart3 fa-sm"></i><span></span>
+                            </a>
+                        </div>
+
+                        {{/if}}
+
+
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black main-menu-icon fa-lg">
                             <a class="mobile-header-button-active" href="#"><i class="bi bi-list"></i></i> </a>
                         </div>
@@ -165,11 +190,18 @@
     <div class="clickalbe-sidebar-wrap">
         <a class="sidebar-close"><i class="icon_close"></i></a>
         <div class="mobile-header-content-area">
-            <div class="mobile-search mobile-header-padding-border-1">
-                <form class="search-form" action="#">
-                    <input type="text" placeholder="Search here…">
-                    <button class="button-search"><i class="bi bi-search"></i></button>
-                </form>
+            <div class="input-group md-form form-sm form-2 pl-0">
+
+                <input id="searchBoxMobile" class="form-control my-0 py-1 red-border" type="text" onkeyup="search()"
+                    placeholder="Search here…" aria-label="Search">
+
+                <div class="input-group-append">
+                    <button onclick="searchMobile()" class="input-group-text red lighten-3 " id="basic-text1"><i
+                            class="fas fa-search text-grey" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="col-11" id="dropMobile" style="background-color: white; position: absolute; z-index: 100;">
+
             </div>
             <div class="mobile-menu-wrap mobile-header-padding-border-2">
                 <!-- mobile menu start -->
@@ -180,30 +212,25 @@
                                 <li><a href="index.html">Home version 1 </a></li>
                             </ul> --}}
                         </li>
-                        <li class="menu-item-has-children "><a href="/viewAll">shop</a>
+                        <li class="menu-item-has-children "><a href="/viewAll">Shop All</a>
                         </li>
-                        <li class="menu-item-has-children"><a href="#">Pages</a>
+                        <li class="menu-item-has-children"><a href="#">Categories</a>
                             <ul class="dropdown">
-                                <li><a href="about-us.html">about us </a></li>
-                                <li><a href="/cart">cart page</a></li>
-                                <li><a href="checkout.html">checkout </a></li>
-                                <li><a href="/account">my account</a></li>
-                                <li><a href="/wishlist">wishlist </a></li>
-                                <li><a href="compare.html">compare </a></li>
-                                <li><a href="contact.html">contact us </a></li>
-                                <li><a href="order-tracking.html">order tracking</a></li>
-                                <li><a href="/login-register">login / register </a></li>
+
+                                
+                                {{#each headerDetails.categories}}
+                                <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
+                                {{/each}}
+
                             </ul>
                         </li>
-                        <li class="menu-item-has-children "><a href="#">Blog</a>
-                            <ul class="dropdown">
-                                <li><a href="blog.html">blog standard </a></li>
-                                <li><a href="blog-no-sidebar.html">blog no sidebar </a></li>
-                                <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                <li><a href="blog-details.html">blog details</a></li>
-                            </ul>
+                        <li class="menu-item-has-children "><a href="/cart">Cart</a>
                         </li>
-                        <li><a href="contact.html">Contact us</a></li>
+                        <li class="menu-item-has-children "><a href="/wishlist">Wish List</a>
+                        </li>
+                        <li class="menu-item-has-children "><a href="/account">Account</a>
+                        </li>
+                        <li><a href="/">Contact us</a></li>
                     </ul>
                 </nav>
                 <!-- mobile menu end -->

@@ -531,3 +531,20 @@ db.order.aggregate([
     ])
 
     db.product.find({totalDiscount:{$gt:15}})
+
+
+
+    db.wishlist.aggregate([
+        {
+            $match:{user:ObjectId("636ca815ae1373bc4f89de1b")}
+        },
+        {
+            $project: {
+              
+               numberOfColors: { $cond:  "wishlist.$.products" }
+            }
+         }
+    ])
+
+
+

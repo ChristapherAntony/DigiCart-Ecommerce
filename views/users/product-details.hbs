@@ -406,6 +406,7 @@
                     let count = $('#cart-count').html()
                     count = parseInt(count) + 1
                     $('#cart-count').html(count)
+                    
                     Swal.fire({
                         position: 'top-end',
                         width: 300,
@@ -416,6 +417,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    location.reload()
                 } else {
                     Swal.fire({
                         title: 'Please Login ',

@@ -68,17 +68,6 @@
             </div>
         </div> --}}
 
-
-
-
-
-
-
-
-
-
-
-
         <form id="checkout-form" action="#" method="post">
             <div class="checkout-wrap pt-20">
 
@@ -106,7 +95,7 @@
                                     <h4>Delivery Address</h4>
                                 </div>
 
-                                <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+                                <input type="text" name="userId" id="" value="{{headerDetails.userId}}" hidden>
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="billing-info mb-20 form-floating">
@@ -218,7 +207,7 @@
 
                                     <div class="your-order-info order-subtotal">
                                         <ul>
-                                            <li>Subtotal <span id="subTotal">{{total}} </span>
+                                            <li>Subtotal <span id="subTotal">{{headerDetails.total}} </span>
                                             </li>
                                         </ul>
                                     </div>
@@ -231,7 +220,7 @@
                                     </div>
                                     <div class="your-order-info order-total">
                                         <ul>
-                                            <li>Total <span id="total">{{total}} </span></li>
+                                            <li>Total <span id="total">{{headerDetails.total}} </span></li>
                                         </ul>
                                     </div>
                                 </div>
