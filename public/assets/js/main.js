@@ -1131,6 +1131,7 @@ function addToCart(proId) {
                 let count = $('#cart-count').html()
                 count = parseInt(count) + 1
                 $('#cart-count').html(count)
+                
                 Swal.fire({
                     position: 'top-end',
                     width: 300,
@@ -1138,7 +1139,7 @@ function addToCart(proId) {
                     icon: 'success',
                     text: "Item Added to Cart",
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1000
                 })
             } else {
                 Swal.fire({

@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-secondary btn-sm" onclick="history.back()">Cancel</button>
+                                <a class="btn btn-secondary btn-sm" onclick="history.back()">Cancel</a>
                                 <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                                 <button type="submit" class="btn btn-success btn-sm">Submit</button>
                                  
@@ -80,7 +80,5 @@
 </main><!-- End #main -->
 {{!-- to change the image while slecting new --}}
 <script>
-    function viewImage(event) {
-        document.getElementById("imgView").src = URL.createObjectURL(event.target.files[0])
-    }
+
 </script>

@@ -321,8 +321,8 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   userHelpers.getCartProducts(req.session.user._id).then(async (products) => {
     console.log(products,"*********************************************");
-    if(products.length>0)res.render('users/cart', { products, userId, headerDetails });
-    res.render('users/cartIsEmpty', {  headerDetails });
+    if(products){res.render('users/cart', { products, userId, headerDetails });}
+    else{res.render('users/cartIsEmpty', {  headerDetails });}
     //if no products in cart render cart empty page
   })
 });

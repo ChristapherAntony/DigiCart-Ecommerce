@@ -45,8 +45,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select onchange="getCategoryDiscount()" name="category" class="form-select" required
-                                        id="floatingCategory" aria-label="State">
+                                    <select onchange="getCategoryDiscount()" name="category" class="form-select"
+                                        required id="floatingCategory" aria-label="State">
                                         <option selected>Select Any</option>
                                         {{#each category}}
                                         <option value="{{this._id}}">{{this.category}}</option>
@@ -58,7 +58,7 @@
                             <div class="col-md-2">
                                 <div class="form-floating">
 
-                                    <input   name="categoryDiscount" value="0"  type="number" class="form-control"
+                                    <input name="categoryDiscount" value="0" type="number" class="form-control"
                                         id="categoryDiscount" placeholder="" readonly>
 
                                     <label for="categoryDiscount"><i class="bi bi-percent"></i>Category </label>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="costPrice" type="number"  class="form-control" id="floatingCity"
+                                    <input name="costPrice" type="number" class="form-control" id="floatingCity"
                                         placeholder="City">
                                     <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Cost Price </label>
                                 </div>
@@ -99,8 +99,8 @@
 
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input name="MRP" onkeyup="getTotalDiscount()" type="number" class="form-control" id="MRP"
-                                        placeholder="City" >
+                                    <input name="MRP" onkeyup="getTotalDiscount()" type="number" class="form-control"
+                                        id="MRP" placeholder="City">
                                     <label for="MRP"><i class="bi bi-currency-rupee"></i>MRP
                                     </label>
                                 </div>
@@ -108,7 +108,7 @@
                             <div class="col-md-2">
                                 <div class="form-floating">
                                     <input onkeyup="getTotalDiscount(this)" type="number" name="productDiscount"
-                                        class="form-control" id="productDiscount" placeholder="City" >
+                                        class="form-control" id="productDiscount" placeholder="City">
                                     <label for="ProductDiscount"><i class="bi bi-percent"></i>Product</label>
                                 </div>
                             </div>
@@ -123,14 +123,14 @@
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <input name="offerPrice" type="number" class="form-control" id="offerPrice"
-                                        placeholder="City"  value="0" readonly>
+                                        placeholder="City" value="0" readonly>
                                     <label for="offerPrice"><i class="bi bi-currency-rupee"></i> Offer Price</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating">
                                     <input name="totalDiscount" type="number" class="form-control" id="totalDiscount"
-                                        placeholder="City"  value="0" readonly>
+                                        placeholder="City" value="0" readonly>
                                     <label for="floatingCity"><i class="bi bi-percent"></i>Total</label>
                                 </div>
                             </div>
@@ -142,34 +142,47 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="file" name="image1" id="formFile " accept="image/*" required>
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Image 1</label>
+                                <img id="imgView1" src="/images/product-img/{{product.image1}}" style="width: 100px"
+                                    alt="">
+                                <div class="col-sm-8">
+                                    <input onchange="viewImage1(event)" type="file" class="form-control" name="image1"
+                                        value="" id="formFile " accept="image/*" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="file" name="image2" id="formFile" accept="image/*" required>
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Image 2</label>
+                                <img id="imgView2" src="/images/product-img/{{product.image2}}" style="width: 100px"
+                                    alt="">
+                                <div class="col-sm-8">
+
+                                    <input onchange="viewImage2(event)" type="file" class="form-control" name="image2"
+                                        value="" id="formFile" accept="image/*" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="file" name="image3" id="formFile" accept="image/*" required>
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Image 3</label>
+                                <img id="imgView3" src="/images/product-img/{{product.image3}}" style="width: 100px"
+                                    alt="">
+                                <div class="col-sm-8">
+                                    <input onchange="viewImage3(event)" type="file" class="form-control" name="image3"
+                                        value="" id="formFile" accept="image/*" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="file" name="image4" id="formFile" accept="image/*" required>
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Image 4</label>
+                                <img id="imgView4" src="/images/product-img/{{product.image4}}" style="width: 100px"
+                                    alt="">
+                                <div class="col-sm-8">
+                                    <input onchange="viewImage4(event)" type="file" class="form-control" name="image4"
+                                        value="" id="formFile" accept="image/*" required>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-secondary btn-sm" onclick="history.back()">Cancel</button>
+                                <a class="btn btn-secondary btn-sm" onclick="history.back()">Cancel</a>
                                 <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                                 <button type="submit" class="btn btn-success btn-sm">Submit</button>
-                                
+
                             </div>
                         </form><!-- End floating Labels Form -->
 
@@ -188,6 +201,20 @@
 </main><!-- End #main -->
 
 <script>
+
+    function viewImage1(event) {
+        document.getElementById("imgView1").src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage2(event) {
+        document.getElementById("imgView2").src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage3(event) {
+        document.getElementById("imgView3").src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage4(event) {
+        document.getElementById("imgView4").src = URL.createObjectURL(event.target.files[0])
+    }
+
     function getCategoryDiscount() {
         let variableOne = document.getElementById('floatingCategory')
         let variableTwo = variableOne.options[variableOne.selectedIndex].text
@@ -202,7 +229,7 @@
                 method: 'get',
                 success: (response) => {
                     document.getElementById('categoryDiscount').value = response
-                    
+
                 }
             })
         }
@@ -210,15 +237,15 @@
 
 
     function getTotalDiscount() {
-        let proDis=parseInt(document.getElementById('productDiscount').value)
-        let catDis=parseInt(document.getElementById('categoryDiscount').value)
-        let MRP=parseInt(document.getElementById('MRP').value)
+        let proDis = parseInt(document.getElementById('productDiscount').value)
+        let catDis = parseInt(document.getElementById('categoryDiscount').value)
+        let MRP = parseInt(document.getElementById('MRP').value)
 
-        document.getElementById('totalDiscount').value=proDis+catDis
-            
-           let Dis=(proDis+catDis)/100
-        document.getElementById('offerPrice').value= MRP-(MRP*Dis)
+        document.getElementById('totalDiscount').value = proDis + catDis
+
+        let Dis = (proDis + catDis) / 100
+        document.getElementById('offerPrice').value = MRP - (MRP * Dis)
     }
-   
+
 
 </script>

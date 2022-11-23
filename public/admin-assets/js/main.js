@@ -356,6 +356,14 @@ $(document).ready(function () {
   $('#myTable').DataTable();
 });
 
+// $(document).ready(function() {
+//   $('#myTable').DataTable( {
+//       dom: 'Bfrtip',
+//       buttons: [
+//           'copy', 'csv', 'excel', 'pdf', 'print'
+//       ]
+//   } );
+// } );
 
 // for hide a san after 5 seconds
 $.fn.delayedHide = function (delay) {
@@ -371,3 +379,9 @@ $.fn.delayedHide = function (delay) {
 
 //(".disappear").delayedHide(); 
 $(".disappear1").delayedHide();
+
+
+function viewImage(event) {
+  console.log("heloooooooooooooo")
+  document.getElementById("imgView").src = URL.createObjectURL(event.target.files[0])
+}

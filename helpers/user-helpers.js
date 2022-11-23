@@ -471,7 +471,7 @@ module.exports = {
     getCartProducts: (userId) => {
 
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
-            let total = await db.get().collection(collection.CART_COLLECTION)
+            let products = await db.get().collection(collection.CART_COLLECTION)
                 .aggregate([
                     {
                         $match: { user: objectId(userId) }
@@ -507,7 +507,10 @@ module.exports = {
                     }
 
                 ]).toArray()
-            resolve(total)
+                if(products.length>0){
+                    resolve(products)
+                }else{resolve()}
+            
 
         })
     },
