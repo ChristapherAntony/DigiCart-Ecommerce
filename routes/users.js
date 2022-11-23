@@ -8,10 +8,13 @@ const wishlistHelper = require("../helpers/wishList-helper")
 const { uid } = require('uid')
 const { response } = require('express');
 const paypal = require('paypal-rest-sdk');
+require('dotenv').config()
+
+
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
-  'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
-  'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
+  'client_id': process.env.SANDBOX_ID,
+  'client_secret': process.env.CLIENT_SECRET
 });
 
 

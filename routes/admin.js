@@ -8,12 +8,9 @@ const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
-// require('dotenv').config();
 
-  require('dotenv').config()
-  console.log(process.env.NAME);
-  console.log(process.env.DB_PASSWORD);
-  console.log(process.env.DB_USER);
+
+
 
 
 /***********multer for products imgs*/

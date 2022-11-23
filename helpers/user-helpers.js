@@ -5,16 +5,17 @@ const { response } = require('express')
 var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
 const { uid } = require('uid')
+require('dotenv').config()
 var instance = new Razorpay({
-    key_id: 'rzp_test_IsLNHEQ2MGIHsd',
-    key_secret: 'NesRoFC2sgBMN8toPYVxtWUa',
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'ASAocgRIGuweasCF3uKZWPyapBhyFM7ulfBYknuDfGVp2knZIHyY24Bazj88u9g2hCmP5BWVAc0b33uX',
-    'client_secret': 'EO-LQBODL7aJNl4krjvmClOiPrv8CwH-OAuPjPJp6MiaQsZieE1VXEbpxxRjsgQk7nem8_TAJeTvlBB7'
+    'client_id': process.env.SANDBOX_ID,
+    'client_secret': process.env.CLIENT_SECRET
 });
 
 
@@ -386,7 +387,7 @@ module.exports = {
                         }
                     }
                 ]).toArray()
-            
+
             ///////////////////
             let categories = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()  // toArray- convert into an array
 
@@ -507,10 +508,10 @@ module.exports = {
                     }
 
                 ]).toArray()
-                if(products.length>0){
-                    resolve(products)
-                }else{resolve()}
-            
+            if (products.length > 0) {
+                resolve(products)
+            } else { resolve() }
+
 
         })
     },
