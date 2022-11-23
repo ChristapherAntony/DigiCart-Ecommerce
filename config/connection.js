@@ -4,7 +4,7 @@ const state={
 }
 
 module.exports.connect=(done)=>{
-    const url ="mongodb://localhost:27017"
+    const url ="mongodb+srv://christapher012:Chris012@cluster0.1sshytz.mongodb.net/?retryWrites=true&w=majority"
     const dbname="BroCamp-Project-1"
 
     mongoClient.connect(url,(err,data)=>{

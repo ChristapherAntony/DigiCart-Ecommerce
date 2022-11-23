@@ -21,7 +21,7 @@ paypal.configure({
 const verifyUser = (req, res, next) => {
   req.session.returnTo = req.url
   if (req.session.user) {
-    
+
     next();
   } else {
     res.render('users/login-signUp');
@@ -320,9 +320,9 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   let userId = req.session.user._id                                              //also need to pass to hbs
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   userHelpers.getCartProducts(req.session.user._id).then(async (products) => {
-    console.log(products,"*********************************************");
-    if(products){res.render('users/cart', { products, userId, headerDetails });}
-    else{res.render('users/cartIsEmpty', {  headerDetails });}
+    console.log(products, "*********************************************");
+    if (products) { res.render('users/cart', { products, userId, headerDetails }); }
+    else { res.render('users/cartIsEmpty', { headerDetails }); }
     //if no products in cart render cart empty page
   })
 });
@@ -345,7 +345,7 @@ router.get('/add-to-cart/:id', verifyUser, async (req, res, next) => {
 router.get('/wishlist', verifyUser, async (req, res, next) => {
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   const productDetails = await wishlistHelper.getWishList(req.session.user._id)
-  res.render('users/wishlist', {  headerDetails, productDetails });
+  res.render('users/wishlist', { headerDetails, productDetails });
 });
 
 router.get('/add-to-wishlist/:id', verifyUser, async (req, res, next) => {
@@ -469,7 +469,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
 router.get('/paymentFailed/:orderId', verifyUser, async (req, res) => {
   const deletePendingOrder = await userHelpers.deletePendingOrder(req.params.orderId)
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-  res.render('users/paymentFailed', { headerDetails})
+  res.render('users/paymentFailed', { headerDetails })
 })
 
 router.post('/verify-payment', (req, res) => {
@@ -497,7 +497,7 @@ router.get('/orderSuccess/:orderId', verifyUser, async (req, res) => {
   let oldProductDetails = await userHelpers.oldProductDetails(req.params.orderId)
   console.log(orderDetails);
   console.log(oldProductDetails);
-  res.render('users/orderSuccess', { headerDetails,orderDetails,oldProductDetails })
+  res.render('users/orderSuccess', { headerDetails, orderDetails, oldProductDetails })
 })
 
 router.get('/viewOrders', verifyUser, async (req, res) => {
@@ -512,7 +512,7 @@ router.get('/orderDetails/:id', verifyUser, async (req, res) => {
   oldProductDetails.forEach(cartDetails => {
     cartDetails.orderId = orderDetails._id
   })//added order id in to  the 'oldProductDetails' for accessing while on button click
-  res.render('users/orderDetails', {  orderDetails, oldProductDetails, headerDetails })
+  res.render('users/orderDetails', { orderDetails, oldProductDetails, headerDetails })
 })
 
 router.get('/cancelTheOrder', verifyUser, (req, res) => {
