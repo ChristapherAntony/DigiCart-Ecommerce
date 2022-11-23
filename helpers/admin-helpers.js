@@ -178,8 +178,8 @@ module.exports = {
     },
     getDashDetails: () => {
         return new Promise(async (resolve, reject) => {
-            const CODCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "COD" }).count()
-            const PayPalCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "PAYPAL" }).count()
+            const CODCount = await db.get()?.collection(collection.ORDER_COLLECTION).find({ payment_method: "COD" }).count()
+            const PayPalCount = await db.get()?.collection(collection.ORDER_COLLECTION).find({ payment_method: "PAYPAL" }).count()
             const OnlineCount = await db.get().collection(collection.ORDER_COLLECTION).find({ payment_method: "ONLINE" }).count()
             const TotalSales = await db.get().collection(collection.ORDER_COLLECTION).find().count()
             const TotalUsers = await db.get().collection(collection.USER_COLLECTION).find().count()

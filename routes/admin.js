@@ -8,6 +8,13 @@ const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
 const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
+// require('dotenv').config();
+
+  require('dotenv').config()
+  console.log(process.env.NAME);
+  console.log(process.env.DB_PASSWORD);
+  console.log(process.env.DB_USER);
+
 
 /***********multer for products imgs*/
 const multerStorage = multer.diskStorage({
@@ -60,6 +67,7 @@ const verifyAdmin = (req, res, next) => {
 
 /* GET users listing. */
 router.get('/', verifyAdmin, async function (req, res, next) {
+
   res.redirect('/admin/dash');
 });
 
@@ -76,6 +84,8 @@ router.post('/dash', (req, res) => {
 })
 
 router.get('/dash', verifyAdmin, async function (req, res, next) {
+  console.log("==============================================");
+  
   const DashDetails = await adminHelpers.getDashDetails()
   const SalesReport = await adminHelpers.getSalesReport()
   const products = await productHelpers.getAllProductsLookUP()
