@@ -320,7 +320,10 @@ router.get('/cart', verifyUser, async (req, res, next) => {
   let userId = req.session.user._id                                              //also need to pass to hbs
   const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
   userHelpers.getCartProducts(req.session.user._id).then(async (products) => {
-    res.render('users/cart', { products, userId, headerDetails });
+    console.log(products,"*********************************************");
+    if(products.length>0)res.render('users/cart', { products, userId, headerDetails });
+    res.render('users/cartIsEmpty', {  headerDetails });
+    //if no products in cart render cart empty page
   })
 });
 
@@ -517,6 +520,14 @@ router.get('/cancelTheOrder', verifyUser, (req, res) => {
   Id.proId = req.query.proId,
     Id.orderId = req.query.orderId
   userHelpers.cancelOrder(Id).then(() => {
+    res.json(response)
+  })
+})
+router.get('/returnTheOrder', verifyUser, (req, res) => {
+  let Id = {}
+  Id.proId = req.query.proId,
+    Id.orderId = req.query.orderId
+  userHelpers.returnOrder(Id).then(() => {
     res.json(response)
   })
 })

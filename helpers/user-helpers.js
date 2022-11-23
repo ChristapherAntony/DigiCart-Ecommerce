@@ -889,6 +889,18 @@ module.exports = {
                     resolve()
                 })
         })
+    }),
+    returnOrder: ((Id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).update(
+                { _id: objectId(Id.orderId), 'cartDetails.item': objectId(Id.proId) },
+                {
+                    $set: { 'cartDetails.$.status': 'Returned' }
+                })
+                .then(() => {
+                    resolve()
+                })
+        })
     })
 
 }

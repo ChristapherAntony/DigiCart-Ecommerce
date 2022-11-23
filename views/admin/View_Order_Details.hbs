@@ -37,16 +37,12 @@
                                 {{orderDetails.payment_method}}
                                 <br>
                                 <b>Shipping Method:</b> Free Delivery <br>
-
-
                                 {{#isEqual orderDetails.status 'Cancelled'}}
                                 <h1>Cancelled</h1>
                                 {{/isEqual}}
                                 {{#isEqual orderDetails.status 'Shipped'}}
                                 <h1>Shipped</h1>
                                 {{/isEqual}}
-
-
                             </td>
                         </tr>
                     </tbody>
@@ -74,7 +70,7 @@
                     </tbody>
                 </table>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover " id="myTable">
                         <thead>
                             <tr>
                                 <td class="text-left ">#</td>
@@ -130,16 +126,10 @@
                                         {{/isEqual}}
                                         {{#isEqual this.cartDetails.status 'Cancelled'}}
                                         {{/isEqual}}
-
-
-
-
+                                        {{#isEqual this.cartDetails.status 'Returned'}}
+                                        {{/isEqual}}
                                     </select>
-
-
                                 </td>
-
-
                                 <td class="text-right">{{this.cartDetails.product.offerPrice}}</td>
                                 <td class="text-right">{{this.cartDetails.productTotal}}</td>
 
