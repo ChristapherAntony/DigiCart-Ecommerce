@@ -27,7 +27,10 @@ const verifyUser = (req, res, next) => {
 
     next();
   } else {
-    res.render('users/login-signUp');
+    userHelpers.getHeaderDetails(req.session.user?._id).then((response)=>{
+      let headerDetails=response
+      res.render('users/login-signUp',{headerDetails});
+    }) 
   }
 }
 router.get('/login-register', verifyUser, (req, res, next) => {
@@ -101,8 +104,9 @@ router.post('/verifyOtp', (req, res, next) => {
 });
 
 
-router.get('/signUp', (req, res, next) => {
-  res.render('users/signUp')
+router.get('/signUp', async(req, res, next) => {
+  let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
+  res.render('users/signUp',{headerDetails})
 });
 
 

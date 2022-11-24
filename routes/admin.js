@@ -9,10 +9,6 @@ const categoryHelpers = require('../helpers/category-helpers');
 const adminHelpers = require('../helpers/admin-helpers');
 const multer = require('multer')
 
-
-
-
-
 /***********multer for products imgs*/
 const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -55,16 +51,14 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-    next();
-
-    //res.render('admin/admin-login', { layout: 'admin-layout', login: true });
+   //next(); 
+    res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 
 
 /* GET users listing. */
 router.get('/', verifyAdmin, async function (req, res, next) {
-
   res.redirect('/admin/dash');
 });
 
@@ -281,7 +275,7 @@ router.post('/update-product/:id', uploadMultiple, async (req, res) => {
 
 router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
   productHelpers.deleteProduct(req.params.id).then((response) => {
-    res.redirect('/admin/view-products',)
+    res.json(response)
   })
 })
 

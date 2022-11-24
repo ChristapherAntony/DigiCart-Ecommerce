@@ -157,39 +157,45 @@
                     <form action="/admin/addCoupon" method="post">
                         <!-- Coupon Code input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="couponCode">Coupon Code</label>
                             <input value="" name="couponCode" type="text" id="couponCode" class="form-control"
                                 required />
-                            <label class="form-label" for="couponCode">Coupon Code</label>
+                            
                         </div>
 
                         <!-- Coupon Description input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="couponDescription">Coupon Description</label>
                             <input value="" name="couponDescription" type="text" id="couponDescription"
                                 class="form-control" required />
-                            <label class="form-label" for="couponDescription">Coupon Description</label>
+                            
                         </div>
 
                         <!-- Coupon  input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="couponDiscount">Offer %</label>
                             <input value="" name="couponDiscount" type="number" id="couponDiscount" class="form-control"
                                 required />
-                            <label class="form-label" for="couponDiscount">Offer %</label>
+                            
                         </div>
                         <!-- up to  input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
                             <input value="" name="maxAmount" type="number" id="maxAmount" class="form-control"
                                 required />
-                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                            
                         </div>
                         <!-- min spend  input -->
                         <div class="form-outline mb-2">
-                            <input value="0" name="minSpend" type="number" id="minSpend" class="form-control" required />
                             <label class="form-label" for="maxAmount">Min Spend</label>
+                            <input value="0" name="minSpend" type="number" id="minSpend" class="form-control" required />
+                            
                         </div>
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
-                            <input type="date" name="expiryDate" id="expiryDate" class="form-control" required />
                             <label class="form-label" for="expiryDate">Expiry Date</label>
+                            <input type="date" name="expiryDate" id="expiryDate" class="form-control" required />
+                            
                         </div>
                         <!-- Submit button -->
                         <button style="background-color:rgb(163, 106, 2) ;" type="submit"
@@ -216,41 +222,47 @@
                         <!-- Coupon Code input -->
                         <input type="text" name="id" value="{{this._id}}" hidden>
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="couponCode">Coupon Code</label>
                             <input value="{{this.couponCode}}" name="couponCode" type="text" id="couponCode"
                                 class="form-control" required />
-                            <label class="form-label" for="couponCode">Coupon Code</label>
+                            
                         </div>
 
                         <!-- Coupon Description input -->
                         <div class="form-outline mb-2">
+                             <label class="form-label" for="couponDescription">Coupon Description</label>
                             <input value="{{this.couponDescription}}" name="couponDescription" type="text"
                                 id="couponDescription" class="form-control" required />
-                            <label class="form-label" for="couponDescription">Coupon Description</label>
+                           
                         </div>
 
                         <!-- Coupon  input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="couponDiscount">Offer %</label>
                             <input value="{{this.couponDiscount}}" name="couponDiscount" type="number"
                                 id="couponDiscount" class="form-control" required />
-                            <label class="form-label" for="couponDiscount">Offer %</label>
+                            
                         </div>
                         <!-- up to  input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
                             <input value="{{this.maxAmount}}" name="maxAmount" type="number" id="maxAmount"
                                 class="form-control" required />
-                            <label class="form-label" for="maxAmount">Up to (Max Discount)</label>
+                            
                         </div>
                         {{!-- min spend --}}
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="maxAmount">Min Spend</label>
                             <input value="{{this.minSpend}}" name="minSpend" type="number" id="minSpend"
                                 class="form-control" required />
-                            <label class="form-label" for="maxAmount">Min Spend</label>
+                            
                         </div>
                         <!-- Date  input -->
                         <div class="form-outline mb-2">
+                            <label class="form-label" for="expiryDate">Expiry Date</label>
                             <input value="{{this.expiryDate}}" type="date" name="expiryDate" id="expiryDate"
                                 class="form-control" required />
-                            <label class="form-label" for="expiryDate">Expiry Date</label>
+                            
                         </div>
                         <!-- Submit button -->
                         <button style="background-color:rgb(163, 106, 2) ;" type="submit"

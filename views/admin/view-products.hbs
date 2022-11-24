@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
                 <li class="breadcrumb-item"><a href="/admin/view-products">Product Management</a></li>
-                
+
             </ol>
             <a href="/admin/add-product" type="button" class="btn btn-success "> <i class="bi bi-check-circle"></i> Add
                 New</a>
@@ -33,8 +33,8 @@
                 <td>{{this.stock}}</td>
                 <td><a href="/admin/edit-product/{{this._id}}" class="btn btn-warning btn-sm "> <i
                             class="bi bi-pencil-square"></i></a>
-                    <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger btn-sm"> <i
-                            class="bi bi-trash3"></i></a>
+                    <button onclick="deleteProduct('{{this._id}}')" class="btn btn-danger btn-sm"> <i
+                            class="bi bi-trash3"></i></button>
                 </td>
             </tr>
             {{/each }}
@@ -47,3 +47,33 @@
 
 
 </main><!-- End #main -->
+
+<script>
+    function deleteProduct(Id) {
+        Swal.fire({
+            text: "Are You really want to delete this product !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/delete-product/' + Id,
+                    method: 'get',
+                    success: (response) => {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your Product has been deleted.',
+                            'success'
+                        )
+                        location.reload()
+                    }
+                })
+            }
+        })
+
+
+    }
+</script>
