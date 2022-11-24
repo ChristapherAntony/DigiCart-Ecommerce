@@ -1,3 +1,48 @@
+<style>
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        right: 0;
+        background-color: rgb(255, 255, 255);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #000000;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+</style>
 <header class="header-area " style="background-color:rgb(228,67,17) ;">
     <div class="header-large-device">
         <div class="header-top header-top-ptb-7 border-bottom-9">
@@ -5,10 +50,11 @@
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-lg-2">
                         <div class="logo ">
-                            <a href="/"><img src="/assets/images/logo/logo-3.png" alt="logo" height="35" width="130"></a>
+                            <a href="/"><img src="/assets/images/logo/logo-3.png" alt="logo" height="35"
+                                    width="130"></a>
                         </div>
                     </div>
-                     {{!-- product search --}}
+                    {{!-- product search --}}
                     <div class="col-xl-6 col-lg-6">
                         <div class="input-group md-form form-sm form-2 pl-0">
                             <input id="searchBox" class="form-control my-0 py-1 red-border" type="text"
@@ -172,9 +218,138 @@
                         {{/if}}
 
 
-                        <div class="same-style-2 same-style-2-white same-style-2-hover-black main-menu-icon fa-lg">
-                            <a class="mobile-header-button-active" ><i class="bi bi-list"></i></i> </a>
+                        {{!-- <div
+                            class="same-style-2 same-style-2-white same-style-2-hover-black main-menu-icon fa-lg">
+                            <a class="mobile-header-button-active"><i class="bi bi-list"></i></i> </a>
+                        </div> --}}
+
+
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            {{!-- search --}}
+                            {{!-- <div class="input-group md-form form-sm form-2 pl-0">
+                                <input id="searchBoxMobile" class="form-control my-0 py-1 red-border" type="text"
+                                    onkeyup="search()" placeholder="Search here…" aria-label="Search">
+
+                                <div class="input-group-append">
+                                    <button onclick="searchMobile()" class="input-group-text red lighten-3 "
+                                        id="basic-text1"><i class="fas fa-search text-grey"
+                                            aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-11" id="dropMobile"
+                                style="background-color: white; position: absolute; z-index: 100;">
+
+                            </div> --}}
+                            <div class="mobile-menu-wrap mobile-header-padding-border-2">
+                                <!-- mobile menu start -->
+                                <nav>
+                                    <ul class="mobile-menu">
+                                        <li class="menu-item-has-children"><a href="/">Home</a>
+                                            {{!-- <ul class="dropdown">
+                                                <li><a href="index.html">Home version 1 </a></li>
+                                            </ul> --}}
+                                        </li>
+                                        <li class="menu-item-has-children "><a href="/viewAll">Shop All</a>
+                                        </li>
+                                        {{#each headerDetails.categories}}
+                                        <li class="menu-item-has-children "><a href="/viewAll/{{this._id}}">{{this.category}}</a>
+                                        </li>
+                                        {{/each}}
+                                       
+                                        <hr style="border: 1px solid black;">
+
+                                        <li class="menu-item-has-children "><a href="/account">Account</a>
+                                        </li>
+                                        <li class="menu-item-has-children "><a href="/cart">Cart</a>
+                                        </li>
+                                        <li class="menu-item-has-children "><a href="/wishlist">Wish List</a>
+                                        </li>
+                                        
+                                        <li><a href="/">Contact us</a></li>
+                                    </ul>
+                                </nav>
+                                <!-- mobile menu end -->
+                            </div>
+
+                            <div class="mobile-social-icon">
+                                <a class="facebook" href="#"><i class="bi bi-facebook"></i></a>
+                                <a class="twitter" href="#"><i class="bi bi-twitter"></i></a>
+                                <a class="pinterest" href="#"><i class="bi bi-pinterest"></i></a>
+                                <a class="instagram" href="#"><i class="bi bi-instagram"></i></a>
+                            </div>
+
                         </div>
+
+                        <div id="mySidenav" class="sidenav ">
+                            <div class="clickalbe-sidebar-wrap">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <a class="sidebar-close"><i class="icon_close"></i></a>
+                                <div class="mobile-header-content-area">
+                                    <div class="input-group md-form form-sm form-2 pl-0">
+
+                                        <input id="searchBoxMobile" class="form-control my-0 py-1 red-border"
+                                            type="text" onkeyup="search()" placeholder="Search here…"
+                                            aria-label="Search">
+
+                                        <div class="input-group-append">
+                                            <button onclick="searchMobile()" class="input-group-text red lighten-3 "
+                                                id="basic-text1"><i class="fas fa-search text-grey"
+                                                    aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-11" id="dropMobile"
+                                        style="background-color: white; position: absolute; z-index: 100;">
+
+                                    </div>
+
+                                    <div class="mobile-menu-wrap mobile-header-padding-border-2">
+                                        <!-- mobile menu start -->
+                                        <nav>
+                                            <ul class="mobile-menu">
+                                                <li class="menu-item-has-children"><a href="/">Home</a>
+                                                    {{!-- <ul class="dropdown">
+                                                        <li><a href="index.html">Home version 1 </a></li>
+                                                    </ul> --}}
+                                                </li>
+                                                <li class="menu-item-has-children "><a href="/viewAll">Shop All</a>
+                                                </li>
+                                                <li class="menu-item-has-children"><a href="#">Categories</a>
+                                                    <ul class="dropdown">
+
+
+                                                        {{#each headerDetails.categories}}
+                                                        <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
+                                                        {{/each}}
+
+                                                    </ul>
+                                                </li>
+                                                <li class="menu-item-has-children "><a href="/cart">Cart</a>
+                                                </li>
+                                                <li class="menu-item-has-children "><a href="/wishlist">Wish List</a>
+                                                </li>
+                                                <li class="menu-item-has-children "><a href="/account">Account</a>
+                                                </li>
+                                                <li><a href="/">Contact us</a></li>
+                                            </ul>
+                                        </nav>
+                                        <!-- mobile menu end -->
+                                    </div>
+                                    <div class="mobile-social-icon">
+                                        <a class="facebook" href="#"><i class="bi bi-facebook"></i></a>
+                                        <a class="twitter" href="#"><i class="bi bi-twitter"></i></a>
+                                        <a class="pinterest" href="#"><i class="bi bi-pinterest"></i></a>
+                                        <a class="instagram" href="#"><i class="bi bi-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+
+
                     </div>
                 </div>
             </div>
@@ -213,7 +388,7 @@
                         <li class="menu-item-has-children"><a href="#">Categories</a>
                             <ul class="dropdown">
 
-                                
+
                                 {{#each headerDetails.categories}}
                                 <li> <a href="/viewAll/{{this._id}}">{{this.category}}</a></li>
                                 {{/each}}
@@ -279,6 +454,18 @@
 
 
 <script>
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+
+
+
     function confirmLoginCart() {
         Swal.fire({
             title: 'Please Login ',
