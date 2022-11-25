@@ -10,16 +10,15 @@ const { response } = require('express');
 const paypal = require('paypal-rest-sdk');
 require('dotenv').config()
 
+
+
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': process.env.SANDBOX_ID,
   'client_secret': process.env.CLIENT_SECRET
 });
 
-
-
 //session verifying
-
 const verifyUser = (req, res, next) => {
   req.session.returnTo = req.url
   if (req.session.user) {

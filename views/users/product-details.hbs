@@ -108,32 +108,14 @@
                         </div>
                     </div>
                     <div class="pro-details-price">
-                        <span class="new-price">{{product.offerPrice}}</span>
-                        <span class="old-price">{{product.sellingPrice}}</span>
+                        <span class="new-price"><i class="bi bi-currency-rupee"></i> {{product.offerPrice}}</span>
+                        <span class="old-price">{{product.MRP}}</span>
                     </div>
 
-
-
-                    <div class="pro-details-color-wrap">
-
-
-                        {{!-- <div class="pro-details-color-content">
-                            <ul>
-                                <li><a class="dolly" href="#">dolly</a></li>
-                                <li><a class="white" href="#">white</a></li>
-                                <li><a class="azalea" href="#">azalea</a></li>
-                                <li><a class="peach-orange" href="#">Orange</a></li>
-                                <li><a class="mona-lisa active" href="#">lisa</a></li>
-                                <li><a class="cupid" href="#">cupid</a></li>
-                            </ul>
-                        </div> --}}
-                    </div>
 
                     <div class="pro-details-quality">
-                        <span>Quantity:</span> <span>
-                            <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                            </div>
+                        <h3 class="text-success">{{product.totalDiscount}} % off</h3><span> On this product</span>
+                        
                     </div>
                     <div class="product-details-meta">
 
@@ -150,7 +132,7 @@
                             </a>
                         </div>
                         <div class="pro-details-action">
-                            <a title="Add to Wishlist" href="#"><i class="bi bi-heart fa-sm"></i></a>
+                            <a title="Add to Wishlist" onclick="addToWishlistDetails('{{product._id}}')"><i class="bi bi-heart fa-sm"></i></a>
                             <a title="Add to Compare" href="#"><i class="bi bi-binoculars"></i></a>
                             <a class="social" title="Social" href="#"><i class="bi bi-share"></i></a>
                             <div class="product-dec-social">
@@ -380,7 +362,7 @@
                             </div>
                             <span>(2)</span>
                         </div>
-                        <h3><a  href="/details/{{this._id}}">{{this.title}}</a></h3>
+                        <h3><a href="/details/{{this._id}}">{{this.title}}</a></h3>
                         <div class="product-price-2">
                             <span>{{this.offerPrice}}</span>
                         </div>
@@ -406,13 +388,13 @@
                     let count = $('#cart-count').html()
                     count = parseInt(count) + 1
                     $('#cart-count').html(count)
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         width: 300,
-                        height:100,
+                        height: 100,
                         icon: 'success',
-                        
+
                         text: "Item Added to Cart",
                         showConfirmButton: false,
                         timer: 1500

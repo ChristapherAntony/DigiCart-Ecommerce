@@ -438,32 +438,43 @@
                                     <div class="product-plr-1">
                                         <div class="single-product-wrap">
                                             <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
+                                                <a href="/details/{{this._id}}">
                                                     <img src="/images/product-img/{{this.image1}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-content-wrap-3">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}
+                                                    </span> --}}
+
+                                                    <span class="new-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}} </span>
+                                                    <span class="old-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.MRP}}</span>
+
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span><a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
                                                 class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    <span><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}}</span>
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span> <a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add
+                                                        To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -527,32 +538,43 @@
                                     <div class="product-plr-1">
                                         <div class="single-product-wrap">
                                             <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
+                                                <a href="/details/{{this._id}}">
                                                     <img src="/images/product-img/{{this.image1}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-content-wrap-3">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}
+                                                    </span> --}}
+
+                                                    <span class="new-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}} </span>
+                                                    <span class="old-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.MRP}}</span>
+
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span><a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
                                                 class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    <span><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}}</span>
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span> <a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add
+                                                        To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -616,32 +638,43 @@
                                     <div class="product-plr-1">
                                         <div class="single-product-wrap">
                                             <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
+                                                <a href="/details/{{this._id}}">
                                                     <img src="/images/product-img/{{this.image1}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-content-wrap-3">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}
+                                                    </span> --}}
+
+                                                    <span class="new-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}} </span>
+                                                    <span class="old-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.MRP}}</span>
+
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span><a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
                                                 class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    <span><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}}</span>
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span> <a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add
+                                                        To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -705,32 +738,43 @@
                                     <div class="product-plr-1">
                                         <div class="single-product-wrap">
                                             <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
+                                                <a href="/details/{{this._id}}">
                                                     <img src="/images/product-img/{{this.image1}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-content-wrap-3">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">{{this.title}}</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}
+                                                    </span> --}}
+
+                                                    <span class="new-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}} </span>
+                                                    <span class="old-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.MRP}}</span>
+
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span><a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
                                                 class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
                                                 <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Mini Protector</a></h3>
+                                                        href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
+                                                    <span><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}}</span>
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">USoffice</a></span>
+                                                    <span> <a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add
+                                                        To Cart</button>
                                                 </div>
                                             </div>
                                         </div>

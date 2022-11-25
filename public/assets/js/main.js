@@ -1156,14 +1156,12 @@ function addToCart(proId) {
                     }
                 })
             }
-
         }
     })
 }
 function changeQuantity(cartId, proId, userId, price, count) {
     let totalPrice = parseInt(document.getElementById(price).innerHTML)
     let quantity = parseInt(document.getElementById(proId).innerHTML)
-    console.log(document.getElementById(price + price).innerHTML);
     count = parseInt(count)
     priceInt = parseInt(price)
     if (count == -1 && quantity == 1) {
@@ -1187,7 +1185,6 @@ function changeQuantity(cartId, proId, userId, price, count) {
                         quantity: quantity,
                         price: priceInt,
                         totalPrice: totalPrice
-
                     },
                     method: 'post',
                     success: (response) => {
@@ -1246,8 +1243,6 @@ function changeQuantity(cartId, proId, userId, price, count) {
                         document.getElementById(price + price).innerHTML = totalPrice - priceInt
                         document.getElementById(price).innerHTML = totalPrice - priceInt
                     }
-
-
                 }
             }
         })
