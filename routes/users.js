@@ -10,9 +10,6 @@ const { response } = require('express');
 const paypal = require('paypal-rest-sdk');
 require('dotenv').config()
 
-console.log(process.env.RAZORPAY_FAIL_PAGE);
-console.log(process.env.PAYPAL_FAIL_URL);
-console.log(process.env.PAYPAL_SUCCESS_URL);
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': process.env.SANDBOX_ID,

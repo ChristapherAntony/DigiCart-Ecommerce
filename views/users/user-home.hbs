@@ -1,5 +1,3 @@
-
-
 {{!-- carousel starts from here --}}
 {{!-- for laptop --}}
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade d-none d-md-block" data-ride="carousel">
@@ -25,7 +23,7 @@
         </div>
         {{/each }}
         <div class="carousel-item active">
-            <img class="d-block w-100" src="/images/web-banner-_5_.webp" alt="Third slide">
+            <img class="d-block w-100" src="/images/banner-img/lapend.jpg" alt="Third slide">
             <div class="carousel-caption d-none d-md-block">
                 <h5> </h5>
                 <p></p>
@@ -67,7 +65,7 @@
         </div>
         {{/each }}
         <div class="carousel-item active">
-            <img class="d-block w-100" src="/images/9act.jpg" alt="Third slide">
+            <img class="d-block w-100" src="/images/banner-img/mobend.png" alt="Third slide">
             <div class="carousel-caption d-none d-md-block">
                 <h5>hello </h5>
                 <p>purchase immidiatly</p>
@@ -193,7 +191,7 @@
                 </div>
                 <div class="timer-wrap-2 timer-wrap-2-hm10">
                     <h4><i class=""></i> Buy now:</h4>
-                    
+
                 </div>
             </div>
             <div
@@ -287,7 +285,7 @@
     </div>
 </div>
 {{!-- category sales --}}
-{{!-- {{#each category}}  --}}
+{{!-- {{#each category}} --}}
 <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">
@@ -296,9 +294,10 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="/viewAll/6358e5d0421c3c872a21c471"><img src="/images/category-img/1668334952182-mxw_2048,f_auto (42).avif" alt=""></a>
+                            <a href="/viewAll/6358e5d0421c3c872a21c471"><img
+                                    src="images/sidecategory/Samsung-Mobiles-Under-20000.jpg" alt=""></a>
                         </div>
-                        <div class="banner-content-23 text-center">
+                        {{!-- <div class="banner-content-23 text-center">
                             <div class="banner-content-23-top">
                                 <p>cyber<br>monday<br>sale</p>
                                 <h2><span>50%</span> OFF <br>HasTech TV</h2>
@@ -306,11 +305,20 @@
                             <div class="banner-btn-3">
                                 <a href="/viewAll/{{this._id}}">Purchase Now</a>
                             </div>
+                        </div> --}}
+                        <div class="banner-content-24 text-center">
+                            <span>Smart Phones</span>
+                            <h2>Buy <br>Now</h2>
+                            <p></p>
+                            <div class="banner-btn-4">
+                                <a href="/viewAll/6358e6ae421c3c872a21c472">Shop Now</a>
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 {{!-- right side area --}}
-                
+
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
@@ -339,15 +347,18 @@
                                                 <h3 class="mrg-none bold"><a class="orange"
                                                         href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}} </span> --}}
-                                                    
-                                                            <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}} </span>
-                                                            <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
-                                                      
+                                                    {{!-- <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}
+                                                    </span> --}}
+
+                                                    <span class="new-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}} </span>
+                                                    <span class="old-price"><i class="bi bi-currency-rupee"></i>
+                                                        {{this.MRP}}</span>
+
 
                                                 </div>
                                                 <div class="product-author">
-                                                    <span><a class="orange" >{{this.brand}}</a></span>
+                                                    <span><a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                             </div>
                                             <div
@@ -355,14 +366,16 @@
                                                 <h3 class="mrg-none bold"><a class="orange"
                                                         href="/details/{{this._id}}">{{this.title}}</a></h3>
                                                 <div class="product-price-4 product-price-4-hm10">
-                                                    <span><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
-                                                    
+                                                    <span><i class="bi bi-currency-rupee"></i>
+                                                        {{this.offerPrice}}</span>
+
                                                 </div>
                                                 <div class="product-author">
-                                                    <span> <a class="orange" >{{this.brand}}</a></span>
+                                                    <span> <a class="orange">{{this.brand}}</a></span>
                                                 </div>
                                                 <div class="pro-add-to-cart-2">
-                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add To Cart</button>
+                                                    <button onclick="addToCart('{{this._id}}')" title="Add to Cart">Add
+                                                        To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -380,7 +393,7 @@
 </div>
 {{!-- {{/each}} --}}
 
-{{!-- {{#each category}}  --}}
+{{!-- {{#each category}} --}}
 <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">
@@ -389,21 +402,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="/viewAll/6358e5d0421c3c872a21c472"><img src="/images/category-img/1667590304127-mbp16-spacegray-select-202110.jpeg" alt=""></a>
+                            <a href="/viewAll/6358e5d0421c3c872a21c472"><img
+                                    src="/images/sidecategory/best_laptops.webp" alt=""></a>
                         </div>
-                        <div class="banner-content-23 text-center">
+                        <div class="banner-content-24 text-center">
                             <div class="banner-content-23-top">
-                                <p>cyber<br>monday<br>sale</p>
-                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                                <p><br><br>sale</p>
+                                <h2><span>Top </span> Selling<br>Laptops</h2>
                             </div>
-                            <div class="banner-btn-3">
-                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                            <div class="banner-btn-4">
+                                <a href="/viewAll/6358e6d8421c3c872a21c473">Purchase Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 {{!-- right side area --}}
-                
+
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
@@ -477,21 +491,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="/viewAll/6358e72f421c3c872a21c474"><img src="/images/category-img/1668334788876-mxw_2048,f_auto (6).avif" alt=""></a>
+                            <a href="/viewAll/6358e72f421c3c872a21c474"><img
+                                    src="/images/sidecategory/Apple-Watch-Series-8-Group-Colors-Gear.webp" alt=""></a>
                         </div>
                         <div class="banner-content-23 text-center">
                             <div class="banner-content-23-top">
-                                <p>cyber<br>monday<br>sale</p>
-                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                                <p><br><br></p>
+                                <h2><span>Top</span> Selling <br> Watches</h2>
                             </div>
                             <div class="banner-btn-3">
-                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                                <a href="/viewAll/6358e72f421c3c872a21c474">Purchase Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 {{!-- right side area --}}
-                
+
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
@@ -556,7 +571,7 @@
 </div>
 {{!-- {{/each}} --}}
 
-{{!-- {{#each category}}  --}}
+{{!-- {{#each category}} --}}
 <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">
@@ -565,21 +580,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="/viewAll/6358e7a5421c3c872a21c476"><img src="/images/category-img/1668334809417-mxw_2048,f_auto (39).avif" alt=""></a>
+                            <a href="/viewAll/6358e7a5421c3c872a21c476"><img src="/images/sidecategory/banner-29.jpg"
+                                    alt=""></a>
                         </div>
                         <div class="banner-content-23 text-center">
                             <div class="banner-content-23-top">
-                                <p>cyber<br>monday<br>sale</p>
-                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                                <p><br><br></p>
+                                <h2><span>Buy</span> Your <br>Smart TV</h2>
                             </div>
                             <div class="banner-btn-3">
-                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                                <a href="/viewAll/6358e7a5421c3c872a21c476">Purchase Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 {{!-- right side area --}}
-                
+
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
@@ -644,7 +660,7 @@
 </div>
 {{!-- {{/each}} --}}
 
-{{!-- {{#each category}}  --}}
+{{!-- {{#each category}} --}}
 <div class="banner-product-wrap pb-70">
     <div class="container">
         <div class="section-wrap-3">
@@ -653,21 +669,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="banner-wrap">
                         <div class="banner-img banner-img-zoom">
-                            <a href="/viewAll/6358e72f421c3c872a21c473"><img src="/images/category-img/1668334823791-mxw_2048,f_auto (40).avif" alt=""></a>
+                            <a href="/viewAll/6358e72f421c3c872a21c473"><img
+                                    src="/images/sidecategory/bluetooth-speaker-260nw-576091510.jpg" alt=""></a>
                         </div>
                         <div class="banner-content-23 text-center">
-                            <div class="banner-content-23-top">
-                                <p>cyber<br>monday<br>sale</p>
-                                <h2><span>50%</span> OFF <br>HasTech TV</h2>
+                            <div class="banner-content-23-top ">
+                                <p><br><br></p>
+                                <h2 class="text-light"><span></span>Buy now<br></h2>
                             </div>
                             <div class="banner-btn-3">
-                                <a href="/viewAll/{{this._id}}">Purchase Now</a>
+                                <a href="/viewAll/637cb20726a4b12a66625c8f">Purchase Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 {{!-- right side area --}}
-                
+
                 <div class="col-lg-8 col-md-6">
                     <div class="product-area product-area-padding">
                         <div class="section-title-btn-wrap mb-25">
@@ -731,1207 +748,3 @@
     </div>
 </div>
 {{!-- {{/each}} --}}
-
-{{!-- <div class="banner-product-wrap pb-70">
-    <div class="container">
-        <div class="section-wrap-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="banner-wrap">
-                        <div class="banner-img banner-img-zoom">
-                            <a href="product-details.html"><img src="assets/images/banner/banner-30.jpg" alt=""></a>
-                        </div>
-                        <div class="banner-content-24 text-center">
-                            <span>new arrvial</span>
-                            <h2>Simple <br>Backpacker</h2>
-                            <p>Ready for your trip</p>
-                            <div class="banner-btn-4">
-                                <a href="product-details.html">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-6">
-                    <div class="product-area product-area-padding">
-                        <div class="section-title-btn-wrap mb-25">
-                            <div class="section-title-8">
-                                <h2>apparel & colothing</h2>
-                            </div>
-                            <div class="tab-style-10 nav">
-                                <a class="active" href="#product-12" data-toggle="tab">Popular </a>
-                                <a href="#product-13" data-toggle="tab"> Best Seller </a>
-                                <a href="#product-14" data-toggle="tab">Sale </a>
-                            </div>
-                        </div>
-                        <div class="tab-content jump">
-                            <div id="product-12" class="tab-pane active">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-67.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-68.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-69.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-70.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-71.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="product-13" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-70.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-69.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-68.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-67.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-71.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="product-14" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-69.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Sport Sneaker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-67.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Brown T-shirt</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">jetaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-70.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">White Duffles</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">etaposhop</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-68.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Herchoe Backpack</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">olabear.com</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-71.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Round Sunglasses</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">sunglassjp</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="banner-product-wrap pb-70">
-    <div class="container">
-        <div class="section-wrap-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="banner-wrap">
-                        <div class="banner-img banner-img-zoom">
-                            <a href="product-details.html"><img src="assets/images/banner/banner-31.jpg" alt=""></a>
-                        </div>
-                        <div class="banner-content-25 text-center">
-                            <span>best seller</span>
-                            <h2>pendant<br>lighting</h2>
-                            <div class="banner-btn-5">
-                                <a href="product-details.html">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-6">
-                    <div class="product-area product-area-padding">
-                        <div class="section-title-btn-wrap mb-25">
-                            <div class="section-title-8">
-                                <h2>home & furniture</h2>
-                            </div>
-                            <div class="tab-style-10 nav">
-                                <a class="active" href="#product-15" data-toggle="tab">Popular </a>
-                                <a href="#product-16" data-toggle="tab"> Best Seller </a>
-                                <a href="#product-17" data-toggle="tab">Sale </a>
-                            </div>
-                        </div>
-                        <div class="tab-content jump">
-                            <div id="product-15" class="tab-pane active">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-72.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-73.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-74.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-76.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-75.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="product-16" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-76.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-74.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-73.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-72.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-75.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="product-17" class="tab-pane">
-                                <div
-                                    class="product-slider-active-9 dot-style-2 dot-style-2-position-static dot-style-2-mrg-4">
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-74.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Pack 10 Utensils</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$43.50 </span>
-                                                    <span class="old-price">$52.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-72.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Rice Cooker</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$19.98 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-76.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$123.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$123.50 </span>
-                                                    <span class="old-price">$152.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-73.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$26.50 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange"
-                                                        href="product-details.html">Set 24 Knifes</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span class="new-price">$26.50 </span>
-                                                    <span class="old-price">$45.85</span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">InterioUS</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-plr-1">
-                                        <div class="single-product-wrap">
-                                            <div class="product-img product-img-zoom mb-15">
-                                                <a href="product-details.html">
-                                                    <img src="assets/images/product/product-75.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content-wrap-3">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
-                                                <h3 class="mrg-none bold"><a class="orange" href="product-details.html">
-                                                        Plastic Chair</a></h3>
-                                                <div class="product-price-4 product-price-4-hm10">
-                                                    <span>$86.75 </span>
-                                                </div>
-                                                <div class="product-author">
-                                                    <span>Seller: <a class="orange" href="#">Homelover</a></span>
-                                                </div>
-                                                <div class="pro-add-to-cart-2">
-                                                    <button title="Add to Cart">Add To Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-{{!-- <div class="blog-area pb-70">
-    <div class="container">
-        <div class="section-title-btn-wrap mb-25">
-            <div class="section-title-8">
-                <h2>latest from our blog</h2>
-            </div>
-            <div class="btn-style-9">
-                <a href="blog.html">all articles</a>
-            </div>
-        </div>
-        <div class="section-wrap-2">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog-wrap mb-30">
-                        <div class="blog-img mb-20">
-                            <a href="blog-details.html"><img src="assets/images/blog/blog-6.jpg" alt="blog-img"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <ul>
-                                    <li><a href="#">News </a></li>
-                                    <li>May 25, 2020</li>
-                                </ul>
-                            </div>
-                            <h3><a href="blog-details.html">Five things you only know if you’re at Chanel's Hamburg
-                                    Show</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog-wrap mb-30">
-                        <div class="blog-img mb-20">
-                            <a href="blog-details.html"><img src="assets/images/blog/blog-7.jpg" alt="blog-img"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <ul>
-                                    <li><a href="#">Inspiration </a></li>
-                                    <li>May 25, 2020</li>
-                                </ul>
-                            </div>
-                            <h3><a href="blog-details.html">Basic colord mixed - trendind 2020</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog-wrap mb-30">
-                        <div class="blog-img mb-20">
-                            <a href="blog-details.html"><img src="assets/images/blog/blog-8.jpg" alt="blog-img"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <ul>
-                                    <li><a href="#">Lookbook </a></li>
-                                    <li>May 25, 2020</li>
-                                </ul>
-                            </div>
-                            <h3><a href="blog-details.html">Calvin Klein Shoes Collection 2020, Activites Summer</a>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-{{!-- <div class="download-app-area pb-70">
-    <div class="container">
-        <div class="section-wrap-4">
-            <div class="bg-img" style="background-image:url(assets/images/bg/bg-3.jpg);">
-                <div class="download-app-content">
-                    <h2>Download Norda <br>App Now!</h2>
-                    <p>Shopping faster with our app.</p>
-                    <div class="app-img">
-                        <a href="#"><img src="assets/images/icon-img/app-1.png" alt=""></a>
-                        <a href="#"><img src="assets/images/icon-img/app-2.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}

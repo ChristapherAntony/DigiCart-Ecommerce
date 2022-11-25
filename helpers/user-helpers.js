@@ -517,8 +517,6 @@ module.exports = {
     },
     getCartProductsWithOffer: (userId, total, couponApplied) => {
         couponApplied = parseInt(couponApplied)
-        console.log("tottal cart amoutn", total);
-        console.log("couponApplied", couponApplied);
         let cartTotal = parseInt(total)
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             let total = await db.get().collection(collection.CART_COLLECTION)
