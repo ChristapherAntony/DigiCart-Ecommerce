@@ -444,7 +444,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
           // "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
           // "cancel_url":process.env.PAYPAL_FAIL_URL+orderId
           "return_url":"www.digicart.gq/orderSuccess/"+orderId,
-          "cancel_url":"http://digicart.gq/orderSuccess/"+orderId
+          "cancel_url":"https://digicart.gq/paymentFailed/"+orderId
         },
         "transactions": [{
           "amount": {
