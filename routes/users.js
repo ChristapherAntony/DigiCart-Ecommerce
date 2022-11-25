@@ -441,7 +441,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url":"https://digicart.gq/orderSuccess/"+orderId,
+          "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
          // "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
           "cancel_url":process.env.RAZORPAY_FAIL_PAGE+orderId
           // "return_url":"http://localhost:3000",
