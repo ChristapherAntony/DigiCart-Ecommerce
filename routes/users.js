@@ -443,8 +443,8 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
         "redirect_urls": {
           // "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
           // "cancel_url":process.env.PAYPAL_FAIL_URL+orderId
-          "return_url":"https://digicart.gq/orderSuccess/"+orderId,
-          "cancel_url":"https://digicart.gq/paymentFailed/"+orderId
+          "return_url":"http://localhost:3000",
+          "cancel_url":"http://localhost:3000"
         },
         "transactions": [{
           "amount": {
