@@ -10,7 +10,9 @@ const { response } = require('express');
 const paypal = require('paypal-rest-sdk');
 require('dotenv').config()
 
-
+console.log(process.env.RAZORPAY_FAIL_PAGE);
+console.log(process.env.PAYPAL_FAIL_URL);
+console.log(process.env.PAYPAL_SUCCESS_URL);
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': process.env.SANDBOX_ID,
@@ -428,6 +430,7 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
     } else if (req.body['payment_method'] === 'ONLINE') {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
         response.razor = true
+        response.RAZORPAY_FAIL_PAGE=process.env.RAZORPAY_FAIL_PAGE
         res.json(response)
       })
 
@@ -438,8 +441,8 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url": "http://localhost:3000/orderSuccess/" + orderId,
-          "cancel_url": "http://localhost:3000/paymentFailed/" + orderId
+          "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
+          "cancel_url":process.env.PAYPAL_FAIL_URL+orderId
         },
         "transactions": [{
           "amount": {

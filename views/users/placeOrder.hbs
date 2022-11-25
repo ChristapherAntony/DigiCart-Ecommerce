@@ -310,6 +310,8 @@
 
 
     function razorpayPayment(order) {
+        
+        
         console.log("*******************************************order in function")
         console.log(order)
         var options = {
@@ -325,7 +327,9 @@
             },
             "modal": {
                 "ondismiss": function () {
-                    window.location.replace("https://digicart.gq/paymentFailed/"+order.receipt);
+                    
+                    window.location.replace(order.RAZORPAY_FAIL_PAGE+order.receipt);
+                   // window.location.replace("https://digicart.gq/paymentFailed/"+order.receipt);
                 }
             },
             "prefill": {
