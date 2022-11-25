@@ -21,11 +21,16 @@
         background-color: white;
     }
 </style>
-<section class=" gradient-custom">
+<div class="ps-10">
+    
+    <button class="btn btn-sm btn-outline-danger float-right mr-5 " onclick="exportToPDF()">Download  <i
+            class="bi bi-filetype-pdf"></i></button>
+</div>
+<section class=" gradient-custom" id="invoice">
     <div class="container py-5 ">
         <div class="row d-flex justify-content-center align-items-center ">
             <div class="col-lg-10 col-xl-8">
-                <div class="cardNew" style="border-radius: 10px;">
+                <div class="cardNew" style="border-radius: 10px;" >
                     <div class="card-header px-4 py-5" style="background-color:rgb(102,102,102);">
                         <h5 class="text-light mb-0">Thanks for your Order, <span
                                 style="color: rgb(255, 255, 255);">{{orderDetails.deliveryDetails.Name}}</span>!</h5>
@@ -165,13 +170,13 @@
                                         {{#isEqual this.cartDetails.status 'Cancelled'}}
                                         <h4 id="{{../this.cartDetails.item}}" class="float-left">Order Cancelled </h4>
                                         <h4 class="float-right"> Refund will be credited</h4>
-                                    
+
 
                                         {{/isEqual}}
                                         {{#isEqual this.cartDetails.status 'Returned'}}
                                         <h4 id="{{../this.cartDetails.item}}" class="float-left">Product Returned</h4>
                                         <h4 class="float-right"> Refund will be credited</h4>
-                                        
+
 
                                         {{/isEqual}}
 
@@ -292,4 +297,27 @@
             }
         })
     }
+</script>
+
+<script src="../assets/js/exportexcel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+    function exportToPDF() {
+        const element = document.getElementById('invoice');
+        element.style.width = '700px';
+        element.style.height = '900px';
+        let opt = {
+            margin: 1,
+            filename: 'DigiCart.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 1 },
+            jsPDF: { unit: 'mm', orientation: 'portrait' }
+
+        }
+        html2pdf().set(opt)
+            .from(element)
+            .save();
+
+    }
+
 </script>

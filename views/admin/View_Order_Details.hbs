@@ -8,12 +8,16 @@
                 <li class="breadcrumb-item active">Order Information <i class="bi bi-truck"></i></li>
             </ol>
         </nav>
+        <div class="ps-10">
+            <button class="btn btn-sm btn-danger " onclick="exportToPDF()">Download <i
+                    class="bi bi-filetype-pdf"></i></button>
+        </div>
     </div><!-- End Page Title -->
 
 
 
     <!-- Main Container  -->
-    <div class="main-container container">
+    <div class="main-container container" id="invoice">
 
 
         <div class="row">
@@ -21,7 +25,7 @@
             <div id="content" class="col-sm-12">
                 <h3 class="title"> </h3>
 
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" >
                     <thead>
                         <tr>
                             <td colspan="2" class="text-left">Order Details</td>
@@ -190,3 +194,25 @@
 
 
 </main><!-- End #main -->
+<script src="../assets/js/exportexcel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+    function exportToPDF() {
+        const element = document.getElementById('invoice');
+        element.style.width = '700px';
+        element.style.height = '900px';
+        let opt = {
+            margin: 10,
+            filename: 'DigiCart.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 1 },
+            jsPDF: { unit: 'mm', orientation: 'portrait' }
+
+        }
+        html2pdf().set(opt)
+            .from(element)
+            .save();
+
+    }
+
+</script>

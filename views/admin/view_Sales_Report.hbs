@@ -6,10 +6,21 @@
                 <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
                 <li class="breadcrumb-item active">Reports</li>
                 <li class="breadcrumb-item active">Sales Report</li>
-                <button onclick="exportToExcel()"> excel</button>
-                <button onclick="exportToPDF()"></button>
+                <div class="float-right">
+
+
+                </div>
+
             </ol>
+
         </nav>
+        <div class="ps-10">
+            <button class="btn btn-sm btn-success " onclick="exportToExcel()">Export Excel <i
+                    class="bi bi-file-earmark-excel"></i></button>
+            <button class="btn btn-sm btn-danger " onclick="exportToPDF()">Export PDF <i
+                    class="bi bi-filetype-pdf"></i></button>
+        </div>
+
     </div><!-- End Page Title -->
 
     <section class="section dashboard" id="invoice">
@@ -514,7 +525,7 @@
 
 
     function exportToExcel() {
-        console.log("234567u8i9op")
+        
         let table = new Table2Excel();
         console.log(table)
         table.export(document.querySelectorAll("table.table"))
