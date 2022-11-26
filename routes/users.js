@@ -22,7 +22,6 @@ paypal.configure({
 const verifyUser = (req, res, next) => {
   req.session.returnTo = req.url
   if (req.session.user) {
-
     next();
   } else {
     userHelpers.getHeaderDetails(req.session.user?._id).then((response)=>{
@@ -31,6 +30,7 @@ const verifyUser = (req, res, next) => {
     }) 
   }
 }
+
 router.get('/login-register', verifyUser, (req, res, next) => {
   res.redirect('/');
 });
@@ -78,7 +78,6 @@ router.post('/enterOtp', (req, res, next) => {
   })
   //////////////////////////
   // res.render('users/enterOtp') //bypass otp
-
 })
 
 
