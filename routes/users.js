@@ -426,6 +426,9 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
         response.razor = true
         response.RAZORPAY_FAIL_PAGE=process.env.RAZORPAY_FAIL_PAGE
+        response.userName=req.session.user.UserName
+        response.userMobile=req.session.user.MobileNo
+        response.userEmail=req.session.user.UserEmail
         res.json(response)
       })
 
@@ -437,10 +440,8 @@ router.post('/placeOrder', verifyUser, async (req, res) => {
         },
         "redirect_urls": {
           "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
-         // "return_url":process.env.PAYPAL_SUCCESS_URL+orderId,
           "cancel_url":process.env.RAZORPAY_FAIL_PAGE+orderId
-          // "return_url":"http://localhost:3000",
-          // "cancel_url":"www.digicart.gq"
+  
         },
         "transactions": [{
           "amount": {

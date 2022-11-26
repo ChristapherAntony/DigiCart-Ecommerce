@@ -75,8 +75,6 @@ router.post('/dash', (req, res) => {
 })
 
 router.get('/dash', verifyAdmin, async function (req, res, next) {
-  console.log("==============================================");
-  
   const DashDetails = await adminHelpers.getDashDetails()
   const SalesReport = await adminHelpers.getSalesReport()
   const products = await productHelpers.getAllProductsLookUP()
