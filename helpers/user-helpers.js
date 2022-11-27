@@ -90,7 +90,7 @@ module.exports = {
                 .findOne({ _id: objectId(userId) })
 
             let cartDetails = user.walletTransaction
-            cartDetails.forEach(cartDetails => {
+            cartDetails?.forEach(cartDetails => {
                 cartDetails.date = new Date(cartDetails.date).toLocaleDateString()
             })
             const wallet = {

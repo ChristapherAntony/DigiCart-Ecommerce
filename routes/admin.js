@@ -2,7 +2,7 @@
 var express = require('express');
 const userHelpers = require('../helpers/user-helpers');
 var router = express.Router();
-const multer = require('multer');
+const { uploadSingleFile, uploadMultiple, uploadTwoBanner } = require('../middlewares/multer');
 const { verifyAdmin } = require('../middlewares/verification');
 const {
   dashboard, adminLogin, getDashBoard, viewUsers, blockUser, unBlockUser, signOut, viewProductCategory, getAddCategoryPage,
@@ -11,41 +11,6 @@ const {
   viewSalesReport, salesReportByDate, viewOfferManagementPage, viewCouponManagementPage, addNewCoupon, updateCoupon, deleteCoupon,
   applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile
 } = require('../controllers/adminControllers');
-
-
-//uploads product img
-const multerStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/images/product-img");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const uploadMultiple = multer({ storage: multerStorage }).fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
-
-//uploads category img
-const multerStorageCategory = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/images/category-img");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-}) 
-const uploadSingleFile = multer({ storage: multerStorageCategory }).fields([{ name: 'image', maxCount: 1 }])
-
-//uploads banner img
-const multerStorageBanner = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/images/banner-img");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const uploadTwoBanner = multer({ storage: multerStorageBanner }).fields([{ name: 'largeImg', maxCount: 1 }, { name: 'smallImg', maxCount: 1 }])
-
 
 
 //Login Routes
@@ -100,13 +65,7 @@ router.get('/edit-TopBanner/:id', verifyAdmin, getEditBannerPage)
 router.post('/update-TopBanner/:id', uploadTwoBanner, updateTopBanner)
 router.get('/delete-TopBanner/:id', verifyAdmin, deleteTopBanner)
 
-router.post('/removeProduct', (req, res, next) => {
-  userHelpers.removeProduct(req.body).then(async (response) => {
-    const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
-    // response.total = await userHelpers.getTotalAmount(req.body.user)
-    res.json(response)
-  })
-})
+
 
 module.exports = router;
 
@@ -131,3 +90,12 @@ module.exports = router;
 // const productHelpers = require('../helpers/product-helpers');
 // const categoryHelpers = require('../helpers/category-helpers');
 // const adminHelpers = require('../helpers/admin-helpers');
+
+
+// router.post('/removeProduct', (req, res, next) => {
+//   userHelpers.removeProduct(req.body).then(async (response) => {
+//     const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+//     // response.total = await userHelpers.getTotalAmount(req.body.user)
+//     res.json(response)
+//   })
+// })
