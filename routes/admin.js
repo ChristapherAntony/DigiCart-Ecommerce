@@ -1,13 +1,15 @@
-const { request, response } = require('express');
+
 var express = require('express');
-const { ProfilingLevel } = require('mongodb');
 const userHelpers = require('../helpers/user-helpers');
 var router = express.Router();
-const userHelper = require('../helpers/user-helpers')
-const productHelpers = require('../helpers/product-helpers');
-const categoryHelpers = require('../helpers/category-helpers');
-const adminHelpers = require('../helpers/admin-helpers');
-const multer = require('multer')
+const multer = require('multer');
+const {
+  dashboard, adminLogin, getDashBoard, viewUsers, blockUser, unBlockUser, signOut, viewProductCategory, getAddCategoryPage,
+  addCategory, getEditCategory, updateCategory, getDeleteCategory, viewProducts, getAddProducts, categoryViseDiscount,
+  addNewProduct, getEditProducts, updateProduct, deleteProduct, viewOrderDetails, viewAllOrders, changeDeliveryStatus,
+  viewSalesReport, salesReportByDate, viewOfferManagementPage, viewCouponManagementPage, addNewCoupon, updateCoupon, deleteCoupon,
+  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile
+} = require('../controllers/adminControllers');
 
 /***********multer for products imgs*/
 const multerStorage = multer.diskStorage({
@@ -51,365 +53,64 @@ const verifyAdmin = (req, res, next) => {
   if (req.session.admin) {
     next();
   } else {
-   //next(); 
+    // next();
     res.render('admin/admin-login', { layout: 'admin-layout', login: true });
   }
 }
 
 
-/* GET users listing. */
-router.get('/', verifyAdmin, async function (req, res, next) {
-  res.redirect('/admin/dash');
-});
+//Login Routes
+router.get('/', verifyAdmin, dashboard);
+router.post('/dash', adminLogin)
+router.get('/dash', verifyAdmin, getDashBoard);
+router.get('/view-users', verifyAdmin, viewUsers)
+router.get('/block/:id', verifyAdmin, blockUser)
+router.get('/unBlock/:id', verifyAdmin, unBlockUser)
+router.get('/signOut', verifyAdmin, signOut)
+
+//Product Category Routes
+router.get('/product-category', verifyAdmin, viewProductCategory)
+router.get('/add-category', verifyAdmin, getAddCategoryPage)
+router.post('/addNewCategory', verifyAdmin, uploadSingleFile, addCategory)
+router.get('/edit-category/:id', getEditCategory)
+router.post('/update-category/:id', uploadSingleFile, updateCategory)
+router.get('/delete-category/:id', verifyAdmin, getDeleteCategory)
+
+//Product Routes
+router.get('/view-products', verifyAdmin, viewProducts)
+router.get('/add-product', verifyAdmin, getAddProducts)
+router.get('/getCategoryDiscount', verifyAdmin, categoryViseDiscount) //to show in add product dropdown
+router.post('/add-products', uploadMultiple, addNewProduct)
+router.get('/edit-product/:id', verifyAdmin, getEditProducts)
+router.post('/update-product/:id', uploadMultiple, updateProduct)
+router.get('/delete-product/:id', verifyAdmin, deleteProduct)
+router.get('/viewOrders', verifyAdmin, viewAllOrders)
+router.get('/viewOrdersDetails/:id', verifyAdmin, viewOrderDetails)
+router.post('/changeDeliveryStatus', verifyAdmin, changeDeliveryStatus)
+router.get('/view_Sales_Report', verifyAdmin, viewSalesReport)
+router.post('/searchByDate', verifyAdmin, salesReportByDate)
 
 
-router.post('/dash', (req, res) => {
-  userHelper.adminLogin(req.body).then((response) => {
-    if (response.status) {
-      req.session.admin = response.user
-      res.redirect('/admin/dash')
-    } else {
-      res.redirect('/admin/dash')
-    }
-  })
-})
+//Profile Routes 
+router.get('/profile', verifyAdmin, viewAdminProfile)
 
-router.get('/dash', verifyAdmin, async function (req, res, next) {
-  const DashDetails = await adminHelpers.getDashDetails()
-  const SalesReport = await adminHelpers.getSalesReport()
-  const products = await productHelpers.getAllProductsLookUP()
-  const TopSelling = await adminHelpers.topSelling()
-  const OrderHistory = await adminHelpers.getRecentOrderHistory()
-  const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
-  res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory, monthlygraph });
-});
+//Offer And Coupon Management Routes 
+router.get('/offerManagement', verifyAdmin, viewOfferManagementPage)
 
-router.get('/view-users', verifyAdmin, (req, res, next) => {
-  userHelpers.getAllUsers().then((users) => {
-    res.render('admin/view-users', { users, layout: 'admin-layout' })
-  })
-})
+router.get('/CouponManagements', verifyAdmin, viewCouponManagementPage)
+router.post('/addCoupon', verifyAdmin, addNewCoupon)
+router.post('/updateCoupon', verifyAdmin, updateCoupon)
+router.post('/deleteCoupon', verifyAdmin, deleteCoupon)
+router.post('/getCouponDiscount/:couponCode', verifyAdmin, applyCouponDiscount)
 
-router.get('/block/:id', verifyAdmin, function (req, res) {
-  userHelpers.blockUser(req.params.id)
-  res.redirect('/admin/view-users')
-})
+//TopBanner Routes 
+router.get('/topBanner', verifyAdmin, getTopBanner)
+router.get('/addBanner', verifyAdmin, getAddBannerPage)
+router.post('/add-banner', uploadTwoBanner, addNewBanner)
+router.get('/edit-TopBanner/:id', verifyAdmin, getEditBannerPage)
+router.post('/update-TopBanner/:id', uploadTwoBanner, updateTopBanner)
+router.get('/delete-TopBanner/:id', verifyAdmin, deleteTopBanner)
 
-router.get('/unBlock/:id', verifyAdmin, function (req, res) {
-  userHelpers.unBlockUser(req.params.id)
-  res.redirect('/admin/view-users')
-})
-
-router.get('/signOut', verifyAdmin, (req, res, next) => {
-  req.session.destroy()
-  res.redirect('/admin')
-})
-
-// product section starts here
-
-//category----starts here<<<<<<<<<
-
-
-router.get('/product-category', verifyAdmin, (req, res, next) => {
-  categoryHelpers.getAllCategory().then((category) => {
-    req.session.offer = false
-    res.render('admin/product-category', { layout: 'admin-layout', category })
-  })
-})
-
-router.get('/add-category', verifyAdmin, (req, res, next) => {
-
-  let categoryError = req.session.categoryError
-  req.session.categoryError = null
-  res.render('admin/add-category', { layout: 'admin-layout', categoryError })
-})
-
-
-router.post('/addNewCategory', uploadSingleFile, async (req, res, next) => {
-  req.body.image = req.files.image[0].filename
-  const addCategory = await categoryHelpers.addCategory(req.body)
-  if (addCategory.status === false) {
-    req.session.categoryError = "Your Entered Category Already exists! Try again..";
-    res.redirect('/admin/add-category')
-  } else {
-    req.session.categoryError = null
-    res.redirect("/admin/product-category")
-  }
-})
-
-router.get('/edit-category/:id', async (req, res) => {
-  let categoryId = req.params.id
-  let categoryDetails = await categoryHelpers.getCategoryDetails(categoryId)
-  res.render('admin/edit-category', { categoryDetails, layout: 'admin-layout' })
-})
-
-router.post('/update-category/:id', uploadSingleFile, async (req, res) => {
-  if (req.files.image == null) {
-    Image1 = await productHelpers.fetchImage(req.params.id)
-  } else {
-    Image1 = req.files.image[0].filename
-  }
-  req.body.image = Image1
-  categoryHelpers.updateCategory(req.params.id, req.body).then(async () => {
-    let changeValues = await productHelpers.changeValues(req.params.id, req.body.categoryDiscount)
-    if (req.session.offer) {
-      res.redirect('/admin/offerManagement')
-    } else {
-      res.redirect('/admin/product-category')
-    }
-  })
-})
-
-router.get('/delete-category/:id', verifyAdmin, (req, res, next) => {
-  let categoryId = req.params.id
-  categoryHelpers.deleteCategory(categoryId).then((response) => {
-    res.json(response)
-  })
-})
-
-
-//category section ends here>>>>>>>
-
-//products----starts here<<<<<<<<<
-router.get('/view-products', verifyAdmin, (req, res, next) => {
-  productHelpers.getAllProductsLookUP().then((products) => {
-    req.session.offer = false
-    res.render('admin/view-products', { layout: 'admin-layout', products })
-  })
-})
-
-/*********** */
-
-/********** */
-
-
-
-router.get('/add-product', verifyAdmin, (req, res, next) => {
-  categoryHelpers.getAllCategory().then((category) => {
-    res.render('admin/add-product', { layout: 'admin-layout', category, productError:req.session.productError })
-    req.session.productError=null
-  })
-})
-router.get('/getCategoryDiscount', verifyAdmin, (req, res, next) => {
-  console.log(req.query.categoryName);
-  console.log("api call");
-  categoryHelpers.getCategoryDiscount(req.query.categoryName).then((response) => {
-    console.log(req.query.categoryName, "===", response);
-    res.json(response)
-  })
-})
-
-
-router.post('/add-products', uploadMultiple, async(req, res) => {
-  req.body.image1 = req.files.image1[0].filename
-  req.body.image2 = req.files.image2[0].filename
-  req.body.image3 = req.files.image3[0].filename
-  req.body.image4 = req.files.image4[0].filename
-  req.body.costPrice = parseInt(req.body.costPrice),
-    req.body.MRP = parseInt(req.body.MRP),
-    req.body.categoryDiscount = parseInt(req.body.categoryDiscount),
-    req.body.productDiscount = parseInt(req.body.productDiscount),
-    req.body.totalDiscount = parseInt(req.body.totalDiscount),
-    req.body.offerPrice = parseInt(req.body.offerPrice),
-    req.body.stock = parseInt(req.body.stock)
-  const response = await productHelpers.addProduct(req.body)
-  if (response.status === false) {
-    req.session.productError = "Your Product Already exists! Try again..";
-    res.redirect('/admin/add-product')
-  } else {
-    res.redirect('/admin/view-products')
-  }
-  
-})
-
-
-
-router.get('/edit-product/:id', verifyAdmin, async (req, res, next) => {
-  let productId = req.params.id   //to get the clicked item id
-  let product = await productHelpers.getProductDetails(productId)
-  let productCategory = await productHelpers.getProductCategory(product.category)
-  productCategoryName = productCategory.category
-  categoryHelpers.getAllCategory().then((category) => {
-    res.render('admin/edit-product', { category, layout: 'admin-layout', product, productCategoryName })
-  })
-
-})
-
-router.post('/update-product/:id', uploadMultiple, async (req, res) => {
-  if (req.files.image1 == null) {
-    Image1 = await productHelpers.fetchImage1(req.params.id)
-  } else {
-    Image1 = req.files.image1[0].filename
-  }
-  if (req.files.image2 == null) {
-    Image2 = await productHelpers.fetchImage2(req.params.id)
-  } else {
-    Image2 = req.files.image2[0].filename
-  }
-  if (req.files.image3 == null) {
-    Image3 = await productHelpers.fetchImage3(req.params.id)
-  } else {
-    Image3 = req.files.image3[0].filename
-  }
-  if (req.files.image4 == null) {
-    Image4 = await productHelpers.fetchImage4(req.params.id)
-  } else {
-    Image4 = req.files.image4[0].filename
-  }
-  req.body.image1 = Image1
-  req.body.image2 = Image2
-  req.body.image3 = Image3
-  req.body.image4 = Image4
-  productHelpers.updateProduct(req.params.id, req.body).then(() => {
-    if (req.session.offer) {
-      res.redirect('/admin/offerManagement')
-    } else {
-      res.redirect('/admin/view-products')
-    }
-
-  })
-})
-
-
-router.get('/delete-product/:id', verifyAdmin, (req, res, next) => {
-  productHelpers.deleteProduct(req.params.id).then((response) => {
-    res.json(response)
-  })
-})
-
-router.get('/viewOrders', verifyAdmin, (req, res, next) => {
-  adminHelpers.getOrderHistory().then((OrderHistory) => {
-    res.render('admin/View_Orders', { layout: 'admin-layout', OrderHistory })
-  })
-})
-
-
-router.get('/viewOrdersDetails/:id', verifyAdmin, async (req, res, next) => {
-  let orderDetails = await adminHelpers.getOrderDetails(req.params.id)
-  //let orderDetailsProducts = await adminHelpers.orderDetailsProducts(req.params.id) // old method chnaged to static
-  let orderProductsDetails = await userHelpers.oldProductDetails(req.params.id)
-  orderProductsDetails.forEach(cartDetails => {
-    cartDetails.orderId = orderDetails._id
-  })//added order id in to  the 'oldProductDetails' for accessing while on button click
-  res.render('admin/View_Order_Details', { layout: 'admin-layout', orderDetails, orderProductsDetails })
-})
-
-router.post('/changeDeliveryStatus', verifyAdmin, (req, res) => {
-  adminHelpers.changeDeliveryStatus(req.body).then((response) => {
-    res.json({ status: true })
-
-  })
-})
-
-router.get('/view_Sales_Report', verifyAdmin, async (req, res, next) => {
-
-  const SalesReport = await adminHelpers.getSalesReport()
-  res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
-
-})
-router.post('/searchByDate', verifyAdmin, async (req, res, next) => {
-  let dateRange = {}
-  if (req.body.fromDate === "" || req.body.toDate === "") {
-    res.redirect('/admin/view_Sales_Report')
-  } else {
-    dateRange.fromDate = req.body.fromDate
-    dateRange.toDate = req.body.toDate
-  }
-  const SalesReport = await adminHelpers.getSalesReportByDate(dateRange)
-  res.render('admin/view_Sales_Report', { layout: 'admin-layout', SalesReport })
-
-})
-
-
-// view Profile
-router.get('/profile', verifyAdmin, (req, res, next) => {
-  res.render('admin/profile', { layout: 'admin-layout' })
-})
-
-router.get('/offerManagement', verifyAdmin, async (req, res, next) => {
-  let category = await categoryHelpers.getAllCategory()
-  let products = await productHelpers.getAllProductsLookUP()
-  req.session.offer = true
-  console.log(products);
-  res.render('admin/offer-management', { layout: 'admin-layout', category, products })
-})
-
-router.get('/CouponManagements', verifyAdmin, async (req, res, next) => {
-  let activeCoupons = await adminHelpers.getActiveCoupons()
-  let expiredCoupons = await adminHelpers.getExpiredCoupons()
-  res.render('admin/CouponManagements', { layout: 'admin-layout', activeCoupons, expiredCoupons, couponError: req.session.couponError })
-  req.session.couponError = null
-})
-router.post('/addCoupon', verifyAdmin, async (req, res, next) => {
-  req.body.couponDiscount = parseInt(req.body.couponDiscount)
-  req.body.maxAmount = parseInt(req.body.maxAmount)
-  req.body.minSpend = parseInt(req.body.minSpend)
-  let addCoupon = await adminHelpers.addNewCoupon(req.body)
-  if (addCoupon.status === false) {
-    req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
-  } else {
-    req.session.couponError = null
-    res.redirect('/admin/CouponManagements')
-  }
-
-})
-router.post('/updateCoupon', verifyAdmin, async (req, res, next) => {
-  let updateCoupon = await adminHelpers.updateCoupon(req.body)
-  res.redirect('/admin/CouponManagements')
-})
-router.post('/deleteCoupon', verifyAdmin, async (req, res, next) => {
-  let deleteCoupon = await adminHelpers.deleteCoupon(req.body)
-  console.log(deleteCoupon);
-  res.json(response)
-})
-router.post('/getCouponDiscount/:couponCode', verifyAdmin, async (req, res, next) => {
-  let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
-  res.json(getCouponDiscount)
-})
-
-router.get('/topBanner', verifyAdmin, async (req, res, next) => {
-  const bannerTop_main = await productHelpers.getBannerTop_main()
-
-  res.render('admin/topBanner', { layout: 'admin-layout', bannerTop_main })
-})
-router.get('/addBanner', verifyAdmin, async (req, res, next) => {
-  res.render('admin/add-banner', { layout: 'admin-layout' })
-})
-
-router.post('/add-banner', uploadTwoBanner, (req, res) => {
-  req.body.largeImg = req.files.largeImg[0].filename
-  req.body.smallImg = req.files.smallImg[0].filename
-  productHelpers.addBanner(req.body)
-  res.redirect('/admin/topBanner')
-})
-router.get('/edit-TopBanner/:id', async (req, res) => {
-  let topBanner = await productHelpers.getBannerDetails(req.params.id)
-  res.render('admin/edit-TopBanner', { layout: 'admin-layout', topBanner })
-})
-router.post('/update-TopBanner/:id', uploadTwoBanner, async (req, res) => {
-
-  if (req.files.largeImg == null) {
-    temp1 = await productHelpers.fetchBannerImg(req.params.id, "largeImg")
-  } else {
-    temp1 = req.files.largeImg[0].filename
-  }
-  if (req.files.smallImg == null) {
-    temp2 = await productHelpers.fetchBannerImg(req.params.id, "smallImg")
-  } else {
-    temp2 = req.files.smallImg[0].filename
-  }
-  req.body.largeImg = temp1
-  req.body.smallImg = temp2
-  productHelpers.updateBanner(req.params.id, req.body).then((response) => {
-    res.redirect('/admin/topBanner')
-  })
-})
-
-router.get('/delete-TopBanner/:id', verifyAdmin, (req, res, next) => {
-  productHelpers.deleteTopBanner(req.params.id).then((response) => {
-    res.json(response)
-  })
-})
 router.post('/removeProduct', (req, res, next) => {
   userHelpers.removeProduct(req.body).then(async (response) => {
     const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
@@ -419,3 +120,25 @@ router.post('/removeProduct', (req, res, next) => {
 })
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const { request, response } = require('express');
+// const { ProfilingLevel } = require('mongodb');
+// const userHelper = require('../helpers/user-helpers')
+// const productHelpers = require('../helpers/product-helpers');
+// const categoryHelpers = require('../helpers/category-helpers');
+// const adminHelpers = require('../helpers/admin-helpers');
