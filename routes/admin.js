@@ -20,8 +20,8 @@ const multerStorage = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname)
   }
 })
-const upload = multer({ storage: multerStorage });
-const uploadMultiple = upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
+//const upload = ;
+const uploadMultiple = multer({ storage: multerStorage }).fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
 
 /************************multer  */
 const multerStorageCategory = multer.diskStorage({
@@ -31,9 +31,8 @@ const multerStorageCategory = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname)
   }
-})
-const uploadOne = multer({ storage: multerStorageCategory });
-const uploadSingleFile = uploadOne.fields([{ name: 'image', maxCount: 1 }])
+}) 
+const uploadSingleFile = multer({ storage: multerStorageCategory }).fields([{ name: 'image', maxCount: 1 }])
 
 /****************************** */
 const multerStorageBanner = multer.diskStorage({
@@ -44,8 +43,7 @@ const multerStorageBanner = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname)
   }
 })
-const uploadTwo = multer({ storage: multerStorageBanner });
-const uploadTwoBanner = uploadTwo.fields([{ name: 'largeImg', maxCount: 1 }, { name: 'smallImg', maxCount: 1 }])
+const uploadTwoBanner = multer({ storage: multerStorageBanner }).fields([{ name: 'largeImg', maxCount: 1 }, { name: 'smallImg', maxCount: 1 }])
 
 /******************************** */
 
