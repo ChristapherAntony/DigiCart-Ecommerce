@@ -9,19 +9,7 @@ const {
   updateProfile, viewCartPage, addToCart, viewWishlist, addToWishList, removeFromWishlist, addToCart_Wishlist, changeProductQty, removeCartProduct,
   proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar
 } = require('../controllers/userControllers');
-
-//user session verifying
-const verifyUser = (req, res, next) => {
-  req.session.returnTo = req.url
-  if (req.session.user) {
-    next();
-  } else {
-    userHelpers.getHeaderDetails(req.session.user?._id).then((response) => {
-      let headerDetails = response
-      res.render('users/login-signUp', { headerDetails });
-    })
-  }
-}
+const { verifyUser } = require('../middlewares/verification');
 
 
 //Landing & View Products Routes
