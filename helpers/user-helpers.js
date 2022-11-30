@@ -660,7 +660,6 @@ module.exports = {
 
             resolve(cart.products)
         })
-
     },
     placeOrder: (order, products, cartDetails, total, couponApplied) => {
         return new Promise((resolve, reject) => {
@@ -690,7 +689,6 @@ module.exports = {
                 couponApplied: couponApplied,
                 netAmountPaid: (total - couponApplied)
             }
-            console.log(orderObj);
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 resolve(response.insertedId)
             })

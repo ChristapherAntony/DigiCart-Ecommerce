@@ -7,7 +7,7 @@ const {
   verifyReferral, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
   productDetails_verifiedUser, userAccount, getAddAddressPage, addNewAddress, getEditAddressPage, getAddressDetails, updateAddress, deleteAddress,
   updateProfile, viewCartPage, addToCart, viewWishlist, addToWishList, removeFromWishlist, addToCart_Wishlist, changeProductQty, removeCartProduct,
-  proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar
+  proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar, verifyOTP
 } = require('../controllers/userControllers');
 const { verifyUser } = require('../middlewares/verification');
 
@@ -30,7 +30,7 @@ router.get('/logOut', logOut);
 router.get('/otpLogin', getOtpLogin);
 router.post('/enterOtp', verifyMobileNumber)
 router.get('/otpVerify', enterOtpPage); // if mobile number not matched with the DB
-router.post('/verifyOtp', verifyMobileNumber);
+router.post('/verifyOtp', verifyOTP);
 router.get('/signUp', SignUpPage);
 router.post('/signUp', postSignUp)
 router.get('/enterCoupon', getReferralPage);

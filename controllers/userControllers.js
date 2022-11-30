@@ -73,7 +73,7 @@ module.exports = {
         res.render('users/enterOtp', { otpError: req.session.otpError })
         req.session.otpError = null;
     },
-    verifyMobileNumber: (req, res, next) => {
+    verifyOTP: (req, res, next) => {
         let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
         OTP = (number)
         otpHelpers.verifyOTP(OTP).then(async (response) => {
