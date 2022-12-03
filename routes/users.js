@@ -7,7 +7,7 @@ const {
   verifyReferral, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
   productDetails_verifiedUser, userAccount, getAddAddressPage, addNewAddress, getEditAddressPage, getAddressDetails, updateAddress, deleteAddress,
   updateProfile, viewCartPage, addToCart, viewWishlist, addToWishList, removeFromWishlist, addToCart_Wishlist, changeProductQty, removeCartProduct,
-  proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar, verifyOTP
+  proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar, verifyOTP, errorPage
 } = require('../controllers/userControllers');
 const { verifyUser } = require('../middlewares/verification');
 
@@ -69,6 +69,8 @@ router.get('/viewOrders', verifyUser, viewOrders)
 router.get('/orderDetails/:id', verifyUser, viewOrderDetails)
 router.get('/cancelTheOrder', verifyUser, cancelOrder)
 router.get('/returnTheOrder', verifyUser, returnOrder)
+
+router.get('/userError',errorPage)
 
 
 module.exports = router;

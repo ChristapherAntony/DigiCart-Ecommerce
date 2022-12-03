@@ -24,8 +24,12 @@ module.exports = {
     getLogin: (req, res, next) => {
         res.redirect('/');
     },
-    login: (req, res) => {
-        userHelpers.doLogin(req.body).then(async (response) => {
+    errorPage: (req, res) => {
+        res.render('error')
+    },
+    login: async (req, res) => {
+        try {
+            let response = await userHelpers.doLogin(req.body)
             console.log("after dologin", response.status);
             if (response.status == false) {
                 res.render('users/login-signUp', { 'emailError': "Invalid Credentials! " })
@@ -39,12 +43,22 @@ module.exports = {
                 const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
                 res.redirect(req.session.returnTo)
             }
-        })
+        } catch (error) {
+            console.log(err);
+            res.redirect('/userError');
+        }
+
     },
     logOut: (req, res, next) => {
-        req.session.loggedIn = false
-        req.session.user = null
-        res.redirect('/');
+        try {
+            req.session.loggedIn = false
+            req.session.user = null
+            res.redirect('/');
+        } catch (error) {
+            console.log(err);
+            res.redirect('/userError');
+        }
+
     },
     getOtpLogin: (req, res, next) => {
         res.render('users/otpLogin', { mobileError: req.session.mobileError });
@@ -122,14 +136,20 @@ module.exports = {
 
 
     landingPage: async function (req, res, next) {
-        let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
-        const bannerTop_main = await productHelpers.getBannerTop_main()
-        const topDiscounted = await productHelpers.getTopDiscounted()
-        const allProducts = await productHelpers.getAllProducts()
-        const categoryProducts = await productHelpers.getCategoryProductsHome()
-        categoryProducts.topDiscounted = topDiscounted
-        categoryProducts.allProducts = allProducts
-        res.render('users/user-home', { headerDetails, bannerTop_main, categoryProducts })
+        try {
+            let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
+            const bannerTop_main = await productHelpers.getBannerTop_main()
+            const topDiscounted = await productHelpers.getTopDiscounted()
+            const allProducts = await productHelpers.getAllProducts()
+            const categoryProducts = await productHelpers.getCategoryProductsHome()
+            categoryProducts.topDiscounted = topDiscounted
+            categoryProducts.allProducts = allProducts
+            res.render('users/user-home', { headerDetails, bannerTop_main, categoryProducts })
+        } catch (error) {
+            console.log(err);
+            res.redirect('/userError');
+        }
+
     },
     viewAllProducts: async function (req, res, next) {
         if (req.session.productsTemp == null) req.session.productsTemp = await productHelpers.getAllProducts()
@@ -161,16 +181,19 @@ module.exports = {
         res.redirect('/viewAll')
     },
     productDetails: async (req, res, next) => {
-        let productId = req.params.id   //to get the clicked item id
-        const headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
-        productHelpers.getProductDetails(productId).then((product) => {
+        try {
+            let productId = req.params.id   //to get the clicked item id
+            const headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
+            let product = await productHelpers.getProductDetails(productId)
             let category = product.category
-            productHelpers.getProductCategory(category).then((categoryName) => {   // for showing top of the page
-                productHelpers.getCategoryProducts(category).then((categoryTitle) => { //for showing down side of the page
-                    res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails });
-                })
-            })
-        })
+            let categoryName = await productHelpers.getProductCategory(category)   // for showing top of the page
+            let categoryTitle = await productHelpers.getCategoryProducts(category) //for showing down side of the page
+            res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails });
+        } catch (err) {
+            console.log(err);
+            res.redirect('/userError');
+        }
+
     },
     productDetails_verifiedUser: async (req, res, next) => {
         let productId = req.params.id   //to get the clicked item id
