@@ -69,25 +69,6 @@ router.get('/viewOrders', verifyUser, viewOrders)
 router.get('/orderDetails/:id', verifyUser, viewOrderDetails)
 router.get('/cancelTheOrder', verifyUser, cancelOrder)
 router.get('/returnTheOrder', verifyUser, returnOrder)
-
 router.get('/userError',errorPage)
 
-
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-// const productHelpers = require('../helpers/product-helpers');
-// const categoryHelpers = require('../helpers/category-helpers');
-// const otpHelpers = require("../helpers/otp-helpers")
-// const wishlistHelper = require("../helpers/wishList-helper")
-// const { uid } = require('uid')
-// const { response } = require('express');

@@ -353,7 +353,6 @@ module.exports = {
                     response.userEmail = req.session.user.UserEmail
                     res.json(response)
                 })
-
             } else if (req.body['payment_method'] === 'PAYPAL') {
                 let payment = {
                     "intent": "authorize",
@@ -363,7 +362,6 @@ module.exports = {
                     "redirect_urls": {
                         "return_url": process.env.PAYPAL_SUCCESS_URL + orderId,
                         "cancel_url": process.env.RAZORPAY_FAIL_PAGE + orderId
-
                     },
                     "transactions": [{
                         "amount": {

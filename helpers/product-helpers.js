@@ -25,7 +25,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find().toArray()
             resolve(products)
-            reject(err)
+            // reject(err)
         })
     },
     getAllProductsLookUP: () => {
@@ -244,7 +244,6 @@ module.exports = {
         })
     },
     getProductsBySearch: (searchData) => {
-        console.log(searchData, "LLLLLLLLLLLLLLLLLLLLLL");
         return new Promise(async (resolve, reject) => {
             let length = searchData.length;
             let products = []
@@ -252,7 +251,6 @@ module.exports = {
                 resolve(products)
             } else {
                 var re = new RegExp(searchData, "i");
-                console.log(re, "reeeeeeeeee");
                 products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ title: re }).toArray()
                 // let arr=[]
                 // products.forEach((products,index)=>{
