@@ -7,9 +7,9 @@ https://user-images.githubusercontent.com/109226401/235305994-d6d54457-798c-400d
 ## Table of Contents
 * [Technologies Used](#technologies-used)
 * [Features](#features)
-* [Screenshots](#screenshots)
 * [Getting Started](#getting-started)
 * [Contact](#contact)
+* [Screenshots](#screenshots)
 
 
 
@@ -63,23 +63,6 @@ The project is divided into mainly 2 modules Admin and User
 
 
 
-## Screenshots
-#### Landing page
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766551/DigiCart/a1_wcgqzp.png)
-#### Search and filters
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766548/DigiCart/2_pnfu2y.png)
-#### Payment
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766549/DigiCart/razor_pay_bqyiwb.png)
-#### Order Details
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682767079/DigiCart/order_details_d13jez.png)
-#### User Dash
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766546/DigiCart/dash_board_ierplv.png)
-
-#### Admin Dash
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766547/DigiCart/admin_p6lltb.png)
-#### Offer Management
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766695/DigiCart/zz_feyo9u.png)
-
 
 ## Getting Started
 To get started  you can simply clone this `DigiCart-Ecommerce` repository and install the dependencies.
@@ -106,9 +89,24 @@ npm start
 
 
 
-
-
-
 ## Contact
 Created by [@ChristapherAntony](https://www.linkedin.com/in/christapherantony-5568a3156/) - feel free to contact me!
+
+
+## Screenshots
+#### Landing page
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766551/DigiCart/a1_wcgqzp.png)
+#### Search and filters
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766548/DigiCart/2_pnfu2y.png)
+#### Payment
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766549/DigiCart/razor_pay_bqyiwb.png)
+#### Order Details
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682767079/DigiCart/order_details_d13jez.png)
+#### User Dash
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766546/DigiCart/dash_board_ierplv.png)
+
+#### Admin Dash
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766547/DigiCart/admin_p6lltb.png)
+#### Offer Management
+![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766695/DigiCart/zz_feyo9u.png)
 
