@@ -1,6 +1,6 @@
 # DigiCart
 > DigiCart is an e-commerce website that allows customers to browse and purchase products online. The website features a user-friendly interface, a secure payment system, and advanced search and filtering options. Customers can create accounts, track their orders status.
-> Live demo [_here_](http://www.digicart.gq/).
+> Live demo [_here_](https://digicart.gq/).
 
 https://user-images.githubusercontent.com/109226401/235305994-d6d54457-798c-400d-9cf5-aed16cd5f4bd.mp4
 
