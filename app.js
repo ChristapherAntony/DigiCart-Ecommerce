@@ -9,7 +9,7 @@ var adminRouter = require('./routes/admin');
 var app = express();
 var session = require('express-session')  // session npm 
 const nocache = require("nocache");
-var db = require('./config/connection')
+
 
 
 // view engine setup
@@ -37,10 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ resave: true, saveUninitialized: true, secret: "Key", cookie: { maxAge: 6000000 } })) // session use
 app.use(nocache());
-db.connect((err) => {
-  if (err) console.log("connection error" + err);
-  else console.log("data base connected");
-})
+
 
 
 app.use('/', usersRouter);
